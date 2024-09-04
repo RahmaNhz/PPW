@@ -409,8 +409,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rahma-nurhaliza-210411100176">Rahma Nurhaliza (210411100176)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-library">Install Library</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">Import Library</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-berita-kompas">CRAWLING BERITA KOMPAS</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-berita-cnn">CRAWLING BERITA CNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-berita-kompas">CRAWLING BERITA KOMPAS</a></li>
 </ul>
             </nav>
         </div>
@@ -445,7 +445,7 @@ oleh program yang disebut web crawler atau spider. Tujuan dari web crawling adal
 Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in /usr/local/lib/python3.10/dist-packages (from requests) (3.3.2)
 Requirement already satisfied: idna&lt;4,&gt;=2.5 in /usr/local/lib/python3.10/dist-packages (from requests) (3.8)
 Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests) (2.0.7)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests) (2024.7.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests) (2024.8.30)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: beautifulsoup4 in /usr/local/lib/python3.10/dist-packages (4.12.3)
@@ -478,13 +478,384 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 </div>
 </div>
 </section>
+<section id="crawling-berita-cnn">
+<h2>CRAWLING BERITA CNN<a class="headerlink" href="#crawling-berita-cnn" title="Link to this heading">#</a></h2>
+<p>Data berita berasal dari situs CNN</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cnnnews</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>  <span class="c1"># Tambahkan parameter limit dengan default 10</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;judul&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;berita&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;tanggal&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;kategori&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">article_count</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Menyimpan jumlah artikel yang sudah diambil</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">page</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">article_count</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+            <span class="k">break</span>  <span class="c1"># Hentikan loop jika jumlah artikel sudah mencapai limit</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.cnnindonesia.com/indeks/&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;flex flex-col gap-5&#39;</span><span class="p">})</span>
+        <span class="n">news</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s1">&#39;article&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;flex-grow&#39;</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">new</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">news</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">article_count</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+                <span class="k">break</span>  <span class="c1"># Menghentikan loop jika jumlah artikel sudah mencapai limit</span>
+
+            <span class="n">a_element</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;aria-label&#39;</span><span class="p">:</span> <span class="s1">&#39;link description&#39;</span><span class="p">})[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+            <span class="n">detail_request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">a_element</span><span class="p">)</span>
+            <span class="n">detail_soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">detail_request</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+
+            <span class="c1"># Ambil judul</span>
+            <span class="n">judul</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;leading-9&#39;</span><span class="p">})</span>
+            <span class="n">judul</span> <span class="o">=</span> <span class="n">judul</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">judul</span> <span class="k">else</span> <span class="s1">&#39;No title&#39;</span>
+
+            <span class="c1"># Ambil berita</span>
+            <span class="n">berita_div</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;detail-text&#39;</span><span class="p">})</span>
+            <span class="n">berita</span> <span class="o">=</span> <span class="n">berita_div</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">berita_div</span> <span class="k">else</span> <span class="s1">&#39;No content&#39;</span>
+
+            <span class="c1"># Ambil tanggal</span>
+            <span class="n">tanggal</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;text-cnn_grey&#39;</span><span class="p">})</span>
+            <span class="n">tanggal</span> <span class="o">=</span> <span class="n">tanggal</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">tanggal</span> <span class="k">else</span> <span class="s1">&#39;No date&#39;</span>
+
+            <span class="c1"># Ambil kategori dari breadcrumb</span>
+            <span class="n">breadcrumb_items</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;text-cnn_black_light3&#39;</span><span class="p">})</span>
+            <span class="n">kategori</span> <span class="o">=</span> <span class="n">breadcrumb_items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">breadcrumb_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;No category&#39;</span>
+
+            <span class="c1"># Bersihkan teks berita dari noise dan kata-kata yang tidak relevan</span>
+            <span class="n">noise</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;strong&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;strong&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">berita</span> <span class="o">=</span> <span class="n">berita</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ADVERTISEMENT&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;SCROLL TO CONTINUE WITH CONTENT&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Lihat Juga :&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Bagikan&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">noise</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-- &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">berita</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">berita</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>  <span class="c1"># Hilangkan spasi berlebih</span>
+
+            <span class="c1"># Tambahkan data ke list</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;judul&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">judul</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;berita&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">berita</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tanggal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tanggal</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;kategori&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kategori</span><span class="p">)</span>
+
+            <span class="n">article_count</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Penghitung artikel</span>
+
+    <span class="c1"># Simpan data ke dalam CSV</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;berita_cnn.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnnnews</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|█         | 1/10 [00:00&lt;00:04,  2.20it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|██        | 2/10 [00:01&lt;00:04,  1.68it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 30%|███       | 3/10 [00:01&lt;00:04,  1.50it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 4/10 [00:02&lt;00:04,  1.48it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|█████     | 5/10 [00:03&lt;00:03,  1.58it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 60%|██████    | 6/10 [00:03&lt;00:02,  1.52it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 70%|███████   | 7/10 [00:05&lt;00:02,  1.11it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|████████  | 8/10 [00:06&lt;00:01,  1.16it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 90%|█████████ | 9/10 [00:06&lt;00:00,  1.23it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10/10 [00:07&lt;00:00,  1.27it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10/10 [00:07&lt;00:00,  1.34it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:07&lt;00:00,  7.89s/it]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:07&lt;00:00,  7.89s/it]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html">
+  <div id="df-f33cc734-63e5-4f00-959a-8313627c612a" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>judul</th>
+      <th>berita</th>
+      <th>tanggal</th>
+      <th>kategori</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Pin Garuda Laris di Paris dan 'Tiket' Ajaib di...</td>
+      <td>Saling tukar pin atau bros sudah jadi budaya d...</td>
+      <td>Kamis, 05 Sep 2024 00:55 WIB</td>
+      <td>Olahraga</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Viral Pendakwah Pakistan Diberi Miras di Pinra...</td>
+      <td>Beredar sebuah video merekam sejumlah warga Ka...</td>
+      <td>Kamis, 05 Sep 2024 00:36 WIB</td>
+      <td>Nasional</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sejoli di Jakbar Jadi Korban Penyiraman Air Ke...</td>
+      <td>Pasangan muda-mudi jadi korban aksi penyiraman...</td>
+      <td>Kamis, 05 Sep 2024 00:14 WIB</td>
+      <td>Nasional</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Disikat Malaysia, Pelatih Filipina Pasrah pada...</td>
+      <td>Pelatih Filipina Norman Fegidero menilai anak ...</td>
+      <td>Kamis, 05 Sep 2024 00:04 WIB</td>
+      <td>Olahraga</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>VIDEO: Paus Fransiskus Pakai Pancasila dalam P...</td>
+      <td>Paus Fransiskus menyinggung soal dasar negara ...</td>
+      <td>Rabu, 04 Sep 2024 23:40 WIB</td>
+      <td>Internasional</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bulog Siap Bantu Pengusaha Perempuan Lakukan I...</td>
+      <td>Perum Bulog mendukung acara Indonesia Womenpre...</td>
+      <td>Rabu, 04 Sep 2024 23:32 WIB</td>
+      <td>Ekonomi</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Pelatih Malaysia Ungkap Derita Usai Harimau Ma...</td>
+      <td>Pelatih timnas Malaysia Pau Marti Vicente memb...</td>
+      <td>Rabu, 04 Sep 2024 23:29 WIB</td>
+      <td>Olahraga</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Dugaan Motif Bunuh Diri Anggota Polsek Ipda BS...</td>
+      <td>Kapolres Kulon Progo, AKBP Wilson Bugner Pasar...</td>
+      <td>Rabu, 04 Sep 2024 23:20 WIB</td>
+      <td>Nasional</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Momen Luhut Cium Tangan Paus Fransiskus di Dep...</td>
+      <td>Menteri Koordinator Bidang Kemaritiman dan Inv...</td>
+      <td>Rabu, 04 Sep 2024 22:58 WIB</td>
+      <td>Internasional</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Pengelola GBK Tak Tutup Rumput Saat Misa Agung...</td>
+      <td>Pusat Pengelola Komplek Gelora Bung Karno (PPK...</td>
+      <td>Rabu, 04 Sep 2024 22:44 WIB</td>
+      <td>Olahraga</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    <div class="colab-df-buttons">
+      
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-f33cc734-63e5-4f00-959a-8313627c612a')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+      
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+    
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-f33cc734-63e5-4f00-959a-8313627c612a button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-f33cc734-63e5-4f00-959a-8313627c612a');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+  
+    </div>
+  </div>
+  </div></div>
+</div>
+</section>
 <section id="crawling-berita-kompas">
 <h2>CRAWLING BERITA KOMPAS<a class="headerlink" href="#crawling-berita-kompas" title="Link to this heading">#</a></h2>
 <p>Data berita berasal dari situs kompas, pada kategori IKN</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kompasnews</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span> <span class="c1">#page: jumlh halaman yg ingin di crawl, limit: batas jumlah berita yang ingin diambil</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;judul&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;berita&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;tanggal&#39;</span><span class="p">:</span> <span class="p">[]}</span> <span class="c1">#menyimpan informasi yang akan diambil</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;judul&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;berita&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;tanggal&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;kategori&#39;</span><span class="p">:[]}</span> <span class="c1">#menyimpan informasi yang akan diambil</span>
     <span class="n">article_count</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#menghitung berapa banyak artikel yang telah diambil</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">page</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
@@ -518,6 +889,11 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
             <span class="n">tanggal</span> <span class="o">=</span> <span class="n">article</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;articlePost-date&#39;</span><span class="p">})</span>
             <span class="n">tanggal</span> <span class="o">=</span> <span class="n">tanggal</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">tanggal</span> <span class="k">else</span> <span class="s1">&#39;No date&#39;</span>
 
+            <span class="c1"># Ambil tanggal</span>
+            <span class="n">breadcrumb_items</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;breadcrumb__item&#39;</span><span class="p">})</span>
+            <span class="n">kategori</span> <span class="o">=</span> <span class="n">breadcrumb_items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">breadcrumb_items</span> <span class="k">else</span> <span class="s1">&#39;No category&#39;</span>
+
+
             <span class="c1"># Ambil berita dari artikel detail</span>
             <span class="n">berita_div</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;read__content&#39;</span><span class="p">})</span>
             <span class="n">berita</span> <span class="o">=</span> <span class="n">berita_div</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">berita_div</span> <span class="k">else</span> <span class="s1">&#39;No content&#39;</span>
@@ -526,11 +902,12 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;judul&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">judul</span><span class="p">)</span>
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;berita&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">berita</span><span class="p">)</span>
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tanggal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tanggal</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;kategori&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kategori</span><span class="p">)</span>
 
             <span class="n">article_count</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;berita-kompas.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;berita-kompas-IKN.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 </div>
@@ -538,7 +915,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kompasnews</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kompasnews</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -546,17 +923,17 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:03&lt;00:00,  3.90s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:10&lt;00:00, 10.82s/it]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:03&lt;00:00,  3.90s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:10&lt;00:00, 10.82s/it]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 <div class="output text_html">
-  <div id="df-e47ece17-39c9-4317-a26e-4ea2272a5a80" class="colab-df-container">
+  <div id="df-3d73a082-62d8-4216-873d-cd5c59574a69" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -578,98 +955,79 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
       <th>judul</th>
       <th>berita</th>
       <th>tanggal</th>
+      <th>kategori</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Angka Stunting di IKN 30 Persen, di Atas Rata-...</td>
-      <td>NUSANTARA, KOMPAS.com - Angka stunting di wila...</td>
-      <td>03/09/2024</td>
+      <td>2 Proyek KPBU Permukiman Kawasan IKN Tengah Di...</td>
+      <td>NUSANTARA, KOMPAS.com - Kementerian Pekerjaan ...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Pj Gubernur Kaltim Minta Anggota DPRD 2024-202...</td>
-      <td>NUSANTARA, KOMPAS.com - Penjabat (Pj) Gubernur...</td>
-      <td>03/09/2024</td>
+      <td>Gratis, Masyarakat dan Tamu VIP yang Minta Dik...</td>
+      <td>NUSANTARA, KOMPAS.com - Direktorat Lalu Lintas...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Ruang buat Prabowo, Anggaran IKN dari Kementer...</td>
-      <td>NUSANTARA, KOMPAS.com - Pagu anggaran Kementer...</td>
-      <td>03/09/2024</td>
+      <td>Kehadiran IKN Dorong Investasi di Balikpapan M...</td>
+      <td>NUSANTARA, KOMPAS.com - Aktivitas pembangunan ...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>"Istana Kepresidenan IKN Harus Berwibawa, Ada ...</td>
-      <td>NUSANTARA, KOMPAS.com - Kompleks Istana Kepres...</td>
-      <td>02/09/2024</td>
+      <td>Angka Stunting IKN di Atas Nasional, Ini Upaya...</td>
+      <td>NUSANTARA, KOMPAS.com - Angka stunting di wila...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Bom Waktu Air Bersih di Sekitar IKN, Pemerinta...</td>
-      <td>NUSANTARA, KOMPAS.com - Masalah air bersih yan...</td>
-      <td>02/09/2024</td>
+      <td>Akhirnya, Investor Asing Masuk IKN, Benamkan M...</td>
+      <td>NUSANTARA, KOMPAS.com - Kabar baik untuk pemba...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Kebutuhan Air Rusun BIN, Polri dan ASN IKN Aka...</td>
-      <td>NUSANTARA, KOMPAS.com - Kebutuhan air bersih d...</td>
-      <td>02/09/2024</td>
+      <td>IKN Butuh 200.000 Pekerja Konstruksi, "Mandor ...</td>
+      <td>NUSANTARA, KOMPAS.com - Pada puncak pembanguna...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Jalan Mulus Tak Hanya di IKN, Juga Akan Dibang...</td>
-      <td>NUSANTARA, KOMPAS.com - Jalan dalam kondisi ma...</td>
-      <td>02/09/2024</td>
+      <td>Bukan di Kompleks Parlemen, DPR Rapat Bareng O...</td>
+      <td>NUSANTARA, KOMPAS.com - Komisi II DPR RI mengg...</td>
+      <td>03/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Ibu Kota Pindah ke IKN, RocknMob Digelar 2 Kal...</td>
-      <td>NUSANTARA, KOMPAS.com - Aktivitas rocknmob ata...</td>
-      <td>02/09/2024</td>
+      <td>Wali Kota Balikpapan Ajak ASN Naik Transportas...</td>
+      <td>NUSANTARA, KOMPAS.com - Wali Kota Balikpapan R...</td>
+      <td>03/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Nusantara Jadi Ibu Kota Negara Tunggu Keputusa...</td>
-      <td>NUSANTARA, KOMPAS.com - Kepala Sekretariat Pre...</td>
-      <td>01/09/2024</td>
+      <td>Angka Stunting di IKN 30 Persen, di Atas Rata-...</td>
+      <td>NUSANTARA, KOMPAS.com - Angka stunting di wila...</td>
+      <td>03/09/2024</td>
+      <td>Ikn</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Warga Sekitar IKN Sulit Akses Air Bersih, Terk...</td>
-      <td>NUSANTARA, KOMPAS.com - Warga yang tinggal sej...</td>
-      <td>01/09/2024</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>Kirab Duplikat Bendera Pusaka Merah Putih Dila...</td>
-      <td>NUSANTARA, KOMPAS.com - Kepala Sekretariat Pre...</td>
-      <td>31/08/2024</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Serba Canggih, Rusun ASN di IKN Gunakan Teknol...</td>
-      <td>NUSANTARA, KOMPAS.com - Rumah Susun (Rusun) Ap...</td>
-      <td>31/08/2024</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>47 Tower Rusun ASN di IKN Beres Dibangun Desember</td>
-      <td>NUSANTARA, KOMPAS.com - Sebanyak 47 tower Ruma...</td>
-      <td>31/08/2024</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>Bangun Jalan dan Jembatan di IKN, Pemerintah H...</td>
-      <td>NUSANTARA, KOMPAS.com - Dalam rangka mendukung...</td>
-      <td>21/08/2024</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>Jembatan Pulau Balang di IKN Siap Diresmikan J...</td>
-      <td>NUSANTARA, KOMPAS.com - Proyek Jembatan Pulau ...</td>
-      <td>27/07/2024</td>
+      <td>Pj Gubernur Kaltim Minta Anggota DPRD 2024-202...</td>
+      <td>NUSANTARA, KOMPAS.com - Penjabat (Pj) Gubernur...</td>
+      <td>03/09/2024</td>
+      <td>Ikn</td>
     </tr>
   </tbody>
 </table>
@@ -677,7 +1035,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
     <div class="colab-df-buttons">
       
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-e47ece17-39c9-4317-a26e-4ea2272a5a80')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-3d73a082-62d8-4216-873d-cd5c59574a69')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
       
@@ -729,12 +1087,12 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 
     <script>
       const buttonEl =
-        document.querySelector('#df-e47ece17-39c9-4317-a26e-4ea2272a5a80 button.colab-df-convert');
+        document.querySelector('#df-3d73a082-62d8-4216-873d-cd5c59574a69 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-e47ece17-39c9-4317-a26e-4ea2272a5a80');
+        const element = document.querySelector('#df-3d73a082-62d8-4216-873d-cd5c59574a69');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -757,56 +1115,63 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
   </div>
   </div></div>
 </div>
-</section>
-<section id="crawling-berita-cnn">
-<h2>CRAWLING BERITA CNN<a class="headerlink" href="#crawling-berita-cnn" title="Link to this heading">#</a></h2>
-<p>Data berita berasal dari situs CNN, pada kategori ekonomi</p>
+<p>Data dari situs kompas kategori Edukasi</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cnnnews</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>  <span class="c1"># Tambahkan parameter limit dengan default 10</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;judul&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;berita&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;tanggal&#39;</span><span class="p">:</span> <span class="p">[]}</span>
-    <span class="n">article_count</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Menyimpan jumlah artikel yang sudah diambil</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kompasnews</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span> <span class="c1">#page: jumlh halaman yg ingin di crawl, limit: batas jumlah berita yang ingin diambil</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;judul&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;berita&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;tanggal&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;kategori&#39;</span><span class="p">:[]}</span> <span class="c1">#menyimpan informasi yang akan diambil</span>
+    <span class="n">article_count</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#menghitung berapa banyak artikel yang telah diambil</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">page</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">article_count</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
-            <span class="k">break</span>  <span class="c1"># Hentikan loop jika jumlah artikel sudah mencapai limit</span>
+            <span class="k">break</span>
 
-        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://www.cnnindonesia.com/ekonomi/indeks/5/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://edukasi.kompas.com/?source=navbar&amp;page=</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1">#(i) : nomor halaman saat ini, yaitu halaman yang akan dikunjungi crawler.</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="n">request</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
-        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
-        <span class="n">soup</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;flex flex-col gap-5&#39;</span><span class="p">})</span>
-        <span class="n">news</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s1">&#39;article&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;flex-grow&#39;</span><span class="p">})</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">new</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">news</span><span class="p">):</span>
+        <span class="c1"># Menemukan elemen artikel</span>
+        <span class="n">articles</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;articleItem&#39;</span><span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">articles</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; menemukan 0 artikel pada halaman </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="k">for</span> <span class="n">article</span> <span class="ow">in</span> <span class="n">articles</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">article_count</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
-                <span class="k">break</span>  <span class="c1"># Menghentikan loop jika jumlah artikel sudah mencapai limit</span>
+                <span class="k">break</span>
 
-            <span class="n">a_element</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;aria-label&#39;</span><span class="p">:</span> <span class="s1">&#39;link description&#39;</span><span class="p">})[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+            <span class="c1"># Ambil URL artikel</span>
+            <span class="n">a_element</span> <span class="o">=</span> <span class="n">article</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;article-link&#39;</span><span class="p">})[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
             <span class="n">detail_request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">a_element</span><span class="p">)</span>
             <span class="n">detail_soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">detail_request</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
 
-            <span class="n">judul</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;leading-9&#39;</span><span class="p">})</span>
-            <span class="n">berita</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;detail-text&#39;</span><span class="p">})</span>
-            <span class="n">tanggal</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;text-cnn_grey&#39;</span><span class="p">})</span>
+            <span class="c1"># Ambil judul</span>
+            <span class="n">judul</span> <span class="o">=</span> <span class="n">article</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;h2&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;articleTitle&#39;</span><span class="p">})</span>
+            <span class="n">judul</span> <span class="o">=</span> <span class="n">judul</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">judul</span> <span class="k">else</span> <span class="s1">&#39;No title&#39;</span>
 
-            <span class="k">if</span> <span class="n">judul</span> <span class="ow">and</span> <span class="n">berita</span> <span class="ow">and</span> <span class="n">tanggal</span><span class="p">:</span>
-                <span class="n">judul</span> <span class="o">=</span> <span class="n">judul</span><span class="o">.</span><span class="n">text</span>
-                <span class="n">berita</span> <span class="o">=</span> <span class="n">berita</span><span class="o">.</span><span class="n">text</span>
-                <span class="n">tanggal</span> <span class="o">=</span> <span class="n">tanggal</span><span class="o">.</span><span class="n">text</span>
-                <span class="n">noise</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;strong&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+            <span class="c1"># Ambil tanggal</span>
+            <span class="n">tanggal</span> <span class="o">=</span> <span class="n">article</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;articlePost-date&#39;</span><span class="p">})</span>
+            <span class="n">tanggal</span> <span class="o">=</span> <span class="n">tanggal</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">tanggal</span> <span class="k">else</span> <span class="s1">&#39;No date&#39;</span>
 
-                <span class="n">berita</span> <span class="o">=</span> <span class="n">berita</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ADVERTISEMENT&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;SCROLL TO CONTINUE WITH CONTENT&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Lihat Juga :&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Bagikan&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">noise</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-- &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-                <span class="n">berita</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">berita</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
-                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;judul&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">judul</span><span class="p">)</span>
-                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;berita&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">berita</span><span class="p">)</span>
-                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tanggal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tanggal</span><span class="p">)</span>
+            <span class="c1"># Ambil tanggal</span>
+            <span class="n">breadcrumb_items</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;breadcrumb__item&#39;</span><span class="p">})</span>
+            <span class="n">kategori</span> <span class="o">=</span> <span class="n">breadcrumb_items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">breadcrumb_items</span> <span class="k">else</span> <span class="s1">&#39;No category&#39;</span>
 
-                <span class="n">article_count</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># penghitung artikel</span>
+
+            <span class="c1"># Ambil berita dari artikel detail</span>
+            <span class="n">berita_div</span> <span class="o">=</span> <span class="n">detail_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;read__content&#39;</span><span class="p">})</span>
+            <span class="n">berita</span> <span class="o">=</span> <span class="n">berita_div</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">berita_div</span> <span class="k">else</span> <span class="s1">&#39;No content&#39;</span>
+
+            <span class="c1"># Tambahkan ke data</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;judul&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">judul</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;berita&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">berita</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tanggal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tanggal</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;kategori&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kategori</span><span class="p">)</span>
+
+            <span class="n">article_count</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;berita-cnn.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;berita-kompas-Edukasi.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 </div>
@@ -814,187 +1179,25 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnnnews</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kompasnews</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/2 [00:00&lt;?, ?it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:03&lt;00:00,  3.96s/it]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/10 [00:00&lt;?, ?it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|█         | 1/10 [00:00&lt;00:03,  2.25it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|██        | 2/10 [00:02&lt;00:08,  1.12s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 30%|███       | 3/10 [00:03&lt;00:09,  1.34s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 4/10 [00:04&lt;00:06,  1.06s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|█████     | 5/10 [00:06&lt;00:06,  1.38s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 60%|██████    | 6/10 [00:07&lt;00:05,  1.29s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 70%|███████   | 7/10 [00:08&lt;00:03,  1.13s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|████████  | 8/10 [00:08&lt;00:01,  1.00it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 90%|█████████ | 9/10 [00:10&lt;00:01,  1.17s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10/10 [00:11&lt;00:00,  1.02s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10/10 [00:11&lt;00:00,  1.11s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|█████     | 1/2 [00:11&lt;00:11, 11.45s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/10 [00:00&lt;?, ?it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|█         | 1/10 [00:00&lt;00:06,  1.42it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|██        | 2/10 [00:01&lt;00:05,  1.41it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 30%|███       | 3/10 [00:02&lt;00:05,  1.39it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 4/10 [00:02&lt;00:04,  1.44it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|█████     | 5/10 [00:03&lt;00:03,  1.36it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|█████     | 5/10 [00:03&lt;00:03,  1.38it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 2/2 [00:15&lt;00:00,  7.06s/it]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 2/2 [00:15&lt;00:00,  7.72s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:03&lt;00:00,  3.96s/it]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 <div class="output text_html">
-  <div id="df-3c0cfb33-f9f7-4ff6-895a-cc83995656b6" class="colab-df-container">
+  <div id="df-90044875-a5a3-4080-8e61-66a53b89d4f5" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1016,98 +1219,79 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
       <th>judul</th>
       <th>berita</th>
       <th>tanggal</th>
+      <th>kategori</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Luhut Ingin Benahi Wisata Bali: Kelab Nude Ku...</td>
-      <td>Pemerintah pusat akan membenahi wisata di Bali...</td>
-      <td>Selasa, 03 Sep 2024 13:50 WIB</td>
+      <td>Ingin Jadi Kepsek atau Pengawas? Cek Syarat Da...</td>
+      <td>KOMPAS.com - Pendaftaran Pendidikan Guru Pengg...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Ma'ruf Amin: Potensi Zakat Rp270 T, Wakaf Rp1...</td>
-      <td>Wakil Presiden Ma'ruf Amin mengungkap banyak p...</td>
-      <td>Selasa, 03 Sep 2024 13:34 WIB</td>
+      <td>DPR Dukung Usulan Pembentukan Komite Percepata...</td>
+      <td>KOMPAS.com - Wakil Ketua Komisi X DPR RI Dede ...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Sepakati PKB, BRI Perkuat Hubungan Industrial...</td>
-      <td>PT Bank Rakyat Indonesia (Persero) Tbk atau BR...</td>
-      <td>Selasa, 03 Sep 2024 12:52 WIB</td>
+      <td>H-2 Tembus 2,7 Juta Pelamar, Ini 20 Kementeria...</td>
+      <td>KOMPAS.com - H-2 menuju penutupan pendaftaran ...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Taji Ekonomi Vatikan, Negara Terkecil yang Di...</td>
-      <td>Kekuatan ekonomi Vatikan di bawah pimpinan Pau...</td>
-      <td>Selasa, 03 Sep 2024 12:45 WIB</td>
+      <td>Pendaftaran KJMU Tahap 2 Tahun 2024 Diperpanja...</td>
+      <td>KOMPAS.com - Pendaftaran Kartu Jakarta Mahasis...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>NeutraDC Kenalkan Smart Hands 2.0, Digital As...</td>
-      <td>Perusahaan NeutraDC yang menyediakan ekosistem...</td>
-      <td>Selasa, 03 Sep 2024 12:42 WIB</td>
+      <td>Beasiswa Bill Gates 2025 Dibuka, Kuliah S2-S3 ...</td>
+      <td>KOMPAS.com - Beasiswa Bill Gates 2025 sudah di...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Rosan: Investasi Indonesia di Afrika Menguat,...</td>
-      <td>Menteri Investasi/Kepala Badan Koordinasi Pena...</td>
-      <td>Selasa, 03 Sep 2024 12:15 WIB</td>
+      <td>Ini 20 Gelar S1 dan S2 Paling Dicari di Masa D...</td>
+      <td>KOMPAS.com - Salah satu faktor mencapai kesuks...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Tarif Tol BSD Bersiap Naik, Berikut Rinciannya</td>
-      <td>PT Bintaro Serpong Damai akan menaikkan tarif ...</td>
-      <td>Selasa, 03 Sep 2024 12:10 WIB</td>
+      <td>Ingin Jadi Kepsek atau Pengawas? Cek Syarat Da...</td>
+      <td>KOMPAS.com - Pendaftaran Pendidikan Guru Pengg...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Blak-blakan Bappenas soal Sumber Uang Untuk M...</td>
-      <td>Kementerian Perencanaan Pembangunan Nasional/B...</td>
-      <td>Selasa, 03 Sep 2024 11:53 WIB</td>
+      <td>Disdik DKI: 4.000 Orang Daftar KKI 2024, Kini ...</td>
+      <td>KOMPAS.com - Sebanyak 4.000 orang mendaftar re...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Deflasi Melanda Ekonomi RI, Pertanda Bahaya A...</td>
-      <td>Alarm darurat ekonomi Indonesia kembali menyal...</td>
-      <td>Selasa, 03 Sep 2024 11:19 WIB</td>
+      <td>Sekolah Semesta Semarang Raih 4 Medali Olimpia...</td>
+      <td>KOMPAS.com - Empat Sekolah Semesta, Semarang, ...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Anggaran Kementerian BUMN Turun, Erick Thohir...</td>
-      <td>Menteri Badan Usaha Milik Negara (BUMN) Erick ...</td>
-      <td>Selasa, 03 Sep 2024 10:53 WIB</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>NeutraDC Jalin Kolaborasi bareng HPE, Cirrasc...</td>
-      <td>Anak perusahaan Telkom, PT Telkom Data Ekosist...</td>
-      <td>Selasa, 03 Sep 2024 10:27 WIB</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Ace Hardware Berganti Nama Aspirasi Hidup Ind...</td>
-      <td>Kawan Lama Group mengganti nama ACE Indonesia ...</td>
-      <td>Selasa, 03 Sep 2024 10:10 WIB</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>Jokowi Rilis Aturan Krisis Energi, Atur Stok ...</td>
-      <td>Presiden Jokowi merilis aturan baru soal cadan...</td>
-      <td>Selasa, 03 Sep 2024 09:42 WIB</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>Rupiah Muram di Rp15.561 Pagi Ini</td>
-      <td>Nilai tukar rupiah dibuka di posisi Rp15.561 p...</td>
-      <td>Selasa, 03 Sep 2024 09:20 WIB</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>Harga Minyak Naik Tipis Imbas Kabar dari Libya</td>
-      <td>Harga minyak naik tipis pada Senin (2/9) kemar...</td>
-      <td>Selasa, 03 Sep 2024 08:43 WIB</td>
+      <td>Pengertian Brainware, Fungsi, dan Jenis-jenisnya</td>
+      <td>KOMPAS.com - Pengguna komputer disebut juga br...</td>
+      <td>04/09/2024</td>
+      <td>Skola</td>
     </tr>
   </tbody>
 </table>
@@ -1115,7 +1299,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
     <div class="colab-df-buttons">
       
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-3c0cfb33-f9f7-4ff6-895a-cc83995656b6')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-90044875-a5a3-4080-8e61-66a53b89d4f5')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
       
@@ -1167,12 +1351,282 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 
     <script>
       const buttonEl =
-        document.querySelector('#df-3c0cfb33-f9f7-4ff6-895a-cc83995656b6 button.colab-df-convert');
+        document.querySelector('#df-90044875-a5a3-4080-8e61-66a53b89d4f5 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-3c0cfb33-f9f7-4ff6-895a-cc83995656b6');
+        const element = document.querySelector('#df-90044875-a5a3-4080-8e61-66a53b89d4f5');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+  
+    </div>
+  </div>
+  </div></div>
+</div>
+<p>Menggabungkan file berita dari kategori yang berbeda</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_ikn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;berita-kompas-IKN.csv&#39;</span><span class="p">)</span>
+<span class="n">df_edukasi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;berita-kompas-Edukasi.csv&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># Menggabungkan dua DataFrame</span>
+<span class="n">df_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_edukasi</span><span class="p">,</span> <span class="n">df_ikn</span><span class="p">])</span>
+
+<span class="c1"># Menyimpan hasil gabungan ke file baru</span>
+<span class="n">df_combined</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;berita-kompas-combined.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_combined</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-8ee0dce2-2873-4c48-9bf3-c73266ad4fce" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>judul</th>
+      <th>berita</th>
+      <th>tanggal</th>
+      <th>kategori</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Ingin Jadi Kepsek atau Pengawas? Cek Syarat Da...</td>
+      <td>KOMPAS.com - Pendaftaran Pendidikan Guru Pengg...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>DPR Dukung Usulan Pembentukan Komite Percepata...</td>
+      <td>KOMPAS.com - Wakil Ketua Komisi X DPR RI Dede ...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>H-2 Tembus 2,7 Juta Pelamar, Ini 20 Kementeria...</td>
+      <td>KOMPAS.com - H-2 menuju penutupan pendaftaran ...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Pendaftaran KJMU Tahap 2 Tahun 2024 Diperpanja...</td>
+      <td>KOMPAS.com - Pendaftaran Kartu Jakarta Mahasis...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Beasiswa Bill Gates 2025 Dibuka, Kuliah S2-S3 ...</td>
+      <td>KOMPAS.com - Beasiswa Bill Gates 2025 sudah di...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Ini 20 Gelar S1 dan S2 Paling Dicari di Masa D...</td>
+      <td>KOMPAS.com - Salah satu faktor mencapai kesuks...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Ingin Jadi Kepsek atau Pengawas? Cek Syarat Da...</td>
+      <td>KOMPAS.com - Pendaftaran Pendidikan Guru Pengg...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Disdik DKI: 4.000 Orang Daftar KKI 2024, Kini ...</td>
+      <td>KOMPAS.com - Sebanyak 4.000 orang mendaftar re...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Sekolah Semesta Semarang Raih 4 Medali Olimpia...</td>
+      <td>KOMPAS.com - Empat Sekolah Semesta, Semarang, ...</td>
+      <td>04/09/2024</td>
+      <td>Edu</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Pengertian Brainware, Fungsi, dan Jenis-jenisnya</td>
+      <td>KOMPAS.com - Pengguna komputer disebut juga br...</td>
+      <td>04/09/2024</td>
+      <td>Skola</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>2 Proyek KPBU Permukiman Kawasan IKN Tengah Di...</td>
+      <td>NUSANTARA, KOMPAS.com - Kementerian Pekerjaan ...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Gratis, Masyarakat dan Tamu VIP yang Minta Dik...</td>
+      <td>NUSANTARA, KOMPAS.com - Direktorat Lalu Lintas...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kehadiran IKN Dorong Investasi di Balikpapan M...</td>
+      <td>NUSANTARA, KOMPAS.com - Aktivitas pembangunan ...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Angka Stunting IKN di Atas Nasional, Ini Upaya...</td>
+      <td>NUSANTARA, KOMPAS.com - Angka stunting di wila...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Akhirnya, Investor Asing Masuk IKN, Benamkan M...</td>
+      <td>NUSANTARA, KOMPAS.com - Kabar baik untuk pemba...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>IKN Butuh 200.000 Pekerja Konstruksi, "Mandor ...</td>
+      <td>NUSANTARA, KOMPAS.com - Pada puncak pembanguna...</td>
+      <td>04/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Bukan di Kompleks Parlemen, DPR Rapat Bareng O...</td>
+      <td>NUSANTARA, KOMPAS.com - Komisi II DPR RI mengg...</td>
+      <td>03/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Wali Kota Balikpapan Ajak ASN Naik Transportas...</td>
+      <td>NUSANTARA, KOMPAS.com - Wali Kota Balikpapan R...</td>
+      <td>03/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Angka Stunting di IKN 30 Persen, di Atas Rata-...</td>
+      <td>NUSANTARA, KOMPAS.com - Angka stunting di wila...</td>
+      <td>03/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Pj Gubernur Kaltim Minta Anggota DPRD 2024-202...</td>
+      <td>NUSANTARA, KOMPAS.com - Penjabat (Pj) Gubernur...</td>
+      <td>03/09/2024</td>
+      <td>Ikn</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    <div class="colab-df-buttons">
+      
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-8ee0dce2-2873-4c48-9bf3-c73266ad4fce')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+      
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+    
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-8ee0dce2-2873-4c48-9bf3-c73266ad4fce button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-8ee0dce2-2873-4c48-9bf3-c73266ad4fce');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1256,8 +1710,8 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rahma-nurhaliza-210411100176">Rahma Nurhaliza (210411100176)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-library">Install Library</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">Import Library</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-berita-kompas">CRAWLING BERITA KOMPAS</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-berita-cnn">CRAWLING BERITA CNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crawling-berita-kompas">CRAWLING BERITA KOMPAS</a></li>
 </ul>
   </nav></div>
 
