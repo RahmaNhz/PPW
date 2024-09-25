@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'VektorSpaceModel';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN" href="Klasifikasiberita-Loreg.html" />
     <link rel="prev" title="CRAWLING BERITA" href="CrawlingBerita.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -183,6 +184,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="CrawlingBerita.html">CRAWLING BERITA</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Vector Space Model (VSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Klasifikasiberita-Loreg.html">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</a></li>
 </ul>
 
     </div>
@@ -237,7 +239,7 @@
       
       
       
-      <li><a href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/docs/VektorSpaceModel.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/RahmaNhz/PPW/blob/gh-pages/_sources/VektorSpaceModel.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch on Colab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -268,7 +270,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+      <li><a href="https://github.com/RahmaNhz/PPW" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -285,7 +287,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FVektorSpaceModel.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/RahmaNhz/PPW/issues/new?title=Issue%20on%20page%20%2FVektorSpaceModel.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -457,11 +459,11 @@ document.write(`
 <span class="g g-Whitespace">    </span><span class="mi">102</span>       <span class="n">force_remount</span><span class="o">=</span><span class="n">force_remount</span><span class="p">,</span>
 
 <span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/drive.py</span> in <span class="ni">_mount</span><span class="nt">(mountpoint, force_remount, timeout_ms, ephemeral, readonly)</span>
-<span class="g g-Whitespace">    </span><span class="mi">131</span>   <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">132</span>   <span class="k">if</span> <span class="n">ephemeral</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">133</span>     <span class="n">_message</span><span class="o">.</span><span class="n">blocking_request</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">134</span>         <span class="s1">&#39;request_auth&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">135</span>         <span class="n">request</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;authType&#39;</span><span class="p">:</span> <span class="s1">&#39;dfs_ephemeral&#39;</span><span class="p">},</span>
+<span class="g g-Whitespace">    </span><span class="mi">135</span>   <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">136</span>   <span class="k">if</span> <span class="n">ephemeral</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">137</span>     <span class="n">_message</span><span class="o">.</span><span class="n">blocking_request</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>         <span class="s1">&#39;request_auth&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span>         <span class="n">request</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;authType&#39;</span><span class="p">:</span> <span class="s1">&#39;dfs_ephemeral&#39;</span><span class="p">},</span>
 
 <span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/_message.py</span> in <span class="ni">blocking_request</span><span class="nt">(request_type, request, timeout_sec, parent)</span>
 <span class="g g-Whitespace">    </span><span class="mi">174</span>       <span class="n">request_type</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">expect_reply</span><span class="o">=</span><span class="kc">True</span>
@@ -2648,6 +2650,15 @@ Term Frequency (TF), yang menghitung seberapa sering sebuah kata muncul dalam do
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">CRAWLING BERITA</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="Klasifikasiberita-Loreg.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
