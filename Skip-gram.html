@@ -1,0 +1,1050 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>WORD EMBEDDING &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Skip-gram';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN" href="Klasifikasiberita-Loreg.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/PPW.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/PPW.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Selamat Datang Di Halaman Pencarian & Penambangan Web (PPW)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="CrawlingBerita.html">CRAWLING BERITA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="VektorSpaceModel.html">Vector Space Model (VSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Klasifikasiberita-Loreg.html">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">WORD EMBEDDING</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/RahmaNhz/PPW/blob/gh-pages/_sources/Skip-gram.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/RahmaNhz/PPW" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/RahmaNhz/PPW/issues/new?title=Issue%20on%20page%20%2FSkip-gram.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Skip-gram.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>WORD EMBEDDING</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skip-gram">Skip-Gram</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arsitektur-skip-gram">Arsitektur Skip-Gram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-cost-function-penurunan-fungsi-biaya">Derivation of Cost Function (Penurunan Fungsi Biaya)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#window-size-of-skip-gram-ukuran-jendela">Window Size of Skip-Gram (Ukuran Jendela)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-skip-gram-model">Training the Skip-Gram Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-perhitungan-manual-skip-gram">Contoh Perhitungan manual Skip-gram</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="word-embedding">
+<h1>WORD EMBEDDING<a class="headerlink" href="#word-embedding" title="Link to this heading">#</a></h1>
+<p>Word Embedding adalah representasi vektor dari kata-kata dalam bentuk numerik, yang digunakan dalam pemrosesan bahasa alami (NLP) untuk menangkap makna semantik dari kata-kata. Tujuan utama dari word embedding adalah untuk memetakan kata-kata dengan arti yang serupa ke ruang vektor yang dekat satu sama lain.</p>
+<section id="skip-gram">
+<h2>Skip-Gram<a class="headerlink" href="#skip-gram" title="Link to this heading">#</a></h2>
+<p>Skip Gram merupakan model yang menggunakan pendekatan berbasis jaringan saraf untuk menghasilkan representasi vektor dari kata-kata dengan memprediksi kata-kata yang muncul di sekitarnya. Dengan kata lain, model belajar untuk mengambil sebuah kata pusat (center word) dan memperkirakan kata-kata yang kemungkinan muncul di sekitarnya dalam kalimat atau teks.Tujuan akhir dari model Skip-Gram adalah untuk mendapatkan representasi vektor yang baik dari kata-kata.</p>
+<section id="arsitektur-skip-gram">
+<h3>Arsitektur Skip-Gram<a class="headerlink" href="#arsitektur-skip-gram" title="Link to this heading">#</a></h3>
+<p><img alt="Screenshot 2024-09-26 110844.png" src="data:image/png;base64,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" /></p>
+<p>Arsitektur model Skip-gram  diatas menggunakan jaringan saraf dengan satu lapisan tersembunyi (<em>Hidden Layer</em>) untuk melakukan prediksi. Model Skip-Gram berfokus pada memprediksi kata-kata konteks yang berdekatan (dalam hal ini, w(t−2), w(t−1), w(t+1), w(t+2)) berdasarkan kata pusat (w(t)). Ini berarti bahwa untuk setiap kata pusat yang diberikan, model berusaha memprediksi kata-kata yang mungkin muncul di sekitarnya.</p>
+</section>
+<section id="derivation-of-cost-function-penurunan-fungsi-biaya">
+<h3>Derivation of Cost Function (Penurunan Fungsi Biaya)<a class="headerlink" href="#derivation-of-cost-function-penurunan-fungsi-biaya" title="Link to this heading">#</a></h3>
+<p>Model Skip-Gram bertujuan mengoptimalkan matriks bobot kata (embedding) dengan memprediksi kata-kata konteks berdasarkan kata pusat. Dengan memaksimalkan probabilitas prediksi semua kata konteks secara bersamaan, model ini mengoptimalkan matriks bobot ( <span class="math notranslate nohighlight">\(\theta\)</span> ) yang merepresentasikan kata-kata dalam ruang vektor. Matriks <span class="math notranslate nohighlight">\(\theta\)</span> merupakan gabungan matriks bobot input dan output, dinyatakan sebagai(<span class="math notranslate nohighlight">\([W_{input}, W_{output}]\)</span>), dan berfungsi sebagai variabel yang dioptimalkan dalam fungsi biaya (<span class="math notranslate nohighlight">\(J\)</span>).Secara matematis,dinyatakan sebagai berikut:
+$<span class="math notranslate nohighlight">\(
+\underset{\theta}{\text{argmax}} \,\, p(w_{1}, w_{2}, ... , w_{C}|w_{center}; \, \theta) \tag{1}
+\)</span>$</p>
+<p>di mana (C) adalah ukuran jendela konteks, dan (w) adalah vektor kata (yang bisa berupa kata konteks atau kata pusat).Dalam statistik, probabilitas (A) diberikan (B) dinyatakan sebagai (P(A|B)),maka mengambil logaritma natural dari persamaan (1) untuk menyederhanakan proses pengambilan turunan. menghasilkan
+$<span class="math notranslate nohighlight">\(
+\underset{\theta}{\text{argmax}} \,\, log \, p(w_{1}, w_{2}, ... , w_{C}|w_{center}; \, \theta) \tag{2}
+\)</span>$</p>
+<p><em><strong>Penggunaan Fungsi Sofmax</strong></em></p>
+<p>Dalam model Skip-Gram, fungsi softmax digunakan untuk klasifikasi kata konteks. Fungsi softmax dalam model Skip-Gram dinyatakan sebagai:
+$<span class="math notranslate nohighlight">\(
+p(w_{context}|w_{center}; \, \theta) = \frac{exp(W_{output_{(context)}} \cdot h)}{\sum^V_{i=1}exp(W_{output_{(i)}} \cdot h)} \tag{3}
+\)</span>$</p>
+<p>Di mana (<span class="math notranslate nohighlight">\(W_{output}(context)\)</span>) adalah vektor baris untuk kata konteks dari matriks embedding output, dan (<span class="math notranslate nohighlight">\(h\)</span>) adalah vektor kata dari lapisan tersembunyi (proyeksi) untuk kata pusat. Fungsi softmax kemudian dimasukkan ke dalam persamaan (3) untuk menghasilkan fungsi objektif baru yang memaksimalkan probabilitas untuk mengamati semua (<span class="math notranslate nohighlight">\(C\)</span>) kata konteks, mengingat kata pusat:</p>
+<div class="math notranslate nohighlight">
+\[
+\underset{\theta}{\text{argmax}} \,\, log \, \prod_{c=1}^{C} \frac{exp(W_
+{output_{(c)}} \cdot h)}{\sum^V_{i=1}exp(W_{output_{(i)}} \cdot h)} \tag{4}
+\]</div>
+<p>Meminimalkan fungsi biaya, dengan menambahkan tanda negatif:
+$<span class="math notranslate nohighlight">\(
+J(\theta; w^{(t)}) = -log \, \prod_{c=1}^{C} \frac{exp(W_{output_{(c)}} \cdot h)}{\sum^V_{i=1}exp(W_{output_{(i)}} \cdot h)} \tag{5}
+\)</span>$</p>
+<p>Dengan menerapkan sifat logaritma, fungsi biaya didapatkan menjadi:
+$<span class="math notranslate nohighlight">\(
+J(\theta; w^{(t)}) = -
+\sum_{c=1}^{C}
+log
+\frac{exp(W_{output_{(c)}} \cdot h)}{\sum^V_{i=1}exp(W_{output_{(i)}} \cdot h)} \tag{6}
+\)</span>$</p>
+<p>Dengan menyederhanakan:
+$<span class="math notranslate nohighlight">\(
+J(\theta; w^{(t)}) = - \sum_{c=1}^{C}(W_{output_{(c)}} \cdot h) + C \cdot log \sum^V_{i=1}exp(W_{output_{(i)}} \cdot h) \tag{7}
+\)</span>$</p>
+</section>
+<section id="window-size-of-skip-gram-ukuran-jendela">
+<h3>Window Size of Skip-Gram (Ukuran Jendela)<a class="headerlink" href="#window-size-of-skip-gram-ukuran-jendela" title="Link to this heading">#</a></h3>
+<p>Model Skip-Gram menggunakan softmax regression untuk memprediksi kata-kata tetangga dari kata pusat. Dalam hal ini, ukuran jendela (<span class="math notranslate nohighlight">\(C\)</span>) menggantikan jumlah label (<span class="math notranslate nohighlight">\(K\)</span>) dan biasanya berkisar antara 1 hingga 10.
+Rumus Softmax regression untuk Skip-Gram dapat dituliskan sebagai berikut:
+$<span class="math notranslate nohighlight">\(
+J(\theta) =
+-\frac{1}{T}
+\sum^T_{t=1}
+\sum_{-c\leq j \leq c,j\neq 0}
+log
+\frac
+{exp(\theta^{(t+j)\top}x^{(t)})}
+{\sum^K_{i=1}
+exp(\theta^{(i)\top}x^{(t)})}
+\)</span>$</p>
+</section>
+<section id="training-the-skip-gram-model">
+<h3>Training the Skip-Gram Model<a class="headerlink" href="#training-the-skip-gram-model" title="Link to this heading">#</a></h3>
+<p>Proses pelatihan model Skip-Gram dibagi menjadi langkah propagasi maju (forward propagation) dan propagasi mundur (backward propagation).</p>
+<p><strong>Forward Propagation</strong></p>
+<ol class="arabic simple">
+<li><p>Input Layer (x) / Lapisan Input
+Pada layer input, digunakan representasi one-hot encoding yang memiliki dimensi V (jumlah kata unik dalam korpus). Vektor input ini hanya memiliki satu nilai 1 yang mewakili kata pusat, sedangkan elemen lainnya adalah 0. Vektor ini kemudian dikalikan dengan matriks bobot input (<span class="math notranslate nohighlight">\(W_{input}\)</span>) yang berukuran V × N, di mana N adalah dimensi dari vektor embedding. Hasilnya adalah vektor berdimensi N yang menjadi layer tersembunyi (projection layer).</p></li>
+<li><p>Lapisan Tersembunyi /Hidden (Projection) Layer
+Hasil perkalian vektor input one-hot dan matriks bobot input menghasilkan lapisan tersembunyi, yaitu sebuah vektor berdimensi N.Persamaan untuk menghitung layer ini adalah:
+$<span class="math notranslate nohighlight">\(
+h = W_{input}^T \cdot x  \in \mathbb{R}^{N}
+\)</span>$</p></li>
+<li><p>Lapisan Output Layer
+Hasil dari hidden layer dikalikan dengan matriks bobot output (<span class="math notranslate nohighlight">\(W_{output}\)</span>) untuk menghasilkan distribusi probabilitas kata-kata konteks menggunakan softmax.
+$<span class="math notranslate nohighlight">\(
+P = \frac{exp(W_{output} \cdot h)}{\sum^V_{i=1}exp(W_{output_{(i)}} \cdot h)} \in \mathbb{R}^{V}
+\)</span>$</p></li>
+</ol>
+<p>Dimana (<span class="math notranslate nohighlight">\(W_{output}\)</span>)(<span class="math notranslate nohighlight">\(i\)</span>) adalah vektor dari matriks output untuk setiap kelas</p>
+<p><strong>Backward Propagation</strong></p>
+<ol class="arabic simple">
+<li><p>Hitung Kesalahan Prediksi (Prediction Error)
+Hitung kesalahan prediksi untuk setiap kata konteks. Kesalahan ini adalah selisih antara probabilitas yang diprediksi (<span class="math notranslate nohighlight">\(𝑦_{pred}\)</span>) dan probabilitas yang sebenarnya (<span class="math notranslate nohighlight">\(𝑦_{true}\)</span>). persamaan dapat ditulis sebagai berikut:
+$<span class="math notranslate nohighlight">\(
+e_c = y_{\text{pred}} - y_{\text{true}}
+\)</span>$</p></li>
+<li><p>Hitung Gradien untuk Matriks Bobot Input
+Hitung gradien dari matriks bobot output (<span class="math notranslate nohighlight">\(W_{output}\)</span> menggunakan rumus:
+$<span class="math notranslate nohighlight">\(
+\frac{\partial J}{\partial W_{\text{output}}} = h \cdot \sum_{c=1}^{C} e_c
+\)</span>$
+h adalah layer tersembunyi yang dihitung sebelumnya.</p></li>
+</ol>
+<p>3.Perbarui matriks bobot input dan output</p>
+<p>GD digunakan untuk memperbarui matriks bobot input (<span class="math notranslate nohighlight">\(W_{input}\)</span>) dan (<span class="math notranslate nohighlight">\(W_{output}\)</span>. Setelah menghitung gradien dari cost function terhadap bobot, SGD mengaplikasikan gradien tersebut untuk memperbarui bobot.Rumus pembaruan bobot yang menggunakan SGD adalah:
+$<span class="math notranslate nohighlight">\(
+W_{input}^{(new)}=W_{input}^{(old)}- \eta \cdot \frac{\partial J}{\partial W_{input}}
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+W_{output}^{(new)}=W_{output}^{(old)}- \eta \cdot \frac{\partial J}{\partial W_{output}}
+\]</div>
+<p>η adalah learning rate yang menentukan seberapa besar langkah yang diambil dalam arah gradien.</p>
+<ol class="arabic simple" start="4">
+<li><p>Iterasi dan Pembaruan Model
+Setelah memperbarui bobot untuk setiap contoh pelatihan, proses ini diulang untuk semua kata dalam korpus. Biasanya, model dilatih dalam beberapa iterasi (epoch), di mana seluruh data pelatihan akan melewati proses forward dan backward propagation beberapa kali.</p></li>
+</ol>
+</section>
+<section id="contoh-perhitungan-manual-skip-gram">
+<h3>Contoh Perhitungan manual Skip-gram<a class="headerlink" href="#contoh-perhitungan-manual-skip-gram" title="Link to this heading">#</a></h3>
+<p>Contoh Perhitungan menggunakan kalimat
+<strong>“Saya makan nasi”</strong>. dengan representasi kata dalam vektor berdimensi 3</p>
+<p><strong>Representasi One-Hot Encoding</strong>
+Membuat representasi one-hot encoding untuk setiap kata dalam kalimat.
+<em>Saya, makan, nasi</em>
+<strong>Representasi One-Hot:</strong></p>
+<ul class="simple">
+<li><p>saya : [1,0,0]</p></li>
+<li><p>Makan : [0,1,0]</p></li>
+<li><p>nasi : [0,0,1]</p></li>
+</ul>
+<p><strong>Menentukan Ukuran Jendela</strong>
+Misalkan menggunakan ukuran jendela C=1. Ini berarti akan memprediksi satu kata konteks untuk setiap kata pusat.
+Pasangan Kata Pusat dan Kata Konteks:
+Pusat: “saya” → Konteks: “makan”
+Pusat: “makan” → Konteks: “saya”, “nasi”
+Pusat: “nasi” → Konteks: “makan”</p>
+<p><strong>Menentukan Matriks Bobot Awal</strong>
+Menggunakan matriks bobot acak untuk bobot input dan output. Misalkan menggunakan bobot acak berikut:</p>
+<p>Matriks Bobot Input
+$$
+W_{\text{input}} =
+\begin{pmatrix}
+0.1 &amp; 0.2 &amp; 0.3 \
+0.4 &amp; 0.5 &amp; 0.6 \
+0.7 &amp; 0.8 &amp; 0.9
+\end{pmatrix}</p>
+<p>Matriks Bobot Output
+$<span class="math notranslate nohighlight">\(
+W_{\text{output}} =
+\begin{pmatrix}
+0.1 &amp; 0.1 &amp;  0.1 \\
+0.2 &amp; 0.2 &amp; 0.2 \\
+0.3 &amp; 0.3 &amp; 0.3
+\end{pmatrix}
+\)</span>$</p>
+<p><strong>Melakukan Fordward Pass</strong>
+<em><strong>Iterasi 1</strong></em>
+<strong>Kata Pusat: “saya”</strong></p>
+<ul class="simple">
+<li><p>input : [1,0,0]</p></li>
+<li><p>Menghitung Aktivasi di Hidden Layer:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}h= W_{\text{input}}^T \cdot \text{input} =
+\begin{pmatrix}
+0.1 &amp; 0.4 &amp; 0.7 \\
+0.2 &amp; 0.5 &amp; 0.8 \\
+0.3 &amp; 0.6 &amp; 0.9
+\end{pmatrix}
+\begin{pmatrix}
+1 \\
+0 \\
+0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0.1 \\
+0.2 \\
+0.3
+\end{pmatrix}
+\end{split}\]</div>
+<ul class="simple">
+<li><p>Menghitung Output di Layer Output:
+$<span class="math notranslate nohighlight">\(u= W_{\text{output}}^T \cdot h =
+\begin{pmatrix}
+0.1 &amp; 0.1 &amp; 0.1 \\
+0.2 &amp; 0.2 &amp; 0.2 \\
+0.3 &amp; 0.3 &amp; 0.3
+\end{pmatrix}
+\begin{pmatrix}
+0.1 \\
+0.2 \\
+0.3
+\end{pmatrix}
+=
+\begin{pmatrix}
+0.14 \\
+0.14 \\
+0.14
+\end{pmatrix}
+\)</span>$</p></li>
+<li><p>Menghitung Probabilitas dengan Softmax:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\text{softmax}(u_i) = \frac{e^{u_i}}{\sum_{j} e^{u_j}}
+\]</div>
+<p>Eksponensial dari setiap elemen u:
+$<span class="math notranslate nohighlight">\(
+e^{0.14} \approx 1.1503
+\)</span>$</p>
+<p>Jumlahkan Setiap Eksponensial:
+$<span class="math notranslate nohighlight">\(
+\sum e^{u_j} = 1.1503 + 1.1503 + 1.1503 = 3.4509
+\)</span>$</p>
+<p>Probabilitas softmax untuk setiap elemen:
+$<span class="math notranslate nohighlight">\(
+\text{softmax}(u_1) = \frac{1.1503}{3.4509} \approx 0.3333
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+\text{softmax}(u_2) = \frac{1.1503}{3.4509} \approx 0.3333
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{softmax}(u_3) = \frac{1.1503}{3.4509} \approx 0.3333
+\]</div>
+<p>Jadi, probabilitas untuk output adalah:
+$<span class="math notranslate nohighlight">\(
+\text{softmax}(u) =
+\begin{pmatrix}
+0.3333 \\
+0.3333 \\
+0.3333
+\end{pmatrix}
+\)</span>$</p>
+<p><em>lakukan hal yang sama dalam forward pass untuk kata pusat “makan”, dan “nasi”</em></p>
+<p><strong>Sehingga diperoleh:</strong>
+<strong>kata pusat “makan”</strong>
+Kata pusat “makan” direpresentasikan sebagai: [ 0 , 1 , 0 ]</p>
+<ul class="simple">
+<li><p>aktivasi di Hidden layer diperoleh:
+$<span class="math notranslate nohighlight">\(
+h = W \cdot \text{input}^T =
+\begin{pmatrix}
+0.1 &amp; 0.2 &amp; 0.3 \\
+0.4 &amp; 0.5 &amp; 0.6 \\
+0.7 &amp; 0.8 &amp; 0.9
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+0 \\
+1 \\
+0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0.4 \\
+0.5 \\
+0.6
+\end{pmatrix}
+\)</span>$</p></li>
+<li><p>Output di Layer Output:
+$<span class="math notranslate nohighlight">\(
+u = W_{\text{output}}^T \cdot h =
+\begin{pmatrix}
+0.1 &amp; 0.1 &amp; 0.1 \\
+0.2 &amp; 0.2 &amp; 0.2 \\
+0.3 &amp; 0.3 &amp; 0.3
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+0.4 \\
+0.5 \\
+0.6
+\end{pmatrix}
+=
+\begin{pmatrix}
+0.32 \\
+0.32 \\
+0.32
+\end{pmatrix}
+\)</span><span class="math notranslate nohighlight">\(
+Seperti pada perhitungan probalitis sebelumnya maka diperoleh probabilitas untuk output adalah:
+\)</span><span class="math notranslate nohighlight">\(
+\text{softmax}(u) =
+\begin{pmatrix}
+0.3333 \\
+0.3333 \\
+0.3333
+\end{pmatrix}
+\)</span>$</p></li>
+</ul>
+<p>Forward pass <strong>kata pusat “nasi”</strong>
+Kata pusat “nasi” direpresentasikan sebagai: [ 0 , 0 , 1 ]</p>
+<ul class="simple">
+<li><p>aktivasi di Hidden layer diperoleh:
+$<span class="math notranslate nohighlight">\(
+h = W \cdot \text{input}^T =
+\begin{pmatrix}
+0.1 &amp; 0.2 &amp; 0.3 \\
+0.4 &amp; 0.5 &amp; 0.6 \\
+0.7 &amp; 0.8 &amp; 0.9
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+0 \\
+0 \\
+1
+\end{pmatrix}
+=
+\begin{pmatrix}
+0.7 \\
+0.8 \\
+0.9
+\end{pmatrix}
+\)</span>$</p></li>
+<li><p>Output di Layer Output:
+$<span class="math notranslate nohighlight">\(
+u = W_{\text{output}}^T \cdot h =
+\begin{pmatrix}
+0.1 &amp; 0.1 &amp; 0.1 \\
+0.2 &amp; 0.2 &amp; 0.2 \\
+0.3 &amp; 0.3 &amp; 0.3
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+0.7 \\
+0.8 \\
+0.9
+\end{pmatrix}
+=
+\begin{pmatrix}
+0.5 \\
+0.5 \\
+0.5
+\end{pmatrix}
+\)</span>$</p></li>
+<li><p>Probabilitas softmax:
+$<span class="math notranslate nohighlight">\(
+\text{softmax}(u) =
+\begin{pmatrix}
+0.3333 \\
+0.3333 \\
+0.3333
+\end{pmatrix}
+\)</span>$</p></li>
+</ul>
+<p><strong>Menghitung loss untuk setiap pasangan kata pusat dan kata konteks</strong>
+Telah diketahui bahwa probabilitas hasil dari softmax untuk setiap kata dalam kalimat “saya makan nasi” adalah 0.3333.
+<strong>Kata Pusat: “saya”, Konteks: “makan”</strong>
+Probabilitas 𝑃 ( 𝑚 𝑎 𝑘 𝑎 𝑛 ) dari hasil softmax sebelumnya adalah 0.3333.
+maka loss dihitung sebagai:
+$<span class="math notranslate nohighlight">\(
+L = -\log(P(\text{makan})) = -\log(0.3333) = 1.0986
+\)</span><span class="math notranslate nohighlight">\(
+**Kata Pusat: &quot;makan&quot;, Konteks: &quot;saya&quot;**
+loss untuk konteks &quot;saya&quot; dihitung sebagai:
+\)</span><span class="math notranslate nohighlight">\(
+L = -\log(P(\text{saya})) = -\log(0.3333) = 1.0986
+\)</span>$
+begitu seterunya hingga setiap pasangan kata pusat dan kata konteks di peroleh:
+Loss untuk kata pusat “saya” dan konteks “makan”: 1.0986
+Loss untuk kata pusat “makan” dan konteks “saya”: 1.0986
+Loss untuk kata pusat “makan” dan konteks “nasi”: 1.0986
+Loss untuk kata pusat “nasi” dan konteks “makan”: 1.0986</p>
+<p><strong>Total Loos:</strong>
+<strong>1.0986×4=4.3944</strong></p>
+<p><strong>Backpropagation</strong></p>
+<ul class="simple">
+<li><p>Menghitung gradien dari loss terhadap bobot.
+$<span class="math notranslate nohighlight">\(
+\frac{\partial P(k)}{\partial L} = -\frac{P(k)}{1}
+\)</span><span class="math notranslate nohighlight">\(
+Karena probabilitas 𝑃 (k) untuk setiap konteks adalah 0.3333, maka gradien untuk setiap loss adalah:
+\)</span><span class="math notranslate nohighlight">\(
+\frac{\partial P(k)}{\partial L} = -\frac{0.3333}{1} \approx -3.000
+\)</span>$</p></li>
+<li><p>Menghitung pembaruan bobot
+$<span class="math notranslate nohighlight">\(
+w_{ij} = w_{ij} - \eta \cdot \frac{\partial w_{ij}}{\partial L}
+\)</span>$</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(w_{ij} \text{ adalah bobot yang ingin diperbarui,}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\quad \eta \text{ adalah learning rate (misalnya, } \eta = 0.01\text{),}\)</span>
+<span class="math notranslate nohighlight">\(\quad \frac{\partial L}{\partial w_{ij}} \text{ adalah gradien dari loss terhadap bobot.}\)</span></p>
+<p><strong>Pembaruan Bobot untuk Setiap Pasangan</strong>
+<strong>Pasangan “saya” dan “makan”:</strong>
+Misalkan bobot awal <span class="math notranslate nohighlight">\(w_{\text{saya,makan}}\)</span> = 0.5
+$<span class="math notranslate nohighlight">\(
+w_{\text{saya,makan}} = 0.5 - 0.01 \cdot (-3.000) = 0.5 + 0.03 = 0.53
+\)</span>$</p>
+<p>Lakukan perhitungan pembaruan bobot pada setiap pasangan seperti sebelumnya.
+Jika Setiap bobot awal adalah 0.5 maka diperoleh:
+$<span class="math notranslate nohighlight">\(
+w_{\text{saya,makan}} = 0.53
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+w_{\text{makan,saya}} = 0.53
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+w_{\text{makan,nasi}} = 0.53
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+w_{\text{nasi,makan}} = 0.53
+\]</div>
+<p><strong>Iterasi 2</strong>
+Menggunakan bobot yang diperbarui ( 𝑤 = 0.53 )</p>
+<p><strong>Menghitung Probabilitas Menggunakan Softmax</strong>
+Dengan bobot w=0.53, maka hitung nilai output sebelum softmax.
+$<span class="math notranslate nohighlight">\(
+\text{Output } \text{saya,makan} = w_{\text{saya,makan}} = 0.53
+\)</span>$</p>
+<p>Dengan cara yang sama, didapatkan output untuk pasangan lainnya:
+$<span class="math notranslate nohighlight">\(
+\text{Output } \text{makan,saya} = w_{\text{makan,saya}} = 0.53
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Output } \text{makan,nasi} = w_{\text{makan,nasi}} = 0.53
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{Output } \text{nasi,makan} = w_{\text{nasi,makan}} = 0.53
+\]</div>
+<p>Kemudian, hitung total output:
+$<span class="math notranslate nohighlight">\(
+\text{Total Output} = 2.12
+\)</span><span class="math notranslate nohighlight">\(
+Probabilitas Menggunakan Softmax:
+\)</span><span class="math notranslate nohighlight">\(
+P(\text{makan}) = \frac{0.53}{2.12} \approx 0.2500
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+P(\text{saya}) = \frac{0.53}{2.12} \approx 0.2500
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P(\text{nasi}) = \frac{0.53}{2.12} \approx 0.2500
+\]</div>
+<p><strong>Menghitung Loss untuk Iterasi Kedua</strong>
+Pasangan Kata Pusat: “saya”, Konteks: “makan”
+Probabilitas P(makan) = 0.2500
+$<span class="math notranslate nohighlight">\(
+L = -\log(P(\text{saya})) = -\log(0.2500) \approx 1.3863
+\)</span><span class="math notranslate nohighlight">\(
+Lakukan perhitung loss menggunakan probabilitas yang baru dihitung untuk setiap pasangan seperti diatas, hingga doperoleh:
+\)</span><span class="math notranslate nohighlight">\(
+\text{Loss untuk kata pusat &quot;saya&quot; dan konteks &quot;makan&quot;: } 1.3863
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Loss untuk kata pusat &quot;makan&quot; dan konteks &quot;saya&quot;: } 1.3863
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{Loss untuk kata pusat &quot;makan&quot; dan konteks &quot;nasi&quot;: } 1.3863
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{Loss untuk kata pusat &quot;nasi&quot; dan konteks &quot;makan&quot;: } 1.3863
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{Total Loss} = 1.3863 \times 4 \approx 5.5452
+\]</div>
+<p><strong>Pembaruan Bobot untuk Iterasi Kedua</strong>
+Misalkan learning rate 𝛼 = 0.01:
+Gradien Loss=−3.000(dari iterasi sebelumnya)
+<em>Pembaruan Bobot:</em>
+$<span class="math notranslate nohighlight">\(
+w_{\text{saya,makan}}^{\text{new}} = w_{\text{saya,makan}} - \alpha \cdot \text{Gradien Loss}
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+w_{\text{saya,makan}}^{\text{new}} =0.53 - 0.01 \cdot (-3.000) = 0.53 + 0.03 = 0.56
+\]</div>
+<p>Pembaruan bobot untuk semua pasangan kata sama, sehingga didapatkan:
+$<span class="math notranslate nohighlight">\(
+w_{\text{saya,makan}} = 0.56
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+w_{\text{makan,saya}} = 0.56
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+w_{\text{makan,nasi}} = 0.56
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+w_{\text{nasi,makan}} = 0.56
+\]</div>
+<p><em><strong>Kesimpulan Iterasi Kedua</strong></em>
+Total Loss setelah iterasi kedua: 5.5452,
+Bobot setelah pembaruan: 0.56 untuk setip pasangan
+Proses pelatihan akan terus berlanjut dengan iterasi berikutnya hingga model mencapai konvergensi.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Klasifikasiberita-Loreg.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skip-gram">Skip-Gram</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arsitektur-skip-gram">Arsitektur Skip-Gram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-cost-function-penurunan-fungsi-biaya">Derivation of Cost Function (Penurunan Fungsi Biaya)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#window-size-of-skip-gram-ukuran-jendela">Window Size of Skip-Gram (Ukuran Jendela)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-skip-gram-model">Training the Skip-Gram Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-perhitungan-manual-skip-gram">Contoh Perhitungan manual Skip-gram</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -183,6 +183,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">CRAWLING BERITA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="VektorSpaceModel.html">Vector Space Model (VSM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Klasifikasiberita-Loreg.html">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Skip-gram.html">WORD EMBEDDING</a></li>
 </ul>
 
     </div>
@@ -446,8 +447,8 @@ oleh program yang disebut web crawler atau spider. Tujuan dari web crawling adal
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: requests in /usr/local/lib/python3.10/dist-packages (2.32.3)
 Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in /usr/local/lib/python3.10/dist-packages (from requests) (3.3.2)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in /usr/local/lib/python3.10/dist-packages (from requests) (3.8)
-Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests) (2.0.7)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /usr/local/lib/python3.10/dist-packages (from requests) (3.10)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests) (2.2.3)
 Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests) (2024.8.30)
 </pre></div>
 </div>
@@ -569,7 +570,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|█         | 1/10 [00:00&lt;00:06,  1.45it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|█         | 1/10 [00:00&lt;00:07,  1.15it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -578,7 +579,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|██        | 2/10 [00:01&lt;00:05,  1.45it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|██        | 2/10 [00:01&lt;00:06,  1.21it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -587,7 +588,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 30%|███       | 3/10 [00:02&lt;00:04,  1.46it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 30%|███       | 3/10 [00:02&lt;00:05,  1.27it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -596,7 +597,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 4/10 [00:02&lt;00:04,  1.46it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 4/10 [00:03&lt;00:04,  1.32it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -605,7 +606,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|█████     | 5/10 [00:03&lt;00:03,  1.39it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|█████     | 5/10 [00:03&lt;00:03,  1.30it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -614,7 +615,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 60%|██████    | 6/10 [00:04&lt;00:03,  1.29it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 60%|██████    | 6/10 [00:04&lt;00:03,  1.21it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -623,7 +624,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 70%|███████   | 7/10 [00:05&lt;00:02,  1.17it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 70%|███████   | 7/10 [00:05&lt;00:02,  1.27it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -632,7 +633,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|████████  | 8/10 [00:06&lt;00:01,  1.08it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|████████  | 8/10 [00:06&lt;00:01,  1.29it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -641,7 +642,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 90%|█████████ | 9/10 [00:07&lt;00:00,  1.05it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 90%|█████████ | 9/10 [00:07&lt;00:00,  1.31it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -650,26 +651,26 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10/10 [00:08&lt;00:00,  1.05it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10/10 [00:08&lt;00:00,  1.05s/it]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10/10 [00:08&lt;00:00,  1.18it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10/10 [00:08&lt;00:00,  1.15it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:08&lt;00:00,  8.97s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:09&lt;00:00,  9.22s/it]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:08&lt;00:00,  8.97s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:09&lt;00:00,  9.22s/it]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 <div class="output text_html">
-  <div id="df-0e3a1afb-663d-4b0f-ab5f-811836fdfec9" class="colab-df-container">
+  <div id="df-3f44849d-c273-44c6-b325-5710b85b981c" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -697,73 +698,73 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
   <tbody>
     <tr>
       <th>0</th>
-      <td>BI Catat Kinerja Penjualan Eceran Melambah Pad...</td>
-      <td>Bank Indonesia (BI) mencatat kinerja penjualan...</td>
-      <td>Selasa, 10 Sep 2024 22:10 WIB</td>
-      <td>Ekonomi</td>
+      <td>Berkualitas Tinggi, Penjualan Ryusei di Shopee...</td>
+      <td>Berbekal pengalaman sebagai produsen pakaian u...</td>
+      <td>Kamis, 03 Okt 2024 08:00 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Menhub Buka Peluang Gandeng Asing Kelola Banda...</td>
-      <td>Menteri Perhubungan Budi Karya Sumadi membuka ...</td>
-      <td>Selasa, 10 Sep 2024 21:02 WIB</td>
-      <td>Ekonomi</td>
+      <td>Dilema 'Gemuk' Honorer Daerah: Desentralisasi ...</td>
+      <td>Carut marut honorer di Indonesia tampaknya bel...</td>
+      <td>Kamis, 03 Okt 2024 07:55 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Jokowi Groundbreaking 2 Investasi Asing di IKN...</td>
-      <td>Presiden Joko Widodo (Jokowi) dijadwalkan mela...</td>
-      <td>Selasa, 10 Sep 2024 20:02 WIB</td>
-      <td>Ekonomi</td>
+      <td>Klaim Asuransi Naik Akibat Pinjol dan Judi Online</td>
+      <td>Asosiasi Asuransi Umum Indonesia (AAUI) mencat...</td>
+      <td>Kamis, 03 Okt 2024 07:20 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Amran Copot Direktur Diduga Calo Pengadaan Bar...</td>
-      <td>Menteri Pertanian Andi Amran Sulaiman mencopot...</td>
-      <td>Selasa, 10 Sep 2024 19:11 WIB</td>
-      <td>Ekonomi</td>
+      <td>Tata Cara dan Syarat Pendaftaran PPPK 2024</td>
+      <td>Daftar Isi Tata cara pendaftaran PPPK 2024 [Ga...</td>
+      <td>Kamis, 03 Okt 2024 06:40 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Bahlil Bicara Pasokan Listrik di Tengah Rencan...</td>
-      <td>Menteri Energi dan Sumber Daya Mineral (ESDM) ...</td>
-      <td>Selasa, 10 Sep 2024 18:32 WIB</td>
-      <td>Ekonomi</td>
+      <td>IHSG Diproyeksi Perkasa Hari Ini</td>
+      <td>Indeks Harga Saham Gabungan (IHSG) diproyeksi ...</td>
+      <td>Kamis, 03 Okt 2024 06:23 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Pertamina Kaji Ubah Minyak Jelantah Jadi Avtur</td>
-      <td>PT Pertamina (Persero) mengkaji pengembangan b...</td>
-      <td>Selasa, 10 Sep 2024 17:43 WIB</td>
-      <td>Ekonomi</td>
+      <td>Airlangga Sentil Pemda Sabang: Apa yang Dijanj...</td>
+      <td>Menteri Koordinator Bidang Perekonomian Airlan...</td>
+      <td>Kamis, 03 Okt 2024 05:01 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Dukung PMI, Bank Mandiri Perluas Akses Livin' ...</td>
-      <td>Bank Mandiri menghadirkan program Livin' Aroun...</td>
-      <td>Selasa, 10 Sep 2024 17:18 WIB</td>
-      <td>Ekonomi</td>
+      <td>Direktur Utama PT Krakatau Steel Purwono Widod...</td>
+      <td>Kabar duka menyelimuti PT Krakatau Steel (Pers...</td>
+      <td>Rabu, 02 Okt 2024 22:50 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Pengamat Ingatkan Pertamina dan PLN Hati-hati ...</td>
-      <td>Pengamat Energi Komaidi Notonegoro meminta PT ...</td>
-      <td>Selasa, 10 Sep 2024 17:12 WIB</td>
-      <td>Ekonomi</td>
+      <td>Menpan RB Diprotes Bupati Telat Beri Award: Ta...</td>
+      <td>Daftar Isi a. Pemda dengan predikat SAKIP AA a...</td>
+      <td>Rabu, 02 Okt 2024 22:40 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Transjakarta Perpanjang Jam Layanan Dua Rute S...</td>
-      <td>Transjakarta memperpanjang jam operasional lay...</td>
-      <td>Selasa, 10 Sep 2024 16:46 WIB</td>
-      <td>Ekonomi</td>
+      <td>Menpan RB Tegaskan Seleksi PPPK 2024 Dibuka 10...</td>
+      <td>Menteri Pendayagunaan Aparatur Negara dan Refo...</td>
+      <td>Rabu, 02 Okt 2024 21:00 WIB</td>
+      <td>No category</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>IHSG Ditutup Menguat ke 7.761, Sektor Teknolog...</td>
-      <td>Indeks harga saham gabungan (IHSG) ditutup di ...</td>
-      <td>Selasa, 10 Sep 2024 16:25 WIB</td>
-      <td>Ekonomi</td>
+      <td>Pengusaha Mulai Resah dengan Deflasi yang Meni...</td>
+      <td>Pengusaha mulai khawatir dengan fenomena defla...</td>
+      <td>Rabu, 02 Okt 2024 20:45 WIB</td>
+      <td>No category</td>
     </tr>
   </tbody>
 </table>
@@ -771,7 +772,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
     <div class="colab-df-buttons">
       
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-0e3a1afb-663d-4b0f-ab5f-811836fdfec9')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-3f44849d-c273-44c6-b325-5710b85b981c')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
       
@@ -823,12 +824,12 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 
     <script>
       const buttonEl =
-        document.querySelector('#df-0e3a1afb-663d-4b0f-ab5f-811836fdfec9 button.colab-df-convert');
+        document.querySelector('#df-3f44849d-c273-44c6-b325-5710b85b981c button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-0e3a1afb-663d-4b0f-ab5f-811836fdfec9');
+        const element = document.querySelector('#df-3f44849d-c273-44c6-b325-5710b85b981c');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -926,17 +927,17 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:02&lt;00:00,  2.85s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:05&lt;00:00,  5.19s/it]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:02&lt;00:00,  2.85s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:05&lt;00:00,  5.19s/it]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 <div class="output text_html">
-  <div id="df-364221cb-105d-47b9-8fdd-7031e7731162" class="colab-df-container">
+  <div id="df-8fca7697-6b4a-4df0-98af-5f00579c2769" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -985,37 +986,37 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
     </tr>
     <tr>
       <th>3</th>
-      <td>Kisah Tragis Penelope, Hiu Hamil yang Dimangsa...</td>
-      <td>KOMPAS.com - Hiu sering dikenal sebagai predat...</td>
-      <td>05/09/2024</td>
+      <td>Cendana Aceh dan NTT Berkerabatkah?</td>
+      <td>Oleh: Eko Pujiono dan Hery Kurniawan\nBERBINCA...</td>
+      <td>30/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Menggagas Satelit Konstelasi Pemantau Bumi Nus...</td>
-      <td>Oleh: Wahyudi Hasbi*\nINDONESIA dengan lebih d...</td>
-      <td>31/08/2024</td>
+      <td>Apakah Virus Sudah Ada di Bumi Sebelum Sel?</td>
+      <td>Apakah sudah ada virus di Bumi ketika sel hidu...</td>
+      <td>29/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Menjaga Sinergi untuk Ketahanan Pangan Nasional</td>
-      <td>Oleh: Rubiyo dan Dwinita Wikan Utami\nINDONESI...</td>
-      <td>25/08/2024</td>
+      <td>Bagaimana Cara Sinar Matahari Bantu Tubuh Prod...</td>
+      <td>Bagaimana cara matahari membantu tubuh kita me...</td>
+      <td>24/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Bagaimana Adik Bayi Dibuat?</td>
-      <td>Bagaimana bayi dibuat?\n\t\t\t\t\t\t- Giaan, u...</td>
-      <td>24/08/2024</td>
+      <td>Pertautan Idiom, Globalisasi, dan Kekuasaan</td>
+      <td>Oleh : Fairul Zabadi\nIDIOM (ungkapan idiomati...</td>
+      <td>23/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Kisah Pencurian Mona Lisa 113 Tahun Lalu yang ...</td>
-      <td>KOMPAS.com - 21 Agustus 1911 adalah salah satu...</td>
-      <td>21/08/2024</td>
+      <td>Kenapa Uban Makin Banyak Seiring Bertambah Tua?</td>
+      <td>KOMPAS.com - Setiap orang pasti akan mengalami...</td>
+      <td>22/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
@@ -1038,7 +1039,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
     <div class="colab-df-buttons">
       
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-364221cb-105d-47b9-8fdd-7031e7731162')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-8fca7697-6b4a-4df0-98af-5f00579c2769')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
       
@@ -1090,12 +1091,12 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 
     <script>
       const buttonEl =
-        document.querySelector('#df-364221cb-105d-47b9-8fdd-7031e7731162 button.colab-df-convert');
+        document.querySelector('#df-8fca7697-6b4a-4df0-98af-5f00579c2769 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-364221cb-105d-47b9-8fdd-7031e7731162');
+        const element = document.querySelector('#df-8fca7697-6b4a-4df0-98af-5f00579c2769');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1190,17 +1191,17 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:03&lt;00:00,  3.79s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:02&lt;00:00,  2.74s/it]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:03&lt;00:00,  3.79s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:02&lt;00:00,  2.74s/it]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 <div class="output text_html">
-  <div id="df-cd09c0b7-1cc6-4104-8d50-61b38794f013" class="colab-df-container">
+  <div id="df-45f3e1fa-c4cc-4562-8d9f-d2bf3d673a59" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1228,72 +1229,72 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
   <tbody>
     <tr>
       <th>0</th>
-      <td>Cerita Kadit CoC, Pilih Kuliah Teknik Elektro ...</td>
-      <td>KOMPAS.com - Kaditya Rakan adalah juara ketiga...</td>
-      <td>10/09/2024</td>
+      <td>Kemendikbud Keluarkan Aturan Baru tentang Beba...</td>
+      <td>KOMPAS.com - Beban kerja dosen kini diatur dal...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Beasiswa Ikatan Dinas PT IMIP bagi Mahasiswa D...</td>
-      <td>KOMPAS.com - Mahasiswa UGM (Universitas Gadjah...</td>
-      <td>10/09/2024</td>
+      <td>Tak Dapat KIP Kuliah 2024? Cek 4 Beasiswa yang...</td>
+      <td>KOMPAS.com - Mahasiswa yang gagal mendapatkan ...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Gelar Beasiswa "ScholarFlip", Flip Ajak Mahasi...</td>
-      <td>KOMPAS.com – Flip, salah satu fintech Indonesi...</td>
-      <td>10/09/2024</td>
+      <td>Pendaftaran PPPK 2024 Dibagi 2 Gelombang, Sima...</td>
+      <td>KOMPAS.com - Pendaftaran seleksi pengadaan Peg...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Dosen Unesa Ungkap Alasan Pemberian ASI Harus ...</td>
-      <td>KOMPAS.com - Setelah lahir, bayi sangat direko...</td>
-      <td>10/09/2024</td>
+      <td>Kemendikbud Keluarkan Aturan Baru tentang Beba...</td>
+      <td>KOMPAS.com - Beban kerja dosen kini diatur dal...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Dukungan dan Investasi Dibutuhkan Generasi Mud...</td>
-      <td>KOMPAS.com - Populasi generasi muda diprediksi...</td>
-      <td>10/09/2024</td>
+      <td>Tak Dapat KIP Kuliah 2024? Cek 4 Beasiswa yang...</td>
+      <td>KOMPAS.com - Mahasiswa yang gagal mendapatkan ...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Kemendikbud Targetkan 10.000 Wirausaha Baru le...</td>
-      <td>KOMPAS.com - Kementerian Pendidikan, Kebudayaa...</td>
-      <td>10/09/2024</td>
+      <td>Pendaftaran PPPK 2024 Dibagi 2 Gelombang, Sima...</td>
+      <td>KOMPAS.com - Pendaftaran seleksi pengadaan Peg...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Dukungan dan Investasi Dibutuhkan Generasi Mud...</td>
-      <td>KOMPAS.com - Populasi generasi muda diprediksi...</td>
-      <td>10/09/2024</td>
+      <td>Kurikulum Merdeka Tidak Ajarkan Hitung Cepat M...</td>
+      <td>KOMPAS.com - Kurikulum Merdeka menekankan sisw...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Jusuf Kalla: Indonesia Masih Perlu Adakan Ujia...</td>
-      <td>KOMPAS.com - Wakil Presiden ke-10 dan ke-12 Ju...</td>
-      <td>10/09/2024</td>
+      <td>Siswa Meninggal karena Dihukum "Squat Jump", F...</td>
+      <td>KOMPAS.com - Ketua Dewan Pakar Federasi Serika...</td>
+      <td>01/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Asesmen Nasional Jenjang SMP 2024 Dimulai, Ada...</td>
-      <td>KOMPAS.com - Asesmen Nasional Berbasis Kompute...</td>
-      <td>10/09/2024</td>
+      <td>Peringatan Hari Kesaktian Pancasila, Mendikbud...</td>
+      <td>KOMPAS.com - Menteri Pendidikan, Kebudayaan, R...</td>
+      <td>01/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Amygdala: Pengertian, Fungsi, dan Anatominya</td>
-      <td>KOMPAS.com - Amygdala adalah tempat disimpanny...</td>
-      <td>10/09/2024</td>
+      <td>Indra Penikmat Cabang Seni Rupa</td>
+      <td>KOMPAS.com - Kesenian adalah segala bentuk kei...</td>
+      <td>03/10/2024</td>
       <td>Skola</td>
     </tr>
   </tbody>
@@ -1302,7 +1303,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
     <div class="colab-df-buttons">
       
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-cd09c0b7-1cc6-4104-8d50-61b38794f013')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-45f3e1fa-c4cc-4562-8d9f-d2bf3d673a59')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
       
@@ -1354,12 +1355,12 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 
     <script>
       const buttonEl =
-        document.querySelector('#df-cd09c0b7-1cc6-4104-8d50-61b38794f013 button.colab-df-convert');
+        document.querySelector('#df-45f3e1fa-c4cc-4562-8d9f-d2bf3d673a59 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-cd09c0b7-1cc6-4104-8d50-61b38794f013');
+        const element = document.querySelector('#df-45f3e1fa-c4cc-4562-8d9f-d2bf3d673a59');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1400,7 +1401,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-d4cad3f1-37fc-4438-90d9-fde11fcb16fd" class="colab-df-container">
+  <div id="df-25c9036c-ddd2-43b6-9993-dfcfb95e969a" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1428,72 +1429,72 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
   <tbody>
     <tr>
       <th>0</th>
-      <td>Cerita Kadit CoC, Pilih Kuliah Teknik Elektro ...</td>
-      <td>KOMPAS.com - Kaditya Rakan adalah juara ketiga...</td>
-      <td>10/09/2024</td>
+      <td>Kemendikbud Keluarkan Aturan Baru tentang Beba...</td>
+      <td>KOMPAS.com - Beban kerja dosen kini diatur dal...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Beasiswa Ikatan Dinas PT IMIP bagi Mahasiswa D...</td>
-      <td>KOMPAS.com - Mahasiswa UGM (Universitas Gadjah...</td>
-      <td>10/09/2024</td>
+      <td>Tak Dapat KIP Kuliah 2024? Cek 4 Beasiswa yang...</td>
+      <td>KOMPAS.com - Mahasiswa yang gagal mendapatkan ...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Gelar Beasiswa "ScholarFlip", Flip Ajak Mahasi...</td>
-      <td>KOMPAS.com – Flip, salah satu fintech Indonesi...</td>
-      <td>10/09/2024</td>
+      <td>Pendaftaran PPPK 2024 Dibagi 2 Gelombang, Sima...</td>
+      <td>KOMPAS.com - Pendaftaran seleksi pengadaan Peg...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Dosen Unesa Ungkap Alasan Pemberian ASI Harus ...</td>
-      <td>KOMPAS.com - Setelah lahir, bayi sangat direko...</td>
-      <td>10/09/2024</td>
+      <td>Kemendikbud Keluarkan Aturan Baru tentang Beba...</td>
+      <td>KOMPAS.com - Beban kerja dosen kini diatur dal...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Dukungan dan Investasi Dibutuhkan Generasi Mud...</td>
-      <td>KOMPAS.com - Populasi generasi muda diprediksi...</td>
-      <td>10/09/2024</td>
+      <td>Tak Dapat KIP Kuliah 2024? Cek 4 Beasiswa yang...</td>
+      <td>KOMPAS.com - Mahasiswa yang gagal mendapatkan ...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Kemendikbud Targetkan 10.000 Wirausaha Baru le...</td>
-      <td>KOMPAS.com - Kementerian Pendidikan, Kebudayaa...</td>
-      <td>10/09/2024</td>
+      <td>Pendaftaran PPPK 2024 Dibagi 2 Gelombang, Sima...</td>
+      <td>KOMPAS.com - Pendaftaran seleksi pengadaan Peg...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Dukungan dan Investasi Dibutuhkan Generasi Mud...</td>
-      <td>KOMPAS.com - Populasi generasi muda diprediksi...</td>
-      <td>10/09/2024</td>
+      <td>Kurikulum Merdeka Tidak Ajarkan Hitung Cepat M...</td>
+      <td>KOMPAS.com - Kurikulum Merdeka menekankan sisw...</td>
+      <td>02/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Jusuf Kalla: Indonesia Masih Perlu Adakan Ujia...</td>
-      <td>KOMPAS.com - Wakil Presiden ke-10 dan ke-12 Ju...</td>
-      <td>10/09/2024</td>
+      <td>Siswa Meninggal karena Dihukum "Squat Jump", F...</td>
+      <td>KOMPAS.com - Ketua Dewan Pakar Federasi Serika...</td>
+      <td>01/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>Asesmen Nasional Jenjang SMP 2024 Dimulai, Ada...</td>
-      <td>KOMPAS.com - Asesmen Nasional Berbasis Kompute...</td>
-      <td>10/09/2024</td>
+      <td>Peringatan Hari Kesaktian Pancasila, Mendikbud...</td>
+      <td>KOMPAS.com - Menteri Pendidikan, Kebudayaan, R...</td>
+      <td>01/10/2024</td>
       <td>Edu</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Amygdala: Pengertian, Fungsi, dan Anatominya</td>
-      <td>KOMPAS.com - Amygdala adalah tempat disimpanny...</td>
-      <td>10/09/2024</td>
+      <td>Indra Penikmat Cabang Seni Rupa</td>
+      <td>KOMPAS.com - Kesenian adalah segala bentuk kei...</td>
+      <td>03/10/2024</td>
       <td>Skola</td>
     </tr>
     <tr>
@@ -1519,37 +1520,37 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
     </tr>
     <tr>
       <th>3</th>
-      <td>Kisah Tragis Penelope, Hiu Hamil yang Dimangsa...</td>
-      <td>KOMPAS.com - Hiu sering dikenal sebagai predat...</td>
-      <td>05/09/2024</td>
+      <td>Cendana Aceh dan NTT Berkerabatkah?</td>
+      <td>Oleh: Eko Pujiono dan Hery Kurniawan\nBERBINCA...</td>
+      <td>30/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Menggagas Satelit Konstelasi Pemantau Bumi Nus...</td>
-      <td>Oleh: Wahyudi Hasbi*\nINDONESIA dengan lebih d...</td>
-      <td>31/08/2024</td>
+      <td>Apakah Virus Sudah Ada di Bumi Sebelum Sel?</td>
+      <td>Apakah sudah ada virus di Bumi ketika sel hidu...</td>
+      <td>29/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>Menjaga Sinergi untuk Ketahanan Pangan Nasional</td>
-      <td>Oleh: Rubiyo dan Dwinita Wikan Utami\nINDONESI...</td>
-      <td>25/08/2024</td>
+      <td>Bagaimana Cara Sinar Matahari Bantu Tubuh Prod...</td>
+      <td>Bagaimana cara matahari membantu tubuh kita me...</td>
+      <td>24/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>Bagaimana Adik Bayi Dibuat?</td>
-      <td>Bagaimana bayi dibuat?\n\t\t\t\t\t\t- Giaan, u...</td>
-      <td>24/08/2024</td>
+      <td>Pertautan Idiom, Globalisasi, dan Kekuasaan</td>
+      <td>Oleh : Fairul Zabadi\nIDIOM (ungkapan idiomati...</td>
+      <td>23/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>Kisah Pencurian Mona Lisa 113 Tahun Lalu yang ...</td>
-      <td>KOMPAS.com - 21 Agustus 1911 adalah salah satu...</td>
-      <td>21/08/2024</td>
+      <td>Kenapa Uban Makin Banyak Seiring Bertambah Tua?</td>
+      <td>KOMPAS.com - Setiap orang pasti akan mengalami...</td>
+      <td>22/09/2024</td>
       <td>Sains</td>
     </tr>
     <tr>
@@ -1572,7 +1573,7 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
     <div class="colab-df-buttons">
       
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-d4cad3f1-37fc-4438-90d9-fde11fcb16fd')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-25c9036c-ddd2-43b6-9993-dfcfb95e969a')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
       
@@ -1624,12 +1625,12 @@ Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.10/dis
 
     <script>
       const buttonEl =
-        document.querySelector('#df-d4cad3f1-37fc-4438-90d9-fde11fcb16fd button.colab-df-convert');
+        document.querySelector('#df-25c9036c-ddd2-43b6-9993-dfcfb95e969a button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-d4cad3f1-37fc-4438-90d9-fde11fcb16fd');
+        const element = document.querySelector('#df-25c9036c-ddd2-43b6-9993-dfcfb95e969a');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
