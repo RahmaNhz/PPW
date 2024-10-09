@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN &#8212; My sample book</title>
+    <title>Part 3. PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA &#8212; My sample book</title>
   
   
   
@@ -62,8 +62,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Klasifikasiberita-Loreg';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="WORD EMBEDDING" href="Skip-gram.html" />
-    <link rel="prev" title="Vector Space Model (VSM)" href="VektorSpaceModel.html" />
+    <link rel="next" title="Part.4 WORD EMBEDDING" href="Skip-gram.html" />
+    <link rel="prev" title="Part.2 Vector Space Model (VSM)" href="VektorSpaceModel.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/PPW.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <script>document.write(`<img src="_static/PPW.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+    <img src="_static/ppwlogo.jpg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/ppwlogo.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
   
   
 </a></div>
@@ -182,10 +182,16 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="CrawlingBerita.html">CRAWLING BERITA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="VektorSpaceModel.html">Vector Space Model (VSM)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Skip-gram.html">WORD EMBEDDING</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CrawlingBerita.html">Part.1 CRAWLING BERITA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="VektorSpaceModel.html">Part.2 Vector Space Model (VSM)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Part 3. PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Skip-gram.html">Part.4 WORD EMBEDDING</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="100beritaToGraf.html">Part.5 Graf 100 Berita</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="RingkasBerita.html">Menghitung TF-IDF untuk setiap Kalimat</a></li>
+
 </ul>
 
     </div>
@@ -402,7 +408,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</h1>
+    <h1>Part 3. PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -412,8 +418,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-preprosessing-berita">Hasil Preprosessing Berita</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membangun-model-logistic-reggresion">MEMBANGUN MODEL LOGISTIC REGGRESION</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penerapan-model-logistic-regression-untuk-klasifikasi-berita-cnn">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-preprosessing-berita">Hasil Preprosessing Berita</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membangun-model-logistic-reggresion">MEMBANGUN MODEL LOGISTIC REGGRESION</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-data-baru">Percobaan Data baru</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -430,7 +440,8 @@ document.write(`
 <p>Nama: RAHMA NURHALIZA</p>
 <p>NIM  : 210411100176</p>
 <p>Kelas : PPW A</p>
-<p>#LOGISTIC REGRESSION</p>
+<section class="tex2jax_ignore mathjax_ignore" id="part-3-penerapan-model-logistic-regression-untuk-klasifikasi-berita">
+<h1>Part 3. PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA<a class="headerlink" href="#part-3-penerapan-model-logistic-regression-untuk-klasifikasi-berita" title="Link to this heading">#</a></h1>
 <p>Logistic Regression merupakan metode dalam pembelajaran mesin yang termasuk dalam supervised learning dan digunakan untuk memprediksi probabilitas hasil biner 1/0 (true/false) berdasarkan satu atau beberapa variabel fitur, degan menggunakan fungsi logistic (sigmoid) untuk melakukan prediksi.</p>
 <p><strong>Rumus Fungsi Sigmoid:</strong>
 $<span class="math notranslate nohighlight">\(
@@ -447,7 +458,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 \hat{y} = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n)}}
 \]</div>
 <section id="penerapan-model-logistic-regression-untuk-klasifikasi-berita-cnn">
-<h1>PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN<a class="headerlink" href="#penerapan-model-logistic-regression-untuk-klasifikasi-berita-cnn" title="Link to this heading">#</a></h1>
+<h2>PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN<a class="headerlink" href="#penerapan-model-logistic-regression-untuk-klasifikasi-berita-cnn" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
@@ -494,7 +505,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 </div>
 </div>
 <section id="hasil-preprosessing-berita">
-<h2>Hasil Preprosessing Berita<a class="headerlink" href="#hasil-preprosessing-berita" title="Link to this heading">#</a></h2>
+<h3>Hasil Preprosessing Berita<a class="headerlink" href="#hasil-preprosessing-berita" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -505,7 +516,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-97c589a8-8142-46a1-a712-170b57f2e391" class="colab-df-container">
+  <div id="df-adf9a727-c127-4e57-94ff-d0922c2f60d5" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -596,7 +607,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-97c589a8-8142-46a1-a712-170b57f2e391')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-adf9a727-c127-4e57-94ff-d0922c2f60d5')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -648,12 +659,12 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 
     <script>
       const buttonEl =
-        document.querySelector('#df-97c589a8-8142-46a1-a712-170b57f2e391 button.colab-df-convert');
+        document.querySelector('#df-adf9a727-c127-4e57-94ff-d0922c2f60d5 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-97c589a8-8142-46a1-a712-170b57f2e391');
+        const element = document.querySelector('#df-adf9a727-c127-4e57-94ff-d0922c2f60d5');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -673,8 +684,8 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   </div>
 
 
-<div id="df-93469555-d269-45a0-b680-c70f7e5ae7ee">
-  <button class="colab-df-quickchart" onclick="quickchart('df-93469555-d269-45a0-b680-c70f7e5ae7ee')"
+<div id="df-dce0325a-e5b8-4b5c-aeec-51d3df5cdde8">
+  <button class="colab-df-quickchart" onclick="quickchart('df-dce0325a-e5b8-4b5c-aeec-51d3df5cdde8')"
             title="Suggest charts"
             style="display:none;">
 
@@ -793,7 +804,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-93469555-d269-45a0-b680-c70f7e5ae7ee button');
+        document.querySelector('#df-dce0325a-e5b8-4b5c-aeec-51d3df5cdde8 button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -826,7 +837,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-bf7dc2f6-a06b-4d6b-a1b9-bce0f7e8c361" class="colab-df-container">
+  <div id="df-813491fc-bd02-48b7-a567-d7f4c8632fe9" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1116,7 +1127,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-bf7dc2f6-a06b-4d6b-a1b9-bce0f7e8c361')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-813491fc-bd02-48b7-a567-d7f4c8632fe9')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -1168,12 +1179,12 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 
     <script>
       const buttonEl =
-        document.querySelector('#df-bf7dc2f6-a06b-4d6b-a1b9-bce0f7e8c361 button.colab-df-convert');
+        document.querySelector('#df-813491fc-bd02-48b7-a567-d7f4c8632fe9 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-bf7dc2f6-a06b-4d6b-a1b9-bce0f7e8c361');
+        const element = document.querySelector('#df-813491fc-bd02-48b7-a567-d7f4c8632fe9');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1193,8 +1204,8 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   </div>
 
 
-<div id="df-e1efec46-fbe5-47cd-b5c4-a30233cb0ef7">
-  <button class="colab-df-quickchart" onclick="quickchart('df-e1efec46-fbe5-47cd-b5c4-a30233cb0ef7')"
+<div id="df-84dd2608-0d4d-4aa4-90b5-9bfdc0a87163">
+  <button class="colab-df-quickchart" onclick="quickchart('df-84dd2608-0d4d-4aa4-90b5-9bfdc0a87163')"
             title="Suggest charts"
             style="display:none;">
 
@@ -1313,7 +1324,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-e1efec46-fbe5-47cd-b5c4-a30233cb0ef7 button');
+        document.querySelector('#df-84dd2608-0d4d-4aa4-90b5-9bfdc0a87163 button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -1326,7 +1337,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 </div>
 </section>
 <section id="membangun-model-logistic-reggresion">
-<h2>MEMBANGUN MODEL LOGISTIC REGGRESION<a class="headerlink" href="#membangun-model-logistic-reggresion" title="Link to this heading">#</a></h2>
+<h3>MEMBANGUN MODEL LOGISTIC REGGRESION<a class="headerlink" href="#membangun-model-logistic-reggresion" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1805,6 +1816,81 @@ Confusion Matrix:
 </div>
 </div>
 </section>
+<section id="percobaan-data-baru">
+<h3>Percobaan Data baru<a class="headerlink" href="#percobaan-data-baru" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="c1"># Simpan TfidfVectorizer</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tfidf_vectorizer.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">vectorizer</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simpan model Logistic Regression ke file pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;model_logreg.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">logreg</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model Logistic Regression telah disimpan ke file &#39;model_logreg.pkl&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model Logistic Regression telah disimpan ke file &#39;model_logreg.pkl&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Muat pipeline preprocessing dan TF-IDF dari file pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tfidf_vectorizer.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Muat model Logistic Regression dari file pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;model_logreg.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">model_logreg</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Data baru yang ingin diuji</span>
+<span class="n">data_baru</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Pasar saham mengalami penurunan tajam setelah adanya laporan ketidakpastian ekonomi global. Investor disarankan untuk berhati-hati dalam mengambil keputusan terkait investasi.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Duel berjalan lebih sengit di babak kedua. Palace berani mengambil inisiatif menyerang dan mampu menciptakan peluang-peluang berbahaya. Tuan rumah nyaris unggul pada menit ke-65 namun Andre Onana berhasil menggagalkan dua ancaman serius. Onana melakukan double save dari tembakan Eddie Nketiah dan Ismaila Sarr.Nketiah lebih dulu melepaskan tembakan dari luar kotak penalti dan berhasil ditepis Onana. Bola liar kemudian coba disambar Sarr tapi lagi-lagi bisa diblok sang penjaga gawangMU tampak kesulitan membangun serangan karena pressing ketat yang dilakukan para pemain Palace. Sering kali serangan yang dibangun Bruno Fernandes dkk terputus di tengah jalan.Hasil imbang tanpa gol tak terhindarkan hingga laga usai. Raihan satu poin merugikan Man Utd yang tengah berjuang kembali ke papan atas klasemen sementara. Kedua penjaga gawang kesebelasan, Henderson dan Onana, patut diacungi jempol berkat penyelamatan gemilang yang dilakukan di sepanjang pertandingan.&quot;</span>
+<span class="p">]</span>
+
+<span class="c1"># Mengubah data baru ke dalam DataFrame</span>
+<span class="n">data_baru_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data_baru</span><span class="p">)</span>
+
+<span class="c1"># Proses data baru menggunakan pipeline</span>
+<span class="n">tfidf_baru</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data_baru_df</span><span class="p">)</span>
+
+<span class="c1"># Prediksi kategori berita menggunakan model Logistic Regression</span>
+<span class="n">prediksi</span> <span class="o">=</span> <span class="n">model_logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">tfidf_baru</span><span class="p">)</span>
+
+<span class="c1"># Tampilkan hasil prediksi</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data_baru</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Teks: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="se">\n</span><span class="s2">Prediksi Kategori: </span><span class="si">{</span><span class="n">prediksi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Teks: Pasar saham mengalami penurunan tajam setelah adanya laporan ketidakpastian ekonomi global. Investor disarankan untuk berhati-hati dalam mengambil keputusan terkait investasi.
+Prediksi Kategori: Ekonomi
+
+Teks: Duel berjalan lebih sengit di babak kedua. Palace berani mengambil inisiatif menyerang dan mampu menciptakan peluang-peluang berbahaya. Tuan rumah nyaris unggul pada menit ke-65 namun Andre Onana berhasil menggagalkan dua ancaman serius. Onana melakukan double save dari tembakan Eddie Nketiah dan Ismaila Sarr.Nketiah lebih dulu melepaskan tembakan dari luar kotak penalti dan berhasil ditepis Onana. Bola liar kemudian coba disambar Sarr tapi lagi-lagi bisa diblok sang penjaga gawangMU tampak kesulitan membangun serangan karena pressing ketat yang dilakukan para pemain Palace. Sering kali serangan yang dibangun Bruno Fernandes dkk terputus di tengah jalan.Hasil imbang tanpa gol tak terhindarkan hingga laga usai. Raihan satu poin merugikan Man Utd yang tengah berjuang kembali ke papan atas klasemen sementara. Kedua penjaga gawang kesebelasan, Henderson dan Onana, patut diacungi jempol berkat penyelamatan gemilang yang dilakukan di sepanjang pertandingan.
+Prediksi Kategori: Olahraga
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1843,7 +1929,7 @@ Confusion Matrix:
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Vector Space Model (VSM)</p>
+        <p class="prev-next-title">Part.2 Vector Space Model (VSM)</p>
       </div>
     </a>
     <a class="right-next"
@@ -1851,7 +1937,7 @@ Confusion Matrix:
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">WORD EMBEDDING</p>
+        <p class="prev-next-title">Part.4 WORD EMBEDDING</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1871,8 +1957,12 @@ Confusion Matrix:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-preprosessing-berita">Hasil Preprosessing Berita</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membangun-model-logistic-reggresion">MEMBANGUN MODEL LOGISTIC REGGRESION</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penerapan-model-logistic-regression-untuk-klasifikasi-berita-cnn">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-preprosessing-berita">Hasil Preprosessing Berita</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membangun-model-logistic-reggresion">MEMBANGUN MODEL LOGISTIC REGGRESION</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-data-baru">Percobaan Data baru</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
