@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'RingkasBerita';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="UTS (Keyword Extraction)" href="UTS.html" />
     <link rel="prev" title="Part.5 Graf 100 Berita" href="100beritaToGraf.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -187,6 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="100beritaToGraf.html">Part.5 Graf 100 Berita</a></li>
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Ringkas Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UTS.html">UTS (Keyword Extraction)</a></li>
 </ul>
 
     </div>
@@ -481,14 +483,14 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/PPW/tugas/2_Kategoriberita-CNN.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/PPW/tugas/1berita.csv&quot;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-2968c882-29a5-48bf-9682-bd08d2e288b9" class="colab-df-container">
+  <div id="df-7470e28b-3a9b-4668-be12-f79f27ddcff6" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -508,7 +510,7 @@ document.write(`
     <tr style="text-align: right;">
       <th></th>
       <th>judul</th>
-      <th>isi</th>
+      <th>berita</th>
       <th>tanggal</th>
       <th>kategori</th>
     </tr>
@@ -516,10 +518,10 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>Jokowi Groundbreaking 2 Investasi Asing di IKN...</td>
-      <td>Presiden Joko Widodo (Jokowi) dijadwalkan mela...</td>
-      <td>Selasa, 10 Sep 2024 20:02 WIB</td>
-      <td>Ekonomi</td>
+      <td>2 Oknum Suporter Persija Jadi Tersangka Perusa...</td>
+      <td>Polisi menetapkan dua orang oknum suporter Per...</td>
+      <td>Rabu, 25 Sep 2024 01:00 WIB</td>
+      <td>Olahraga</td>
     </tr>
   </tbody>
 </table>
@@ -527,7 +529,7 @@ document.write(`
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-2968c882-29a5-48bf-9682-bd08d2e288b9')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-7470e28b-3a9b-4668-be12-f79f27ddcff6')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -579,12 +581,12 @@ document.write(`
 
     <script>
       const buttonEl =
-        document.querySelector('#df-2968c882-29a5-48bf-9682-bd08d2e288b9 button.colab-df-convert');
+        document.querySelector('#df-7470e28b-3a9b-4668-be12-f79f27ddcff6 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-2968c882-29a5-48bf-9682-bd08d2e288b9');
+        const element = document.querySelector('#df-7470e28b-3a9b-4668-be12-f79f27ddcff6');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -617,7 +619,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package punkt to /root/nltk_data...
-[nltk_data]   Unzipping tokenizers/punkt.zip.
+[nltk_data]   Package punkt is already up-to-date!
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
@@ -633,7 +635,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 
 <span class="c1"># Tokenisasi kalimat dari teks berita</span>
-<span class="n">kalimat</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;isi&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">kalimat</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;berita&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="c1"># Menghitung TF-IDF untuk setiap kalimat</span>
 <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
@@ -644,7 +646,7 @@ document.write(`
 
 <span class="c1"># Menampilkan hasil TF-IDF dalam bentuk DataFrame</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TF-IDF per Kalimat:&quot;</span><span class="p">)</span>
-<span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 <span class="c1">#print(tfidf_df)</span>
 
 <span class="c1"># Menampilkan hasil TF-IDF</span>
@@ -659,7 +661,7 @@ document.write(`
 </pre></div>
 </div>
 <div class="output text_html">
-  <div id="df-0fd92570-5135-456d-a454-7b1b60d57c1f" class="colab-df-container">
+  <div id="df-f6d26567-9b44-4149-88d7-a7dabee1c966" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -678,158 +680,494 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>10</th>
-      <th>19</th>
+      <th>12</th>
+      <th>13</th>
+      <th>170</th>
       <th>20</th>
-      <th>2024</th>
+      <th>23</th>
+      <th>24</th>
       <th>ada</th>
-      <th>akan</th>
-      <th>asing</th>
-      <th>atau</th>
-      <th>australia</th>
-      <th>bahwa</th>
+      <th>adapun</th>
+      <th>akhirnya</th>
+      <th>akp</th>
       <th>...</th>
-      <th>timur</th>
       <th>ujarnya</th>
-      <th>understanding</th>
+      <th>ungkapnya</th>
       <th>untuk</th>
-      <th>use</th>
+      <th>usai</th>
       <th>video</th>
-      <th>widodo</th>
-      <th>ya</th>
-      <th>yakni</th>
+      <th>viking</th>
+      <th>viral</th>
+      <th>warga</th>
+      <th>warudoyong</th>
       <th>yang</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>Presiden Joko Widodo (Jokowi) dijadwalkan melakukan peletakan batu pertama atau groundbreaking proyek ke-8 di IKN Nusantara, Kalimantan Timur, pada 19-20 September 2024.</th>
-      <td>0.000000</td>
-      <td>0.194573</td>
-      <td>0.194573</td>
-      <td>0.224806</td>
+      <th>Polisi menetapkan dua orang oknum suporter Persija Jakarta sebagai tersangka kasus perusakan rumah di Sukabumi, Jawa Barat.</th>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>0.194573</td>
       <td>0.000000</td>
-      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>...</td>
-      <td>0.224806</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.224806</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
     </tr>
     <tr>
-      <th>Kepala Presidential Communication Officer (PCO) Hasan Nasbi mengatakan groundbreaking kali ini dilakukan pertama kali untuk investasi asing, yakni dari China dan Australia.</th>
+      <th>Kasat Reskrim Polres Sukabumi Kota AKP Bagus Panuntun mengatakan, penetapan tersangka itu dilakukan setelah penyidik melakukan pemeriksaan secara maraton sejak mereka ditangkap kurang dari 12 jam pascakejadian.</th>
+      <td>0.207838</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>0.00000</td>
       <td>0.000000</td>
-      <td>0.196937</td>
       <td>0.000000</td>
-      <td>0.175225</td>
-      <td>0.0</td>
+      <td>0.207838</td>
       <td>...</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.175225</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.227538</td>
-      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
     </tr>
     <tr>
-      <th>"Nanti tanggal 19 atau tanggal 20 (September) itu akan ada rencana groundbreaking di IKN," kata Hasan dalam konferensi pers di Kantor PCO, Jakarta Pusat, Selasa (10/9).</th>
-      <td>0.208181</td>
-      <td>0.180183</td>
-      <td>0.180183</td>
+      <th>Kedua tersangka itu berperan sebagai perusak spanduk Viking Persib.</th>
       <td>0.000000</td>
-      <td>0.160319</td>
-      <td>0.160319</td>
       <td>0.000000</td>
-      <td>0.180183</td>
       <td>0.000000</td>
-      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>...</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.335412</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
     </tr>
     <tr>
-      <th>Hasan menjelaskan investasi dari China akan bergerak di campuran jasa.</th>
+      <th>"Sementara ini menetapkan dua tersangka yang merusak banner, namun untuk yang merusak pagar ini yang kelihatan di (video) viral tersebut, saat ini masih dalam pengejaran," kata Bagus seperti dikutip detikJabar, Selasa (24/9).</th>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>0.302649</td>
+      <td>0.178708</td>
+      <td>0.00000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>0.0</td>
       <td>...</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>0.156767</td>
       <td>0.000000</td>
-      <td>0.0</td>
+      <td>0.156767</td>
       <td>0.000000</td>
-      <td>0.0</td>
+      <td>0.141200</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.423601</td>
     </tr>
     <tr>
-      <th>Sementara investasi dari Australia dalam sektor pendidikan.</th>
+      <th>Pilihan Redaksi Pelatih Timor Leste U-20 Tolak Panggil Gali Freitas Lawan Indonesia Ketua Viking Minta Maaf, Siap Tanggung Jawab Jika Anggota Terlibat Reaksi Ragnar Oratmangoen usai Debut Negatif di Liga Belgia Bagus belum mau menyebutkan dua identitas tersangka tersebut.</th>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>0.167804</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.350155</td>
-      <td>0.0</td>
       <td>...</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.0</td>
+      <td>0.167804</td>
       <td>0.000000</td>
-      <td>0.0</td>
+      <td>0.147202</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Hanya saja, ia menyebut keduanya terancam pidana Pasal 170 dengan ancaman hukuman maksimal 4 tahun penjara.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.258199</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>"Hukumannya sama seperti semalam, dia merusak banner, memasuki pekarangan rumah kemudian di situ memprovokasi.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Jadi sampai saat ini kami masih melakukan pendalaman untuk tersangka lainnya, kemungkinan masih bisa bertambah," ujarnya.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.260174</td>
+      <td>0.000000</td>
+      <td>0.228232</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Selain memeriksa 13 orang suporter yang diamankan, polisi juga turut memanggil ketua suporter ke Polsek Warudoyong.</th>
+      <td>0.000000</td>
+      <td>0.259728</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.227841</td>
+      <td>0.205217</td>
+    </tr>
+    <tr>
+      <th>"Kita baru menghadirkan ketua suporternya, tadi baru hadir dan saat ini baru dilakukan pemeriksaan," kata Bagus.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Adapun motif para pelaku melakukan perusakan rumah warga lantaran tersulut emosi oleh cacian saat mereka melakukan konvoi.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.259115</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.259115</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Akhirnya mereka masuk ke rumah tersebut dan merusak pagar hingga mencabut spanduk Persib.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.323706</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>"Motif karena ada cacian, ketika mereka konvoi kemudian dari dalam kemudian mencaci The Jak [sebutan suporter Persija] mengatakan kata-kata kasar sampai tiga kali, kemudian memasuki pekarangan, merusak pagar, banner.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.18291</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Di berita viral pun munculkan ibu-ibu memisahkan," ungkapnya.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.317487</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.250853</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Diketahui, peristiwa dugaan perusakan itu terjadi pada Senin (23/9) petang di Jalan Pajagalan, Kelurahan Nyomplong, Kecamatan Warudoyong, Kota Sukabumi.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.247115</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.216776</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Aksi perusakan tersebut bahkan sempat viral di media sosial.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.299386</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Sebelumnya, Persib berhasil mengalahkan Persija 2-0 pada lanjutan Liga 1 di Stadion Si Jalak Harupat, Soreang, Bandung.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Kemenangan Persib dinodai kerusuhan sebagian oknum Bobotoh yang menyerang steward selepas pertandingan.</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.239146</td>
+    </tr>
+    <tr>
+      <th>[Gambas:Video CNN] (jun)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.451824</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 138 columns</p>
+<p>19 rows × 224 columns</p>
 </div>
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-0fd92570-5135-456d-a454-7b1b60d57c1f')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-f6d26567-9b44-4149-88d7-a7dabee1c966')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -881,12 +1219,12 @@ document.write(`
 
     <script>
       const buttonEl =
-        document.querySelector('#df-0fd92570-5135-456d-a454-7b1b60d57c1f button.colab-df-convert');
+        document.querySelector('#df-f6d26567-9b44-4149-88d7-a7dabee1c966 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-0fd92570-5135-456d-a454-7b1b60d57c1f');
+        const element = document.querySelector('#df-f6d26567-9b44-4149-88d7-a7dabee1c966');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -906,8 +1244,8 @@ document.write(`
   </div>
 
 
-<div id="df-15fd88c3-c7e6-4bef-9576-174d290c5654">
-  <button class="colab-df-quickchart" onclick="quickchart('df-15fd88c3-c7e6-4bef-9576-174d290c5654')"
+<div id="df-9759bab3-9c8e-4c20-87c3-bc44063d45bb">
+  <button class="colab-df-quickchart" onclick="quickchart('df-9759bab3-9c8e-4c20-87c3-bc44063d45bb')"
             title="Suggest charts"
             style="display:none;">
 
@@ -1026,7 +1364,7 @@ document.write(`
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-15fd88c3-c7e6-4bef-9576-174d290c5654 button');
+        document.querySelector('#df-9759bab3-9c8e-4c20-87c3-bc44063d45bb button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -1053,7 +1391,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-b8c82f2e-0baa-4e0c-bf6f-aa59da14d16a" class="colab-df-container">
+  <div id="df-3f4318ff-2ef2-4d39-9717-538a62559340" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1086,93 +1424,123 @@ document.write(`
       <th>11</th>
       <th>12</th>
       <th>13</th>
+      <th>14</th>
+      <th>15</th>
+      <th>16</th>
+      <th>17</th>
+      <th>18</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>1.000000</td>
-      <td>0.058984</td>
-      <td>0.219632</td>
-      <td>0.035693</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.111270</td>
-      <td>0.054437</td>
-      <td>0.000000</td>
-      <td>0.024278</td>
-      <td>0.000000</td>
+      <td>0.060391</td>
+      <td>0.127084</td>
+      <td>0.106763</td>
+      <td>0.063082</td>
       <td>0.0</td>
+      <td>0.070906</td>
+      <td>0.028848</td>
+      <td>0.208395</td>
+      <td>0.000000</td>
+      <td>0.077875</td>
+      <td>0.048643</td>
+      <td>0.065733</td>
+      <td>0.027100</td>
+      <td>0.102631</td>
+      <td>0.089283</td>
+      <td>0.073562</td>
+      <td>0.067039</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.058984</td>
+      <td>0.060391</td>
       <td>1.000000</td>
-      <td>0.077573</td>
-      <td>0.176991</td>
-      <td>0.138496</td>
-      <td>0.020182</td>
-      <td>0.000000</td>
-      <td>0.061421</td>
-      <td>0.205503</td>
-      <td>0.021184</td>
-      <td>0.097080</td>
-      <td>0.070139</td>
-      <td>0.000000</td>
+      <td>0.080225</td>
+      <td>0.033700</td>
+      <td>0.031644</td>
       <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.054589</td>
+      <td>0.000000</td>
+      <td>0.097700</td>
+      <td>0.095357</td>
+      <td>0.035125</td>
+      <td>0.078356</td>
+      <td>0.000000</td>
+      <td>0.103650</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.219632</td>
-      <td>0.077573</td>
+      <td>0.127084</td>
+      <td>0.080225</td>
       <td>1.000000</td>
-      <td>0.154269</td>
-      <td>0.070910</td>
-      <td>0.018465</td>
-      <td>0.147317</td>
-      <td>0.000000</td>
-      <td>0.130466</td>
-      <td>0.073332</td>
-      <td>0.026007</td>
-      <td>0.055487</td>
-      <td>0.040077</td>
+      <td>0.026323</td>
+      <td>0.074090</td>
       <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.038323</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.159863</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.058986</td>
+      <td>0.000000</td>
+      <td>0.055403</td>
+      <td>0.060419</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.035693</td>
-      <td>0.176991</td>
-      <td>0.154269</td>
+      <td>0.106763</td>
+      <td>0.033700</td>
+      <td>0.026323</td>
       <td>1.000000</td>
-      <td>0.133237</td>
-      <td>0.034858</td>
-      <td>0.150086</td>
-      <td>0.000000</td>
-      <td>0.155695</td>
-      <td>0.079859</td>
-      <td>0.105659</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>0.070479</td>
       <td>0.0</td>
+      <td>0.147056</td>
+      <td>0.236603</td>
+      <td>0.086930</td>
+      <td>0.144334</td>
+      <td>0.024176</td>
+      <td>0.126720</td>
+      <td>0.140911</td>
+      <td>0.052247</td>
+      <td>0.013097</td>
+      <td>0.097708</td>
+      <td>0.014709</td>
+      <td>0.101303</td>
+      <td>0.070831</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.000000</td>
-      <td>0.138496</td>
-      <td>0.070910</td>
-      <td>0.133237</td>
+      <td>0.063082</td>
+      <td>0.031644</td>
+      <td>0.074090</td>
+      <td>0.070479</td>
       <td>1.000000</td>
-      <td>0.040330</td>
-      <td>0.000000</td>
-      <td>0.277777</td>
-      <td>0.082190</td>
-      <td>0.042332</td>
-      <td>0.065441</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
       <td>0.0</td>
+      <td>0.014975</td>
+      <td>0.016819</td>
+      <td>0.027209</td>
+      <td>0.043872</td>
+      <td>0.000000</td>
+      <td>0.028359</td>
+      <td>0.000000</td>
+      <td>0.015800</td>
+      <td>0.012298</td>
+      <td>0.052052</td>
+      <td>0.049651</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1180,7 +1548,7 @@ document.write(`
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-b8c82f2e-0baa-4e0c-bf6f-aa59da14d16a')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-3f4318ff-2ef2-4d39-9717-538a62559340')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -1232,12 +1600,12 @@ document.write(`
 
     <script>
       const buttonEl =
-        document.querySelector('#df-b8c82f2e-0baa-4e0c-bf6f-aa59da14d16a button.colab-df-convert');
+        document.querySelector('#df-3f4318ff-2ef2-4d39-9717-538a62559340 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-b8c82f2e-0baa-4e0c-bf6f-aa59da14d16a');
+        const element = document.querySelector('#df-3f4318ff-2ef2-4d39-9717-538a62559340');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1257,8 +1625,8 @@ document.write(`
   </div>
 
 
-<div id="df-7d8ea4dc-3987-4084-979a-dc6097e569b8">
-  <button class="colab-df-quickchart" onclick="quickchart('df-7d8ea4dc-3987-4084-979a-dc6097e569b8')"
+<div id="df-6ed8f418-76c2-4914-a17f-20d09cca4540">
+  <button class="colab-df-quickchart" onclick="quickchart('df-6ed8f418-76c2-4914-a17f-20d09cca4540')"
             title="Suggest charts"
             style="display:none;">
 
@@ -1377,7 +1745,7 @@ document.write(`
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-7d8ea4dc-3987-4084-979a-dc6097e569b8 button');
+        document.querySelector('#df-6ed8f418-76c2-4914-a17f-20d09cca4540 button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -1403,8 +1771,9 @@ document.write(`
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cosine</span><span class="p">)):</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cosine</span><span class="p">)):</span>
         <span class="n">similarity</span> <span class="o">=</span> <span class="n">cosine</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">similarity</span> <span class="o">&gt;</span> <span class="mf">0.1</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">similarity</span> <span class="o">&gt;=</span> <span class="mf">0.05</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>  <span class="c1"># Mengubah dari &gt; 0.5 menjadi &gt;= 0.5</span>
             <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+
 
 <span class="c1"># Memotong kalimat menjadi lebih pendek</span>
 <span class="k">def</span> <span class="nf">potong_kalimat</span><span class="p">(</span><span class="n">kalimat</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
@@ -1439,11 +1808,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah Node: 14
-Jumlah Edge: 14
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah Node: 19
+Jumlah Edge: 52
 </pre></div>
 </div>
-<img alt="_images/93a31d8b4d35e39b75f2b968ae7bca3a11eec01cbd6e6f079496f448b49c47b0.png" src="_images/93a31d8b4d35e39b75f2b968ae7bca3a11eec01cbd6e6f079496f448b49c47b0.png" />
+<img alt="_images/a6fcaa453da8f0304b7e3d8f2752bf2f42207d5d0a44264e2e5b65b47c450c8d.png" src="_images/a6fcaa453da8f0304b7e3d8f2752bf2f42207d5d0a44264e2e5b65b47c450c8d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1461,11 +1830,11 @@ Jumlah Edge: 14
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Betweenness centrality tertinggi:
-1. (betweenness centrality: 0.2543 Hasan menjelaskan investasi dari China akan bergerak di campuran jasa. )
-2. (betweenness centrality: 0.1026 Sementara investasi dari Australia dalam sektor pendidikan. )
-3. (betweenness centrality: 0.1026 Itu mungkin ada campuran jasa, ada perhotelan, ada mal, ada perkantoran. )
-4. (betweenness centrality: 0.0598 &quot;Nanti tanggal 19 atau tanggal 20 (September) itu akan ada rencana groundbreaking di IKN,&quot; kata Hasan dalam konferensi pers di Kantor PCO, Jakarta Pusat, Selasa (10/9). )
-5. (betweenness centrality: 0.0491 Hasan mengklaim groundbreaking proyek dari investasi asing itu menunjukkan kepercayaan swasta, termasuk juga pemodal asing untuk berinvestasi di IKN sudah terlihat. )
+1. (betweenness centrality: 0.2515 &quot;Sementara ini menetapkan dua tersangka yang merusak banner, namun untuk yang merusak pagar ini yang kelihatan di (video) viral tersebut, saat ini masih dalam pengejaran,&quot; kata Bagus seperti dikutip detikJabar, Selasa (24/9). )
+2. (betweenness centrality: 0.1729 Polisi menetapkan dua orang oknum suporter Persija Jakarta sebagai tersangka kasus perusakan rumah di Sukabumi, Jawa Barat. )
+3. (betweenness centrality: 0.0609 Akhirnya mereka masuk ke rumah tersebut dan merusak pagar hingga mencabut spanduk Persib. )
+4. (betweenness centrality: 0.0563 Aksi perusakan tersebut bahkan sempat viral di media sosial. )
+5. (betweenness centrality: 0.0475 Kasat Reskrim Polres Sukabumi Kota AKP Bagus Panuntun mengatakan, penetapan tersangka itu dilakukan setelah penyidik melakukan pemeriksaan secara maraton sejak mereka ditangkap kurang dari 12 jam pascakejadian. )
 </pre></div>
 </div>
 </div>
@@ -1489,7 +1858,7 @@ Jumlah Edge: 14
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ringkasan Berita:
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Hasan menjelaskan investasi dari China akan bergerak di campuran jasa. Sementara investasi dari Australia dalam sektor pendidikan. Itu mungkin ada campuran jasa, ada perhotelan, ada mal, ada perkantoran. &quot;Nanti tanggal 19 atau tanggal 20 (September) itu akan ada rencana groundbreaking di IKN,&quot; kata Hasan dalam konferensi pers di Kantor PCO, Jakarta Pusat, Selasa (10/9).&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;&quot;Sementara ini menetapkan dua tersangka yang merusak banner, namun untuk yang merusak pagar ini yang kelihatan di (video) viral tersebut, saat ini masih dalam pengejaran,&quot; kata Bagus seperti dikutip detikJabar, Selasa (24/9). Polisi menetapkan dua orang oknum suporter Persija Jakarta sebagai tersangka kasus perusakan rumah di Sukabumi, Jawa Barat. Akhirnya mereka masuk ke rumah tersebut dan merusak pagar hingga mencabut spanduk Persib. Aksi perusakan tersebut bahkan sempat viral di media sosial.&#39;
 </pre></div>
 </div>
 </div>
@@ -1535,6 +1904,15 @@ Jumlah Edge: 14
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Part.5 Graf 100 Berita</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="UTS.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">UTS (Keyword Extraction)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
