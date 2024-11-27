@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Part.5 Graf 100 Berita &#8212; My sample book</title>
+    <title>Part.6 Pencarian Dokumen &#8212; My sample book</title>
   
   
   
@@ -60,13 +60,11 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '100beritaToGraf';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PencarianBerita';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Ringkas Berita" href="RingkasBerita.html" />
-    <link rel="prev" title="Part.4 WORD EMBEDDING" href="Skip-gram.html" />
+    <link rel="next" title="Part 7. Fuzzy C-Means Clustering" href="Clustering%20fuzzy.html" />
+    <link rel="prev" title="UTS (Keyword Extraction)" href="UTS.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -177,11 +175,11 @@
 <li class="toctree-l1"><a class="reference internal" href="klasifikasiwithsvd.html">Penerapan Logistic Regression (SVD)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Skip-gram.html">Part.4 WORD EMBEDDING</a></li>
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Part.5 Graf 100 Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="100beritaToGraf.html">Part.5 Graf 100 Berita</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="RingkasBerita.html">Ringkas Berita</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UTS.html">UTS (Keyword Extraction)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="PencarianBerita.html">Part.6 Pencarian Dokumen</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Part.6 Pencarian Dokumen</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Clustering%20fuzzy.html">Part 7. Fuzzy C-Means Clustering</a></li>
 </ul>
 
@@ -237,7 +235,7 @@
       
       
       
-      <li><a href="https://colab.research.google.com/github/RahmaNhz/PPW/blob/gh-pages/_sources/100beritaToGraf.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/RahmaNhz/PPW/blob/gh-pages/_sources/PencarianBerita.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch on Colab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -285,7 +283,7 @@
       
       
       
-      <li><a href="https://github.com/RahmaNhz/PPW/issues/new?title=Issue%20on%20page%20%2F100beritaToGraf.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/RahmaNhz/PPW/issues/new?title=Issue%20on%20page%20%2FPencarianBerita.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -315,7 +313,7 @@
       
       
       
-      <li><a href="_sources/100beritaToGraf.ipynb" target="_blank"
+      <li><a href="_sources/PencarianBerita.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -391,7 +389,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Part.5 Graf 100 Berita</h1>
+    <h1>Part.6 Pencarian Dokumen</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -401,19 +399,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Part.5 Graf 100 Berita</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-data-berita-yang-telah-di-preprosessing">Import data berita yang telah di preprosessing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf">TF-IDF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cosine-similarity">Cosine similarity</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konversi">Konversi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-dengan-truncated-svd">Reduksi Dimensi dengan  Truncated SVD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-query-ke-bentuk-tf-idf-dan-reduksi-svd">Transform query ke bentuk TF-IDF dan reduksi SVD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-kemiripan-cosine-similarity-antara-query-dan-dokumen-di-dimensi-yang-lebih-rendah">Hitung kemiripan (cosine similarity) antara query dan dokumen di dimensi yang lebih rendah</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#graf">Graf</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#centrality-dari-dokumen-berita">Centrality dari dokumen Berita</a></li>
-</ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -424,13 +414,22 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p><strong>TUGAS 5</strong></p>
-<p>Nama: RAHMA NURHALIZA</p>
-<p>NIM  : 210411100176</p>
-<p>Kelas : PPW A</p>
-<section class="tex2jax_ignore mathjax_ignore" id="part-5-graf-100-berita">
-<h1>Part.5 Graf 100 Berita<a class="headerlink" href="#part-5-graf-100-berita" title="Link to this heading">#</a></h1>
-<p>Dari hasil TFIDF berita di cosinuskan terbentuk matrix 100 x 100, kemudian di konversi jadi 0, 1 terbentuk matriks adjancency, dan buat grafnya.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="part-6-pencarian-dokumen">
+<h1>Part.6 Pencarian Dokumen<a class="headerlink" href="#part-6-pencarian-dokumen" title="Link to this heading">#</a></h1>
+<p><strong>RAHMA</strong> <strong>NURHALIZA</strong> (<strong>210411100176</strong>)</p>
+<p><strong>PPW</strong> <strong>A</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
@@ -441,7 +440,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">&lt;ipython-input-1-d5df0069828e&gt;</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="nn">&lt;ipython-input-2-d5df0069828e&gt;</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
 
@@ -476,19 +475,16 @@
 </div>
 </div>
 </div>
-<section id="import-data-berita-yang-telah-di-preprosessing">
-<h2>Import data berita yang telah di preprosessing<a class="headerlink" href="#import-data-berita-yang-telah-di-preprosessing" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/PPW/tugas/preprocessing-cnnnews.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/PPW/tugas/preprocessing-cnnnews.csv&quot;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-bbf3a900-fd80-4600-a48f-7ecaf49158b4" class="colab-df-container">
+  <div id="df-4854f16f-064d-4231-b6c7-85205575d5bf" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -579,7 +575,7 @@
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-bbf3a900-fd80-4600-a48f-7ecaf49158b4')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-4854f16f-064d-4231-b6c7-85205575d5bf')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -631,12 +627,12 @@
 
     <script>
       const buttonEl =
-        document.querySelector('#df-bbf3a900-fd80-4600-a48f-7ecaf49158b4 button.colab-df-convert');
+        document.querySelector('#df-4854f16f-064d-4231-b6c7-85205575d5bf button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-bbf3a900-fd80-4600-a48f-7ecaf49158b4');
+        const element = document.querySelector('#df-4854f16f-064d-4231-b6c7-85205575d5bf');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -656,8 +652,8 @@
   </div>
 
 
-<div id="df-3c37858c-8bd0-46af-b2bd-a3ff7bdec097">
-  <button class="colab-df-quickchart" onclick="quickchart('df-3c37858c-8bd0-46af-b2bd-a3ff7bdec097')"
+<div id="df-31f7342b-fde4-4857-9563-423efcd7e552">
+  <button class="colab-df-quickchart" onclick="quickchart('df-31f7342b-fde4-4857-9563-423efcd7e552')"
             title="Suggest charts"
             style="display:none;">
 
@@ -776,7 +772,7 @@
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-3c37858c-8bd0-46af-b2bd-a3ff7bdec097 button');
+        document.querySelector('#df-31f7342b-fde4-4857-9563-423efcd7e552 button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -787,34 +783,29 @@
   </div>
 </div></div>
 </div>
-</section>
-<section id="tf-idf">
-<h2>TF-IDF<a class="headerlink" href="#tf-idf" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
-<span class="c1"># Menginisialisasi TfidfVectorizer</span>
-<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
-<span class="c1"># Menghitung TF-IDF</span>
-<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stopword_removal&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;isi&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<section id="tf-idf">
+<h2>TF-IDF<a class="headerlink" href="#tf-idf" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengubah hasilnya menjadi DataFrame</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stopword_removal&#39;</span><span class="p">])</span>
 <span class="n">tfidf_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
-
-<span class="n">tfidf_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;tfidf.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-<span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-7c11fc50-1cc3-4e5a-8e4e-66e7237fd6d8" class="colab-df-container">
+  <div id="df-cb0f3491-4363-4ff3-8f88-0829892d4d37" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -862,10 +853,10 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -875,7 +866,7 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -886,10 +877,10 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -899,7 +890,7 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -910,10 +901,10 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.024308</td>
       <td>0.0</td>
@@ -923,7 +914,7 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>0.000000</td>
       <td>0.088183</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -934,10 +925,10 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -947,7 +938,7 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -958,10 +949,10 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -971,21 +962,45 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -995,23 +1010,23 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.050692</td>
+      <td>0.047426</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>6</th>
+      <th>96</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
-      <td>0.04869</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.076280</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
@@ -1019,21 +1034,21 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.046121</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>97</th>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.106948</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -1043,21 +1058,21 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.080853</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>98</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
@@ -1067,23 +1082,23 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.041888</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>99</th>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.211657</td>
-      <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.023741</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
@@ -1091,20 +1106,20 @@
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>0.053279</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
   </tbody>
 </table>
-<p>10 rows × 4413 columns</p>
+<p>100 rows × 4413 columns</p>
 </div>
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-7c11fc50-1cc3-4e5a-8e4e-66e7237fd6d8')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-cb0f3491-4363-4ff3-8f88-0829892d4d37')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -1156,12 +1171,12 @@
 
     <script>
       const buttonEl =
-        document.querySelector('#df-7c11fc50-1cc3-4e5a-8e4e-66e7237fd6d8 button.colab-df-convert');
+        document.querySelector('#df-cb0f3491-4363-4ff3-8f88-0829892d4d37 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-7c11fc50-1cc3-4e5a-8e4e-66e7237fd6d8');
+        const element = document.querySelector('#df-cb0f3491-4363-4ff3-8f88-0829892d4d37');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1181,8 +1196,8 @@
   </div>
 
 
-<div id="df-d52d33a2-fac5-40d3-8bdd-b49244044f4d">
-  <button class="colab-df-quickchart" onclick="quickchart('df-d52d33a2-fac5-40d3-8bdd-b49244044f4d')"
+<div id="df-9f677590-18e9-4c42-b284-a6bb91fd18bd">
+  <button class="colab-df-quickchart" onclick="quickchart('df-9f677590-18e9-4c42-b284-a6bb91fd18bd')"
             title="Suggest charts"
             style="display:none;">
 
@@ -1301,7 +1316,7 @@
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-d52d33a2-fac5-40d3-8bdd-b49244044f4d button');
+        document.querySelector('#df-9f677590-18e9-4c42-b284-a6bb91fd18bd button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -1313,34 +1328,23 @@
 </div></div>
 </div>
 </section>
-<section id="cosine-similarity">
-<h2>Cosine similarity<a class="headerlink" href="#cosine-similarity" title="Link to this heading">#</a></h2>
-<p>Cosine similarity adalah ukuran kesamaan antara dua vektor dalam ruang berdimensi tinggi. Nilai cosine similarity berkisar antara -1 dan 1, di mana 1 berarti vektor tersebut identik, 0 berarti tidak ada kesamaan, dan -1 berarti vektor tersebut berlawanan secara sempurna.  Semakin kecil sudutnya, semakin besar nilai cosine similarity, yang berarti kedua vektor tersebut lebih mirip.</p>
-<p>Rumus Cosine Similarity:</p>
-<p>Jika kita memiliki dua vektor ( A ) dan ( B ), cosine similarity dapat dihitung dengan rumus berikut:</p>
-<div class="math notranslate nohighlight">
-\[ \text{Cosine Similarity} = \cos(\theta) = \frac{A \cdot B}{|A| |B|} \]</div>
-<p>Di mana:</p>
-<p><span class="math notranslate nohighlight">\(( A \cdot B )\)</span> adalah hasil perkalian dot <span class="math notranslate nohighlight">\((dot product)\)</span> dari vektor ( A ) dan ( B ).
-<span class="math notranslate nohighlight">\(( |A| )\)</span> adalah norma (panjang) dari vektor ( A ).
-<span class="math notranslate nohighlight">\(( |B| )\)</span> adalah norma (panjang) dari vektor ( B ).</p>
+<section id="reduksi-dimensi-dengan-truncated-svd">
+<h2>Reduksi Dimensi dengan  Truncated SVD<a class="headerlink" href="#reduksi-dimensi-dengan-truncated-svd" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
-
-<span class="c1"># Menghitung cosine similarity berdasarkan matriks TF-IDF dari kolom &#39;isi&#39;</span>
-<span class="n">cosine_sim_matrix</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
-
-<span class="n">cosine_sim_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cosine_sim_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan beberapa baris dari cosine similarity matrix</span>
-<span class="n">cosine_sim_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svd</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># Mulai dengan 100 komponen, bisa dikurangi lagi nanti</span>
+<span class="n">tfidf_svd_matrix</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
+<span class="n">svd_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_svd_matrix</span><span class="p">)</span>
+<span class="c1">#Transpose matriks hasil SVD</span>
+<span class="c1">#tfidf_svd_matrix_transposed = tfidf_svd_matrix.T</span>
+<span class="n">svd_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="c1">#svd_df.shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-32d6fcbb-5abf-4cbb-bc7e-3faf034c0973" class="colab-df-container">
+  <div id="df-e18c708c-f579-4504-ba7d-9926244bdaa5" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1385,123 +1389,123 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.000000</td>
-      <td>0.044144</td>
-      <td>0.021945</td>
-      <td>0.045626</td>
-      <td>0.025731</td>
-      <td>0.030897</td>
-      <td>0.032982</td>
-      <td>0.022318</td>
-      <td>0.018702</td>
-      <td>0.008512</td>
+      <td>0.064586</td>
+      <td>0.188992</td>
+      <td>0.008672</td>
+      <td>-0.027832</td>
+      <td>-0.006030</td>
+      <td>-0.147161</td>
+      <td>0.286516</td>
+      <td>0.018550</td>
+      <td>0.119475</td>
+      <td>-0.008067</td>
       <td>...</td>
-      <td>0.027468</td>
-      <td>0.044871</td>
-      <td>0.004964</td>
-      <td>0.040298</td>
-      <td>0.011542</td>
-      <td>0.017400</td>
-      <td>0.013783</td>
-      <td>0.028455</td>
-      <td>0.039228</td>
-      <td>0.011765</td>
+      <td>0.011600</td>
+      <td>0.019177</td>
+      <td>0.015856</td>
+      <td>-0.004680</td>
+      <td>-0.016401</td>
+      <td>0.002696</td>
+      <td>0.000870</td>
+      <td>0.001023</td>
+      <td>-0.000633</td>
+      <td>0.001782</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.044144</td>
-      <td>1.000000</td>
-      <td>0.014818</td>
-      <td>0.018570</td>
-      <td>0.014142</td>
-      <td>0.039343</td>
-      <td>0.019709</td>
-      <td>0.031232</td>
-      <td>0.036782</td>
-      <td>0.005469</td>
+      <td>0.016457</td>
+      <td>0.179865</td>
+      <td>-0.013202</td>
+      <td>0.021377</td>
+      <td>0.077344</td>
+      <td>0.031816</td>
+      <td>0.088990</td>
+      <td>0.029517</td>
+      <td>0.107614</td>
+      <td>-0.129625</td>
       <td>...</td>
-      <td>0.001245</td>
-      <td>0.002682</td>
-      <td>0.000824</td>
-      <td>0.007048</td>
-      <td>0.002702</td>
-      <td>0.009364</td>
-      <td>0.001254</td>
-      <td>0.006210</td>
-      <td>0.010940</td>
-      <td>0.002154</td>
+      <td>0.003997</td>
+      <td>-0.028164</td>
+      <td>0.000970</td>
+      <td>-0.006774</td>
+      <td>0.002675</td>
+      <td>-0.000255</td>
+      <td>-0.001913</td>
+      <td>0.002492</td>
+      <td>-0.001593</td>
+      <td>-0.002080</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.021945</td>
-      <td>0.014818</td>
-      <td>1.000000</td>
-      <td>0.046732</td>
-      <td>0.022953</td>
-      <td>0.104115</td>
-      <td>0.032253</td>
-      <td>0.019707</td>
-      <td>0.015796</td>
-      <td>0.015316</td>
+      <td>0.031062</td>
+      <td>0.144795</td>
+      <td>-0.010155</td>
+      <td>-0.003804</td>
+      <td>0.010489</td>
+      <td>-0.027065</td>
+      <td>0.007119</td>
+      <td>0.199850</td>
+      <td>-0.069954</td>
+      <td>-0.003941</td>
       <td>...</td>
-      <td>0.011238</td>
-      <td>0.009243</td>
-      <td>0.002726</td>
-      <td>0.016261</td>
-      <td>0.004726</td>
-      <td>0.009262</td>
-      <td>0.005727</td>
-      <td>0.015200</td>
-      <td>0.011083</td>
-      <td>0.013147</td>
+      <td>-0.005434</td>
+      <td>-0.002698</td>
+      <td>-0.001227</td>
+      <td>0.000231</td>
+      <td>-0.000904</td>
+      <td>0.000405</td>
+      <td>-0.000557</td>
+      <td>-0.000371</td>
+      <td>-0.000362</td>
+      <td>-0.000086</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.045626</td>
-      <td>0.018570</td>
-      <td>0.046732</td>
-      <td>1.000000</td>
-      <td>0.014659</td>
-      <td>0.091668</td>
-      <td>0.025466</td>
-      <td>0.001788</td>
-      <td>0.007720</td>
-      <td>0.038898</td>
+      <td>0.047709</td>
+      <td>0.195778</td>
+      <td>-0.012764</td>
+      <td>-0.003038</td>
+      <td>-0.012011</td>
+      <td>-0.085911</td>
+      <td>-0.055248</td>
+      <td>0.161753</td>
+      <td>-0.076000</td>
+      <td>0.030667</td>
       <td>...</td>
-      <td>0.027736</td>
-      <td>0.018454</td>
-      <td>0.004873</td>
-      <td>0.026105</td>
-      <td>0.005913</td>
-      <td>0.009023</td>
-      <td>0.011604</td>
-      <td>0.023191</td>
-      <td>0.017500</td>
-      <td>0.022150</td>
+      <td>0.001599</td>
+      <td>0.009062</td>
+      <td>-0.009052</td>
+      <td>-0.002909</td>
+      <td>0.002805</td>
+      <td>-0.001042</td>
+      <td>0.001103</td>
+      <td>0.001390</td>
+      <td>-0.001164</td>
+      <td>-0.000268</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.025731</td>
-      <td>0.014142</td>
-      <td>0.022953</td>
-      <td>0.014659</td>
-      <td>1.000000</td>
-      <td>0.016183</td>
-      <td>0.056446</td>
-      <td>0.022830</td>
-      <td>0.040793</td>
-      <td>0.028329</td>
+      <td>0.052167</td>
+      <td>0.133710</td>
+      <td>-0.009733</td>
+      <td>-0.010554</td>
+      <td>0.015350</td>
+      <td>-0.009544</td>
+      <td>0.048062</td>
+      <td>0.100011</td>
+      <td>0.037437</td>
+      <td>-0.004073</td>
       <td>...</td>
-      <td>0.024760</td>
-      <td>0.015986</td>
-      <td>0.005630</td>
-      <td>0.026136</td>
-      <td>0.006151</td>
-      <td>0.011131</td>
-      <td>0.004839</td>
-      <td>0.029269</td>
-      <td>0.021541</td>
-      <td>0.040291</td>
+      <td>-0.008579</td>
+      <td>-0.011129</td>
+      <td>-0.000627</td>
+      <td>0.006025</td>
+      <td>-0.005575</td>
+      <td>0.000272</td>
+      <td>-0.000378</td>
+      <td>0.000010</td>
+      <td>0.001317</td>
+      <td>0.000176</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1529,123 +1533,123 @@
     </tr>
     <tr>
       <th>95</th>
-      <td>0.017400</td>
-      <td>0.009364</td>
-      <td>0.009262</td>
-      <td>0.009023</td>
-      <td>0.011131</td>
-      <td>0.005347</td>
-      <td>0.006411</td>
-      <td>0.004869</td>
-      <td>0.005641</td>
-      <td>0.007820</td>
+      <td>0.114567</td>
+      <td>0.043904</td>
+      <td>0.010629</td>
+      <td>0.000050</td>
+      <td>0.042504</td>
+      <td>-0.057286</td>
+      <td>0.129163</td>
+      <td>-0.039097</td>
+      <td>-0.084506</td>
+      <td>-0.011177</td>
       <td>...</td>
-      <td>0.047395</td>
-      <td>0.047842</td>
-      <td>0.034996</td>
-      <td>0.067131</td>
-      <td>0.041249</td>
-      <td>1.000000</td>
-      <td>0.026407</td>
-      <td>0.069518</td>
-      <td>0.063649</td>
-      <td>0.053345</td>
+      <td>-0.001750</td>
+      <td>0.002290</td>
+      <td>0.002323</td>
+      <td>-0.003260</td>
+      <td>0.002104</td>
+      <td>0.001595</td>
+      <td>0.001329</td>
+      <td>0.000764</td>
+      <td>-0.000653</td>
+      <td>-0.001204</td>
     </tr>
     <tr>
       <th>96</th>
-      <td>0.013783</td>
-      <td>0.001254</td>
-      <td>0.005727</td>
-      <td>0.011604</td>
-      <td>0.004839</td>
-      <td>0.003241</td>
-      <td>0.005539</td>
-      <td>0.008841</td>
-      <td>0.013987</td>
-      <td>0.003219</td>
+      <td>0.154076</td>
+      <td>0.024865</td>
+      <td>0.043760</td>
+      <td>0.007618</td>
+      <td>-0.013868</td>
+      <td>0.006646</td>
+      <td>0.006122</td>
+      <td>-0.016914</td>
+      <td>-0.068085</td>
+      <td>-0.151474</td>
       <td>...</td>
-      <td>0.057498</td>
-      <td>0.104612</td>
-      <td>0.054522</td>
-      <td>0.184475</td>
-      <td>0.094748</td>
-      <td>0.026407</td>
-      <td>1.000000</td>
-      <td>0.091708</td>
-      <td>0.082541</td>
-      <td>0.058383</td>
+      <td>0.000436</td>
+      <td>0.009560</td>
+      <td>0.014421</td>
+      <td>-0.007335</td>
+      <td>-0.000831</td>
+      <td>0.009769</td>
+      <td>-0.004656</td>
+      <td>0.001117</td>
+      <td>-0.002290</td>
+      <td>0.001260</td>
     </tr>
     <tr>
       <th>97</th>
-      <td>0.028455</td>
-      <td>0.006210</td>
-      <td>0.015200</td>
-      <td>0.023191</td>
-      <td>0.029269</td>
-      <td>0.002420</td>
-      <td>0.023301</td>
-      <td>0.006144</td>
-      <td>0.021078</td>
-      <td>0.007174</td>
+      <td>0.559221</td>
+      <td>-0.018326</td>
+      <td>-0.094225</td>
+      <td>-0.064428</td>
+      <td>0.029930</td>
+      <td>-0.003415</td>
+      <td>-0.002151</td>
+      <td>-0.018271</td>
+      <td>-0.023394</td>
+      <td>-0.141488</td>
       <td>...</td>
-      <td>0.274767</td>
-      <td>0.205147</td>
-      <td>0.093247</td>
-      <td>0.353772</td>
-      <td>0.100239</td>
-      <td>0.069518</td>
-      <td>0.091708</td>
-      <td>1.000000</td>
-      <td>0.320408</td>
-      <td>0.323901</td>
+      <td>-0.004422</td>
+      <td>0.000370</td>
+      <td>-0.025488</td>
+      <td>-0.045139</td>
+      <td>-0.005575</td>
+      <td>0.011777</td>
+      <td>0.016205</td>
+      <td>0.003124</td>
+      <td>0.006595</td>
+      <td>0.009041</td>
     </tr>
     <tr>
       <th>98</th>
-      <td>0.039228</td>
-      <td>0.010940</td>
-      <td>0.011083</td>
-      <td>0.017500</td>
-      <td>0.021541</td>
-      <td>0.006795</td>
-      <td>0.021415</td>
-      <td>0.006227</td>
-      <td>0.014479</td>
-      <td>0.010435</td>
+      <td>0.545225</td>
+      <td>-0.022100</td>
+      <td>-0.124938</td>
+      <td>-0.021011</td>
+      <td>0.013938</td>
+      <td>-0.005100</td>
+      <td>0.013414</td>
+      <td>-0.001562</td>
+      <td>-0.017073</td>
+      <td>-0.213457</td>
       <td>...</td>
-      <td>0.225440</td>
-      <td>0.194946</td>
-      <td>0.124085</td>
-      <td>0.339575</td>
-      <td>0.079900</td>
-      <td>0.063649</td>
-      <td>0.082541</td>
-      <td>0.320408</td>
-      <td>1.000000</td>
-      <td>0.274838</td>
+      <td>0.003371</td>
+      <td>-0.006210</td>
+      <td>-0.028595</td>
+      <td>-0.019757</td>
+      <td>0.008564</td>
+      <td>0.012005</td>
+      <td>0.002918</td>
+      <td>-0.003305</td>
+      <td>-0.009059</td>
+      <td>0.006263</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>0.011765</td>
-      <td>0.002154</td>
-      <td>0.013147</td>
-      <td>0.022150</td>
-      <td>0.040291</td>
-      <td>0.005080</td>
-      <td>0.016558</td>
-      <td>0.006601</td>
-      <td>0.018072</td>
-      <td>0.012639</td>
+      <td>0.501762</td>
+      <td>0.006642</td>
+      <td>-0.052377</td>
+      <td>-0.019273</td>
+      <td>0.042294</td>
+      <td>-0.016383</td>
+      <td>0.000789</td>
+      <td>-0.034977</td>
+      <td>-0.010077</td>
+      <td>-0.053142</td>
       <td>...</td>
-      <td>0.240510</td>
-      <td>0.249280</td>
-      <td>0.139327</td>
-      <td>0.246213</td>
-      <td>0.099312</td>
-      <td>0.053345</td>
-      <td>0.058383</td>
-      <td>0.323901</td>
-      <td>0.274838</td>
-      <td>1.000000</td>
+      <td>0.016435</td>
+      <td>-0.001062</td>
+      <td>0.057775</td>
+      <td>-0.204360</td>
+      <td>0.002141</td>
+      <td>0.017582</td>
+      <td>0.009432</td>
+      <td>-0.000710</td>
+      <td>-0.002712</td>
+      <td>0.007553</td>
     </tr>
   </tbody>
 </table>
@@ -1654,7 +1658,7 @@
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-32d6fcbb-5abf-4cbb-bc7e-3faf034c0973')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-e18c708c-f579-4504-ba7d-9926244bdaa5')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -1706,12 +1710,12 @@
 
     <script>
       const buttonEl =
-        document.querySelector('#df-32d6fcbb-5abf-4cbb-bc7e-3faf034c0973 button.colab-df-convert');
+        document.querySelector('#df-e18c708c-f579-4504-ba7d-9926244bdaa5 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-32d6fcbb-5abf-4cbb-bc7e-3faf034c0973');
+        const element = document.querySelector('#df-e18c708c-f579-4504-ba7d-9926244bdaa5');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1731,8 +1735,8 @@
   </div>
 
 
-<div id="df-4cef6b5e-70ba-4d68-99c0-fe0e565d5df1">
-  <button class="colab-df-quickchart" onclick="quickchart('df-4cef6b5e-70ba-4d68-99c0-fe0e565d5df1')"
+<div id="df-e8e915ac-32a2-4b4c-a939-4b99e1904dea">
+  <button class="colab-df-quickchart" onclick="quickchart('df-e8e915ac-32a2-4b4c-a939-4b99e1904dea')"
             title="Suggest charts"
             style="display:none;">
 
@@ -1851,7 +1855,7 @@
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-4cef6b5e-70ba-4d68-99c0-fe0e565d5df1 button');
+        document.querySelector('#df-e8e915ac-32a2-4b4c-a939-4b99e1904dea button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -1863,690 +1867,132 @@
 </div></div>
 </div>
 </section>
-<section id="konversi">
-<h2>Konversi<a class="headerlink" href="#konversi" title="Link to this heading">#</a></h2>
+<section id="transform-query-ke-bentuk-tf-idf-dan-reduksi-svd">
+<h2>Transform query ke bentuk TF-IDF dan reduksi SVD<a class="headerlink" href="#transform-query-ke-bentuk-tf-idf-dan-reduksi-svd" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengonversi cosine similarity menjadi 0 dan 1</span>
-<span class="n">binary_cosine_sim_matrix</span> <span class="o">=</span> <span class="p">(</span><span class="n">cosine_sim_matrix</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-<span class="c1"># Mengubah hasilnya menjadi DataFrame</span>
-<span class="n">binary_cosine_sim_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">binary_cosine_sim_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-
-<span class="n">binary_cosine_sim_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Transform query ke bentuk TF-IDF dan reduksi SVD</span>
+<span class="n">query</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Masukkan kalimat yang ingin dicari: &quot;</span><span class="p">)</span>  <span class="c1"># Ganti dengan kalimat yang ingin dicari</span>
+<span class="n">query_tfidf</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="n">query</span><span class="p">])</span>
+<span class="n">query_svd</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">query_tfidf</span><span class="p">)</span>
+<span class="n">query_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">query_svd</span><span class="p">)</span>
+<span class="c1">#query_df</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-  <div id="df-79989cf8-eb86-49fc-98da-6bfda41afaa5" class="colab-df-container">
-    <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>...</th>
-      <th>90</th>
-      <th>91</th>
-      <th>92</th>
-      <th>93</th>
-      <th>94</th>
-      <th>95</th>
-      <th>96</th>
-      <th>97</th>
-      <th>98</th>
-      <th>99</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>95</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>96</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-<p>100 rows × 100 columns</p>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Masukkan kalimat yang ingin dicari: indonesia vs australia
+</pre></div>
 </div>
-    <div class="colab-df-buttons">
-
-  <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-79989cf8-eb86-49fc-98da-6bfda41afaa5')"
-            title="Convert this dataframe to an interactive table."
-            style="display:none;">
-
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
-    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
-  </svg>
-    </button>
-
-  <style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-
-    <script>
-      const buttonEl =
-        document.querySelector('#df-79989cf8-eb86-49fc-98da-6bfda41afaa5 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-79989cf8-eb86-49fc-98da-6bfda41afaa5');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-  </div>
-
-
-<div id="df-33669347-15b2-4c2e-a279-7c103c9acbfd">
-  <button class="colab-df-quickchart" onclick="quickchart('df-33669347-15b2-4c2e-a279-7c103c9acbfd')"
-            title="Suggest charts"
-            style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
-</svg>
-  </button>
-
-<style>
-  .colab-df-quickchart {
-      --bg-color: #E8F0FE;
-      --fill-color: #1967D2;
-      --hover-bg-color: #E2EBFA;
-      --hover-fill-color: #174EA6;
-      --disabled-fill-color: #AAA;
-      --disabled-bg-color: #DDD;
-  }
-
-  [theme=dark] .colab-df-quickchart {
-      --bg-color: #3B4455;
-      --fill-color: #D2E3FC;
-      --hover-bg-color: #434B5C;
-      --hover-fill-color: #FFFFFF;
-      --disabled-bg-color: #3B4455;
-      --disabled-fill-color: #666;
-  }
-
-  .colab-df-quickchart {
-    background-color: var(--bg-color);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    fill: var(--fill-color);
-    height: 32px;
-    padding: 0;
-    width: 32px;
-  }
-
-  .colab-df-quickchart:hover {
-    background-color: var(--hover-bg-color);
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    fill: var(--button-hover-fill-color);
-  }
-
-  .colab-df-quickchart-complete:disabled,
-  .colab-df-quickchart-complete:disabled:hover {
-    background-color: var(--disabled-bg-color);
-    fill: var(--disabled-fill-color);
-    box-shadow: none;
-  }
-
-  .colab-df-spinner {
-    border: 2px solid var(--fill-color);
-    border-color: transparent;
-    border-bottom-color: var(--fill-color);
-    animation:
-      spin 1s steps(1) infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-      border-left-color: var(--fill-color);
-    }
-    20% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    30% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-      border-right-color: var(--fill-color);
-    }
-    40% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    60% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-    }
-    80% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-bottom-color: var(--fill-color);
-    }
-    90% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-    }
-  }
-</style>
-
-  <script>
-    async function quickchart(key) {
-      const quickchartButtonEl =
-        document.querySelector('#' + key + ' button');
-      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-      quickchartButtonEl.classList.add('colab-df-spinner');
-      try {
-        const charts = await google.colab.kernel.invokeFunction(
-            'suggestCharts', [key], {});
-      } catch (error) {
-        console.error('Error during call to suggestCharts:', error);
-      }
-      quickchartButtonEl.classList.remove('colab-df-spinner');
-      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-    }
-    (() => {
-      let quickchartButtonEl =
-        document.querySelector('#df-33669347-15b2-4c2e-a279-7c103c9acbfd button');
-      quickchartButtonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-    })();
-  </script>
 </div>
-
-    </div>
-  </div>
-</div></div>
 </div>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="graf">
-<h1>Graf<a class="headerlink" href="#graf" title="Link to this heading">#</a></h1>
-<p>Graf adalah sebuah himpunan objek-objek yang dinamakan titik, simpul, atau sudut yang dihubungkan oleh penghubung yang dinamakan garis atau sisi. Graf digunakan untuk merepresentasikan hubungan antara objek-objek.</p>
+<section id="hitung-kemiripan-cosine-similarity-antara-query-dan-dokumen-di-dimensi-yang-lebih-rendah">
+<h2>Hitung kemiripan (cosine similarity) antara query dan dokumen di dimensi yang lebih rendah<a class="headerlink" href="#hitung-kemiripan-cosine-similarity-antara-query-dan-dokumen-di-dimensi-yang-lebih-rendah" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="c1"># Membuat graf dari matriks biner</span>
-<span class="c1">#G = nx.from_pandas_adjacency(binary_cosine_sim_df)</span>
-<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">binary_cosine_sim_df</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-
-<span class="c1"># Menggambar graf</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>  <span class="c1"># Menentukan ukuran figure</span>
-<span class="n">G</span><span class="o">.</span><span class="n">remove_edges_from</span><span class="p">([(</span><span class="n">u</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()])</span>
-<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">random_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="c1"># Layout untuk visualisasi graf</span>
-<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-        <span class="n">font_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-
-
-
-<span class="c1"># Menampilkan graf</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Graf Keterhubungan Berita Berdasarkan Cosine Similarity&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/d507f0467d45b9595738491aab36356105699535022b4d09876e0237a2146629.png" src="_images/d507f0467d45b9595738491aab36356105699535022b4d09876e0237a2146629.png" />
-</div>
-</div>
-<section id="centrality-dari-dokumen-berita">
-<h2>Centrality dari dokumen Berita<a class="headerlink" href="#centrality-dari-dokumen-berita" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="c1">#Graph dari matriks biner cosine similarity</span>
-<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">binary_cosine_sim_df</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-
-<span class="c1"># Menghitung Degree Centrality</span>
-<span class="n">degree_centrality</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">degree_centrality</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-
-<span class="c1"># Menghitung Betweenness Centrality</span>
-<span class="n">betweenness_centrality</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">betweenness_centrality</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-
-<span class="c1">#Menghitung Closeness Centrality</span>
-<span class="n">closeness_centrality</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">betweenness_centrality</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-
-<span class="c1"># Mengonversi hasil ke DataFrame</span>
-<span class="n">degree_centrality_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">degree_centrality</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;Degree Centrality&#39;</span><span class="p">])</span>
-<span class="n">betweenness_centrality_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">betweenness_centrality</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;Betweenness Centrality&#39;</span><span class="p">])</span>
-<span class="n">closeness_centrality_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">closeness_centrality</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="s1">&#39;Closeness Centrality&#39;</span><span class="p">])</span>
-
-<span class="c1"># Menampilkan beberapa hasil</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Degree Centrality:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">degree_centrality_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Betweenness Centrality:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">betweenness_centrality_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Closeness Centrality:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">closeness_centrality_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-
-<span class="c1"># Menemukan berita dengan Degree Centrality tertinggi</span>
-<span class="n">top_degree</span> <span class="o">=</span> <span class="n">betweenness_centrality_df</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Betweenness Centrality&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Top 5 Berita dengan Betweenness Centrality Tertinggi:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">top_degree</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degree Centrality:
-   Index  Degree Centrality
-0      0           0.030303
-1      1           0.030303
-2      2           0.020202
-3      3           0.020202
-4      4           0.020202
-Betweenness Centrality:
-   Index  Betweenness Centrality
-0      0                     0.0
-1      1                     0.0
-2      2                     0.0
-3      3                     0.0
-4      4                     0.0
-Closeness Centrality:
-   Index  Closeness Centrality
-0      0                   0.0
-1      1                   0.0
-2      2                   0.0
-3      3                   0.0
-4      4                   0.0
-
-Top 5 Berita dengan Betweenness Centrality Tertinggi:
-    Index  Betweenness Centrality
-53     53                0.001237
-56     56                0.001237
-86     86                0.000206
-87     87                0.000206
-89     89                0.000206
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">query_svd</span><span class="p">,</span> <span class="n">tfidf_svd_matrix</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">similarity_threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">related_docs_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sim</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span> <span class="k">if</span> <span class="n">sim</span> <span class="o">&gt;</span> <span class="n">similarity_threshold</span><span class="p">]</span>
+<span class="n">related_documents</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">related_docs_indices</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">related_documents</span><span class="p">[</span><span class="s1">&#39;similarity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cosine_similarities</span><span class="p">[</span><span class="n">related_docs_indices</span><span class="p">]</span>  <span class="c1"># Tambahkan kolom similarity</span>
 
-<span class="c1"># Misalkan kamu sudah memiliki degree_centrality_df dan betweenness_centrality_df</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kalimat yang dicari:&quot;</span><span class="p">,</span><span class="n">query</span><span class="p">)</span>
 
-<span class="c1"># Tentukan jumlah berita dengan centrality tertinggi yang ingin ditampilkan</span>
-<span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="c1"># Menampilkan dokumen terkait dengan format yang diinginkan</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Dokumen Terkait&#39;</span><span class="si">:</span><span class="s2">^50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">displayed_count</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="c1"># Ambil berita dengan degree centrality tertinggi</span>
-<span class="n">top_degree</span> <span class="o">=</span> <span class="n">degree_centrality_df</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">top_n</span><span class="p">,</span> <span class="s1">&#39;Degree Centrality&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">related_documents</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dokumen #</span><span class="si">{</span><span class="n">displayed_count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Judul     : </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;judul&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tanggal   : </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;tanggal&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kategori  : </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;similarity&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Isi Berita:</span><span class="se">\n</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;isi&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># Pemisah antar dokumen</span>
+    <span class="n">displayed_count</span> <span class="o">+=</span> <span class="mi">1</span>
 
-<span class="c1"># Ambil berita dengan betweenness centrality tertinggi</span>
-<span class="n">top_betweenness</span> <span class="o">=</span> <span class="n">betweenness_centrality_df</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">top_n</span><span class="p">,</span> <span class="s1">&#39;Betweenness Centrality&#39;</span><span class="p">)</span>
-
-<span class="c1"># Buat Graph dari matriks biner cosine similarity (gunakan yang sebelumnya)</span>
-<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">binary_cosine_sim_df</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-
-<span class="c1"># Pilih node (berita) yang ingin ditampilkan</span>
-<span class="n">nodes_to_display</span> <span class="o">=</span> <span class="n">top_degree</span><span class="p">[</span><span class="s1">&#39;Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-
-<span class="c1"># Buat subgraph dengan hanya node yang dipilih</span>
-<span class="n">subgraph</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">nodes_to_display</span><span class="p">)</span>
-
-<span class="c1"># Visualisasikan subgraph</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-<span class="n">G</span><span class="o">.</span><span class="n">remove_edges_from</span><span class="p">([(</span><span class="n">u</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()])</span>
-<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">subgraph</span><span class="p">)</span>  <span class="c1"># Atur posisi node</span>
-<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">subgraph</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Top </span><span class="si">{</span><span class="n">top_n</span><span class="si">}</span><span class="s1"> Berita dengan Betweenness Centrality Tertinggi&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># Menampilkan jumlah dokumen yang ditampilkan</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah dokumen yang ditampilkan: </span><span class="si">{</span><span class="n">displayed_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6f30b07192c95911f8a01a8dafa1e5a5f3c80947cbb96f237f0fd4e756e6d7f9.png" src="_images/6f30b07192c95911f8a01a8dafa1e5a5f3c80947cbb96f237f0fd4e756e6d7f9.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>kalimat yang dicari: indonesia vs australia
+==================================================
+                 Dokumen Terkait                  
+==================================================
+Dokumen #1
+Judul     : Link Live Streaming Indonesia vs Australia di Kualifikasi Piala Dunia
+Tanggal   : Selasa, 10 Sep 2024 17:04 WIB
+Kategori  : Olahraga
+Similarity: 0.5799
+Isi Berita:
+Link live streaming Timnas Indonesia vs Australia di putaran ketiga Kualifikasi Piala Dunia 2026 Zona Asia dapat dilihat dari artikel berikut. Timnas Indonesia akan menjalani laga kedua di Grup C Kualifikasi Piala Dunia 2026 Zona Asia dengan menghadapi Australia. Laga ini akan berlangsung hari ini Selasa (10/9) malam WIB di Stadion Utama Gelora Bung Karno, Jakarta. Jadwal Siaran langsung Timnas Indonesia vs Australia akan disiarkan RCTI pada Selasa (10/9) pukul 19.00 WIB. Selain itu, laga kandang pertama Timnas Indonesia pada fase ketiga Kualifikasi Piala Dunia 2026 ini juga dapat disaksikan melalui live streaming di Vision+. Pilihan Redaksi Jadwal Siaran Langsung Timnas Indonesia vs Australia Prediksi Timnas Indonesia vs Australia di Kualifikasi Piala Dunia Prediksi Line Up Indonesia vs Australia di Kualifikasi Piala Dunia Laga kedua ini menjadi krusial bagi masing-masing tim. Timnas Indonesia ingin melanjutkan tren positif setelah menahan imbang Arab Saudi di Jeddah. Kini di hadapan ribuan suporter setia, Rizky Ridho dan kawan-kawan akan bersikeras memetik poin penuh pada laga malam nanti. Dalam fase pertama dan kedua Kualifikasi Piala Dunia 2026, Timnas Indonesia sudah menjalani empat laga kandang yang berakhir dengan tiga kemenangan dan sekali kalah. Di sisi lain, tim tamu asuhan Graham Arnold bertandang ke Jakarta bukan tanpa motivasi. Kekalahan 0-1 dari Bahrain di kandang menjadi tamparan keras bagi Martin Boyle dkk. Australia diprediksi akan mendominasi penyerangan untuk menciptakan poin terlebih dahulu atas Timnas Indonesia. Catatan lima pertandingan tandang tak terkalahkan menjadi modal yang baik bagi Socceroos. Wasit Salman Ahmad Falahi akan memimpin pertandingan Timnas Indonesia vs Australia malam ini. Salman telah memimpin tiga pertandingan dalam Kualifikasi Piala Dunia 2026, dua dari tiga laga yang dipimpinnya dimenangi tuan rumah. Link Live Streaming Timnas Indonesia vs Australia di kualifikasi Piala Dunia 2026: Stadion Utama Gelora Bung Karno/ Selasa (10/9) pukul 19.00 WIB/ Vision+ [Gambas:Video CNN] (afr/nva)
+--------------------------------------------------
+Dokumen #2
+Judul     : Perbandingan Ranking FIFA Timnas Indonesia vs Australia
+Tanggal   : Selasa, 10 Sep 2024 10:03 WIB
+Kategori  : Olahraga
+Similarity: 0.5033
+Isi Berita:
+Timnas Indonesia dan Australia memiliki perbedaan ranking FIFA yang luar biasa menjelang duel kedua tim dalam babak ketiga Kualifikasi Piala Dunia 2026, Selasa (10/9). Timnas Indonesia menjamu Australia dalam laga kedua Grup C babak ketiga Kualifikasi Piala Dunia 2026 di Stadion Utama Gelora Bung Karno (GBK). Pertandingan ini jadi laga kandang pertama Indonesia dalam babak ketiga Kualifikasi Piala Dunia 2026. Baik Indonesia maupun Australia sama-sama mengincar hasil positif. Hanya saja, setelah dihajar Bahrain 0-1 dalam laga kandang, Australia bertekad menekuk Indonesia di kandangnya sendiri. Pilihan Redaksi Momen Timnas Indonesia Hajar Australia 1-0 di Kualifikasi Piala Dunia Profil Salman Falahi, Wasit Kontroversial di Indonesia vs Australia Gelora 10 November, Saksi Timnas Indonesia Tumpas Australia 1-0 Indonesia yang mengimbangi Arab Saudi 1-1 dalam pertandingan pertama juga berhasrat menang atas Australia. Akan tetapi, dengan melihat perbedaan ranking FIFA yang mencengangkan, hasil imbang sangat bagus untuk Skuad Garuda. Sebelum babak ketiga Kualifikasi Piala Dunia 2026 dimulai, Timnas Indonesia menempati peringkat ke-133 dalam ranking FIFA, berdasarkan rilis terakhir pada 18 Juli. Sementara, Australia unggul jauh atas Indonesia. The Socceroos unggul 109 setrip di atas Tim Merah Putih dengan menempati peringkat ke-24 dunia. Di level Asia, Australia menempati posisi keempat di bawah Jepang, Iran, dan Korea Selatan. Sedangkan Indonesia di peringkat ke-23 Asia. Pelatih Indonesia Shin Tae Yong mengakui perbedaan ranking membuat Australia layak lebih diunggulkan atas Indonesia. Meski begitu Jay Idzes dan kawan-kawan akan memberikan perlawanan kepada Australia. &quot;Saya tidak bisa bicarakan taktik di sini, tetapi kita bisa lihat dari FIFA ranking, kita mau menyerang pun pasti (ujung-ujungnya) akan lebih banyak bertahan,&quot; ujar Shin Tae Yong dalam konferensi pers jelang laga. &quot;FIFA ranking Australia 20-an, kita 130-an, mungkin saja 6:4. Tapi saya sebagai pelatih Timnas Indonesia bagaimana pun akan memikirkan (solusi) untuk itu,&quot; ucap Shin Tae Yong menambahkan. [Gambas:Video CNN] (sry/abs/jal)
+--------------------------------------------------
+Dokumen #3
+Judul     : Prediksi Timnas Indonesia vs Australia di Kualifikasi Piala Dunia
+Tanggal   : Selasa, 10 Sep 2024 09:31 WIB
+Kategori  : Olahraga
+Similarity: 0.6702
+Isi Berita:
+Timnas Indonesia melakoni laga berat melawan Australia dalam Kualifikasi Piala Dunia 2026 di Stadion utama Gelora Bung Karno (GBK), Selasa (10/9) malam. Berikut prediksi Indonesia vs Australia. Tuan rumah Indonesia sedang dalam motivasi tinggi menghadapi Australia setelah mengimbangi Arab Saudi pada pertandingan pertama. Sementara Australia dalam tekanan lantaran kalah 0-1 dari Bahrain. Meski begitu Indonesia pantang jemawa, lantaran Australia tidak seperti Arab Saudi. Australia memiliki kondisi tim yang lebih bagus. The Socceroos hanya kurang beruntung dalam penyelesaian akhir saat lawan Bahrain. Pilihan Redaksi Reaksi Calvin Verdonk Usai Followers Instagram Tembus 1 Juta Jadwal Siaran Langsung Timnas Indonesia vs Australia Profil Salman Falahi, Wasit Kontroversial di Indonesia vs Australia Apabila terlalu percaya diri dan kehilangan fokus, akan berbahaya bagi Indonesia dalam menghadapi Australia. Skuad Garuda butuh kerja keras dengan konsentrasi selama 90 menit. Kedodoran di babak kedua, khususnya pada menit-menit akhir jadi perhatian khusus bagi tim asuhan Shin Tae Yong ini. Apabila Maarten Paes dan kawan-kawan bisa konsisten selama pertandingan, bukan tidak mungkin Indonesia kembali mencuri poin dari Australia. Tambahan tenaga dari Justin Hubner yang sudah terbebas dari akumulasi kartu bisa makin menguatkan pertahanan Indonesia. Justun Hubner termasuk pemain yang fleksibel, bisa dimainkan di sektor pertahanan atau gelandang bertahan. Indonesia Tahan Australia (Surya Sumirat) Timnas Indonesia mendapat lawan berat, Australia. Kekuatan Australia lebih bagus ketimbang Arab Saudi. Ditambah lagi Australia bisa memainkan sejumlah pemain utama yang absen saat kalah dari Bahrain. Indonesia perlu konsisten dalam menyerang maupun bertahan menghadapi Australia. Apabila Indonesia lengah, gawang Maarten Paes bisa dalam ancaman. Namun jika Garuda bisa solid dan konsisten selama 90 menit, bukan tidak mungkin Indonesia kembali membuat kejutan dengan mencuri poin dari Australia. Saya prediksi Indonesia tahan Australia 0-0. Baca kelanjutan berita ini di halaman berikutnya... Stamina Bugar Jadi Tantangan bagi Timnas Indonesia BACA HALAMAN BERIKUTNYA HALAMAN: 1 2
+--------------------------------------------------
+Dokumen #4
+Judul     : Gelora 10 November, Saksi Timnas Indonesia Tumpas Australia 1-0
+Tanggal   : Selasa, 10 Sep 2024 09:00 WIB
+Kategori  : Olahraga
+Similarity: 0.5851
+Isi Berita:
+Stadion Gelora 10 November Surabaya menjadi saksi bisu kemenangan 1-0 Timnas Indonesia atas Australia dalam Kualifikasi Piala Dunia. Menjelang pertarungan sengit di Stadion Utama Gelora Bung Karno (GBK), Jakarta, Selasa (10/9) malam, Timnas Indonesia memiliki kenangan manis melawan Australia. Indonesia akan melawan Australia dalam laga kedua Grup C babak ketiga Kualifikasi Piala Dunia 2026 di GBK, malam nanti. Sebelum pertandingan krusial itu dimulai, Skuad Garuda punya rapor apik melawan The Socceroos di kandang. Pilihan Redaksi Momen Timnas Indonesia Hajar Australia 1-0 di Kualifikasi Piala Dunia 7 Fakta Menarik Jelang Timnas Indonesia vs Australia Reaksi Calvin Verdonk Usai Followers Instagram Tembus 1 Juta Rekor pertemuan kedua tim memihak Australia dengan 12 kemenangan dari 16 pertandingan sejak 1967, menurut situ Socceroos. Timnas Indonesia hanya menang satu kali pada Agustus 1981 silam. Kemenangan Indonesia atas Australia itu terjadi dalam Kualifikasi Piala Dunia 1982 zona Asia dan Oseania pada 1981. Laga Indonesia vs Australia di Stadion Gelora 10 November Surabaya tersebut merupakan partai pemungkas kedua tim di Grup 1. Kemenangan Indonesia atas Australia di Gelora 10 November itu jadi satu-satunya yang dimiliki Tim Merah Putih atas tim asal Oseania tersebut sampai saat ini. Laga Indonesia vs Australia tidak lagi menentukan bagi kedua tim. Pasalnya, baik Timnas Indonesia maupun Australia sama-sama dipastikan tidak lolos ke kualifikasi terakhir. Hanya saja, pertandingan yang dipimpin wasit R Reyes itu krusial bagi Indonesia demi menghindari posisi juru kunci di Grup 1. Sebelum pertandingan, Indonesia mengoleksi 4 poin hasil 1 kemenangan dan 2 kali imbang. Sejumlah sumber menyebutkan, kala itu Indonesia yang dilatih Endang Witarsa yang menggantikan Harry Tjong menurunkan sejumlah pemain muda yang diproyeksikan mengikuti FIFA World Youth Championship 1981 atau saat ini bernama Piala Dunia U-20. Dalam pertandingan tersebut para pemain Australia kelelahan karena cuaca panas di Surabaya. Situasi itu dimanfaatkan Indonesia dengan memiliki sejumlah peluang gol, namun finishing Tim Merah Putih buruk. Tekanan Indonesia baru membuahkan hasil pada menit-menit akhir pertandingan. Pada menit ke-88 striker Herry Risdianto membobol gawang Australia yang dijaga Glen Ahearn. Gol tersebut tercipta lewat kerja sama dua gelandang, Abdul Rahman dan Rully Nere. Kerja sama apik menjadi umpan matang bagi Risdianto yang melepaskan tembakan keras dari sudut sempit. Indonesia pun menang 1-0 atas Australia. Jadwal Siaran Langsung Timnas Indonesia vs Australia Kemenangan itu membuat Gelora 10 November jadi saksi sejarah satu-satunya laga yang dimenangkan Indonesia atas Australia di semua ajang sampai saat ini. Indonesia pun menempati peringkat ketiga klasemen Grup 1 dan terhindar dari dasar klasemen. Saat ini Timnas Indonesia dalam kondisi bagus dan memiliki kepercayaan diri tinggi setelah mengimbangi Arab Saudi dalam laga tandang. Sebaliknya, Australia memiliki beban lebih karena baru dikalahkan Bahrain di kandang sendiri. Kemenangan pada Augusts 1981 diharapkan kembali terulang setelah 43 tahun. Timnas Indonesia membutuhkan kemenangan guna menahbiskan diri sebagai &#39;kuda hitam&#39; Grup C, sekaligus membuka peluang lolos ke putaran final Piala Dunia 2026. [Gambas:Video CNN] (sry)
+--------------------------------------------------
+Dokumen #5
+Judul     : Jadwal Siaran Langsung Timnas Indonesia vs Australia
+Tanggal   : Selasa, 10 Sep 2024 06:26 WIB
+Kategori  : Olahraga
+Similarity: 0.7697
+Isi Berita:
+Timnas Indonesia akan menjamu Australia di Stadion GBK. Berikut jadwal siaran langsung Timnas Indonesia vs Australia di Kualifikasi Piala Dunia 2026 malam ini. Jadwal Timnas Indonesia vs Australia pada matchday kedua Grup C putaran ketiga Kualifikasi Piala Dunia 2026 akan berlangsung di Stadion Utama Gelora Bung Karno, Senayan hari ini Selasa (10/9) malam WIB Siaran langsung Timnas Indonesia vs Australia bisa ditonton di RCTI mulai pukul 19.00 WIB. Pilihan Redaksi Momen Timnas Indonesia Hajar Australia 1-0 di Kualifikasi Piala Dunia Reaksi Calvin Verdonk Usai Followers Instagram Tembus 1 Juta Wasit Kontroversial Salman Falahi Pimpin Laga Indonesia vs Australia Selain itu duel Timnas Indonesia vs Australia juga bisa disaksikan melalui live streaming di Vision+ mulai pukul 19.00 WIB. Secara head to head, Indonesia dan Australia telah bertemu sejak 7 November 1967. Indonesia tercatat kalah 15 kali, tiga kali imbang, dan sekali menang atas Australia. Satu-satunya kemenangan Indonesia atas Australia tercipta pada 30 Agustus 1981. Kini tim tuan rumah Indonesia akan berusaha merebut kemenangan perdana di Grup C Kualifikasi Piala Dunia 2026 setelah bermain imbang 1-1 dengan Arab Saudi di babak pertama. Sementara itu, Australia berupaya bangkit dari kekalahan 0-1 lawan Bahrain di pertandingan pertama untuk menjaga peluang mereka lolos ke Piala Dunia 2026. Kini Indonesia berada di peringkat keempat Grup C dengan satu poin, sementara Australia berada di peringkat kelima dengan nol poin. Jadwal Siaran Langsung Timnas Indonesia vs Australia Stadion Utama Gelora Bung Karno, Senayan/ Selasa (10/9)/Pukul 19.00 WIB/Live RCTI/Live Streaming Vision+ [Gambas:Video CNN] (rhr)
+--------------------------------------------------
+Dokumen #6
+Judul     : Jadwal Siaran Langsung dan Live Streaming Indonesia vs Australia
+Tanggal   : Selasa, 10 Sep 2024 05:30 WIB
+Kategori  : Olahraga
+Similarity: 0.7780
+Isi Berita:
+Jadwal siaran langsung dan live streaming Timnas Indonesia vs Australia bisa diketahui dari artikel berikut. Timnas Indonesia vs Australia pada matchday kedua Grup C Kualifikasi Piala Dunia 2026 akan berlangsung hari ini Selasa (10/9) malam WIB di Stadion Utama Gelora Bung Karno, Senayan. Pertandingan Indonesia vs Australia bisa ditonton secara langsung di RCTI mulai pukul 19.00 WIB. Pilihan Redaksi Momen Timnas Indonesia Hajar Australia 1-0 di Kualifikasi Piala Dunia Reaksi Calvin Verdonk Usai Followers Instagram Tembus 1 Juta Wasit Kontroversial Salman Falahi Pimpin Laga Indonesia vs Australia Selain itu laga Indonesia vs Australia juga bisa disaksikan melalui live streaming di Vision+ juga pada pukul 19.00 WIB. Tuan rumah Indonesia mengincar kemenangan perdana di Grup C Kualifikasi Piala Dunia 2026 setelah bermain imbang 1-1 dengan Arab Saudi di babak pertama. Sementara itu, Australia berupaya bangkit dari kekalahan 0-1 lawan Bahrain di pertandingan pertama untuk menjaga peluang mereka lolos ke Piala Dunia 2026. Kini Indonesia berada di peringkat keempat Grup C dengan satu poin, sementara Australia berada di peringkat kelima dengan nol poin. Pada pertandingan ini Timnas Indonesia dipastikan akan mendapat dukungan penuh dari puluhan ribu suporter Garuda. Hal itu dipastikan karena seluruh tiket Indonesia vs Australia di Stadion GBK telah terjual habis. Dukungan pemain ke-12 Indonesia ini diharapkan bisa memberikan tambahan semangat dan kepercayaan diri para penggawa Garuda untuk mengalahkan Australia. Jadwal Siaran Langsung dan Live Streaming Indonesia vs Australia Stadion Utama Gelora Bung Karno, Senayan/ Selasa (10/9)/Pukul 19.00 WIB/Live RCTI/Live Streaming Vision+ [Gambas:Video CNN] (rhr)
+--------------------------------------------------
+Dokumen #7
+Judul     : Jadwal Grup C Kualifikasi Piala Dunia Hari Ini Termasuk Indonesia
+Tanggal   : Selasa, 10 Sep 2024 04:30 WIB
+Kategori  : Olahraga
+Similarity: 0.7280
+Isi Berita:
+Seluruh atau enam kontestan Grup C putaran ketiga Kualifikasi Piala Dunia 2026 Zona Asia akan bertanding hari ini Selasa (10/9) termasuk Timnas Indonesia vs Australia. Tiga pertandingan matchday kedua Grup C Kualifikasi Piala Dunia 2026 akan berlangsung hari ini Selasa (10/9) malam WIB. Ketiga pertandingan tersebut adalah China vs Arab Saudi, Indonesia vs Australia, dan Bahrain vs Jepang. Pilihan Redaksi Momen Timnas Indonesia Hajar Australia 1-0 di Kualifikasi Piala Dunia 6 Muka Baru Timnas Indonesia yang Bisa Bungkam Australia Reaksi Calvin Verdonk Usai Followers Instagram Tembus 1 Juta Pertandingan China vs Arab Saudi dan Indonesia vs Australia akan digelar berbarengan pada Selasa (10/9) pukul 19.00 WIB. Laga China vs Arab Saudi akan digelar di Stadion Dalian Suoyuwan Football, Dalian. Sedangkan laga Indonesia vs Australia akan berlangsung di Stadion Utama Gelora Bung Karno, Senayan. Pertandingan Indonesia vs Australia bisa ditonton secara langsung di RCTI. Selain itu laga Indonesia vs Australia juga bisa disaksikan melalui live streaming di Vision+. Sementara itu, pertandingan Bahrain vs Jepang akan digelar di Bahrain National Stadium, Riffa, pada Selasa (10/9) pukul 23.00 WIB. Laga Bahrain vs Jepang juga dapat ditonton melalui siaran langsung di RCTI. Selain itu pertandingan Bahrain vs Jepang bisa disaksikan lewat live streaming di Vision+. Pada klasemen Grup C, Jepang kini memimpin dengan torehan tiga poin disusul Bahrain dengan poin yang sama. Kemudian di peringkat ketiga ditempati Arab Saudi dengan satu poin diikuti Indonesia di posisi keempat dengan poin yang sama. Sementara Australia kini berada di posisi kelima dengan nol poin, kemudian China di dasar klasemen dengan nol poin. Jadwal Grup C Kualifikasi Piala Dunia 2026, Selasa (10/9): 19.00 WIB China vs Arab Saudi19.00 WIB Indonesia vs Arab Saudi23.00 WIB Bahrain vs Jepang [Gambas:Video CNN] (rhr)
+--------------------------------------------------
+
+Jumlah dokumen yang ditampilkan: 7
+==================================================
+</pre></div>
+</div>
 </div>
 </div>
 </section>
@@ -2583,20 +2029,20 @@ Top 5 Berita dengan Betweenness Centrality Tertinggi:
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Skip-gram.html"
+       href="UTS.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Part.4 WORD EMBEDDING</p>
+        <p class="prev-next-title">UTS (Keyword Extraction)</p>
       </div>
     </a>
     <a class="right-next"
-       href="RingkasBerita.html"
+       href="Clustering%20fuzzy.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Ringkas Berita</p>
+        <p class="prev-next-title">Part 7. Fuzzy C-Means Clustering</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2617,19 +2063,11 @@ Top 5 Berita dengan Betweenness Centrality Tertinggi:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Part.5 Graf 100 Berita</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-data-berita-yang-telah-di-preprosessing">Import data berita yang telah di preprosessing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf">TF-IDF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cosine-similarity">Cosine similarity</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konversi">Konversi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-dengan-truncated-svd">Reduksi Dimensi dengan  Truncated SVD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-query-ke-bentuk-tf-idf-dan-reduksi-svd">Transform query ke bentuk TF-IDF dan reduksi SVD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-kemiripan-cosine-similarity-antara-query-dan-dokumen-di-dimensi-yang-lebih-rendah">Hitung kemiripan (cosine similarity) antara query dan dokumen di dimensi yang lebih rendah</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#graf">Graf</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#centrality-dari-dokumen-berita">Centrality dari dokumen Berita</a></li>
-</ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>

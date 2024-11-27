@@ -1,0 +1,2126 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Part 7. Fuzzy C-Means Clustering &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Clustering fuzzy';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Part.6 Pencarian Dokumen" href="PencarianBerita.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/ppwlogo.jpg" class="logo__image only-light" alt="My sample book - Home"/>
+    <img src="_static/ppwlogo.jpg" class="logo__image only-dark pst-js-only" alt="My sample book - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Selamat Datang Di Halaman Pencarian & Penambangan Web (PPW)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="CrawlingBerita.html">Part.1 CRAWLING BERITA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="VektorSpaceModel.html">Part.2 Vector Space Model (VSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Klasifikasiberita-Loreg.html">Part 3. PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="klasifikasiwithsvd.html">Penerapan Logistic Regression (SVD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Skip-gram.html">Part.4 WORD EMBEDDING</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="100beritaToGraf.html">Part.5 Graf 100 Berita</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="RingkasBerita.html">Ringkas Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UTS.html">UTS (Keyword Extraction)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PencarianBerita.html">Part.6 Pencarian Dokumen</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Part 7. Fuzzy C-Means Clustering</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/RahmaNhz/PPW/blob/gh-pages/_sources/Clustering fuzzy.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/RahmaNhz/PPW" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/RahmaNhz/PPW/issues/new?title=Issue%20on%20page%20%2FClustering fuzzy.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Clustering fuzzy.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Part 7. Fuzzy C-Means Clustering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tfidf">TFIDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengurangi-dimensi-menggunakan-svd">Mengurangi Dimensi Menggunakan SVD</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengurangan-komponen-1-per-satu-mencari-akurasi-terbaik-dari-4413-komponen-hingga-4000-komponen">Pengurangan komponen 1 per satu (mencari akurasi terbaik dari 4413 komponen hingga 4000 komponen)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-grafik">Menampilkan Grafik</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-plot-dengan-4413-komponen">Menampilkan plot dengan 4413 komponen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kategori-dalam-cluster">Distribusi Kategori Dalam cluster</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengurangan-komponen-1-per-satu-mencari-akurasi-terbaik-dari-300-komponen-hingga-2-komponen">Pengurangan komponen 1 per satu ( mencari akurasi terbaik dari 300 komponen hingga 2 komponen)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Menampilkan Grafik</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-plot-setelah-svd-berdasarkan-pencarian-komponen-dengan-akurasi-terbaik">Menampilkan plot setelah svd, berdasarkan pencarian komponen dengan akurasi terbaik</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Distribusi Kategori Dalam cluster</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face Logo" width="40" style="vertical-align:middle;"/>
+<a href="https://huggingface.co/spaces/RahmaNh/fuzzyc-means" target="_blank" style="text-decoration:none; font-size:16px; margin-left:10px;">Fuzzy C Means</a>
+<section class="tex2jax_ignore mathjax_ignore" id="part-7-fuzzy-c-means-clustering">
+<h1>Part 7. Fuzzy C-Means Clustering<a class="headerlink" href="#part-7-fuzzy-c-means-clustering" title="Link to this heading">#</a></h1>
+<p>NAMA : RAHMA NURHALIZA</p>
+<p>NIM : 210411100176</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-1-d5df0069828e&gt;</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/drive.py</span> in <span class="ni">mount</span><span class="nt">(mountpoint, force_remount, timeout_ms, readonly)</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span> <span class="k">def</span> <span class="nf">mount</span><span class="p">(</span><span class="n">mountpoint</span><span class="p">,</span> <span class="n">force_remount</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout_ms</span><span class="o">=</span><span class="mi">120000</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span><span class="w">   </span><span class="sd">&quot;&quot;&quot;Mount your Google Drive at the specified mountpoint path.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">100</span>   <span class="k">return</span> <span class="n">_mount</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span>       <span class="n">mountpoint</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">102</span>       <span class="n">force_remount</span><span class="o">=</span><span class="n">force_remount</span><span class="p">,</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/drive.py</span> in <span class="ni">_mount</span><span class="nt">(mountpoint, force_remount, timeout_ms, ephemeral, readonly)</span>
+<span class="g g-Whitespace">    </span><span class="mi">135</span>   <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">136</span>   <span class="k">if</span> <span class="n">ephemeral</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">137</span>     <span class="n">_message</span><span class="o">.</span><span class="n">blocking_request</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>         <span class="s1">&#39;request_auth&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span>         <span class="n">request</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;authType&#39;</span><span class="p">:</span> <span class="s1">&#39;dfs_ephemeral&#39;</span><span class="p">},</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/_message.py</span> in <span class="ni">blocking_request</span><span class="nt">(request_type, request, timeout_sec, parent)</span>
+<span class="g g-Whitespace">    </span><span class="mi">174</span>       <span class="n">request_type</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">expect_reply</span><span class="o">=</span><span class="kc">True</span>
+<span class="g g-Whitespace">    </span><span class="mi">175</span>   <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">176</span>   <span class="k">return</span> <span class="n">read_reply_from_input</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="n">timeout_sec</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/_message.py</span> in <span class="ni">read_reply_from_input</span><span class="nt">(message_id, timeout_sec)</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span>     <span class="n">reply</span> <span class="o">=</span> <span class="n">_read_next_input_message</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span>     <span class="k">if</span> <span class="n">reply</span> <span class="o">==</span> <span class="n">_NOT_READY</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reply</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">96</span>       <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span>       <span class="k">continue</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="k">if</span> <span class="p">(</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/PPW/tugas/preprocessing-cnnnews.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-dd0940f1-939e-40bf-b3df-36502c1c2ff2" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>judul</th>
+      <th>isi</th>
+      <th>tanggal</th>
+      <th>kategori</th>
+      <th>berita_clean</th>
+      <th>case_folding</th>
+      <th>tokenize</th>
+      <th>stopword_removal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Jokowi Groundbreaking 2 Investasi Asing di IKN...</td>
+      <td>Presiden Joko Widodo (Jokowi) dijadwalkan mela...</td>
+      <td>Selasa, 10 Sep 2024 20:02 WIB</td>
+      <td>Ekonomi</td>
+      <td>Presiden Joko Widodo Jokowi dijadwalkan melaku...</td>
+      <td>presiden joko widodo jokowi dijadwalkan melaku...</td>
+      <td>['presiden', 'joko', 'widodo', 'jokowi', 'dija...</td>
+      <td>presiden joko widodo jokowi dijadwalkan peleta...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Amran Copot Direktur Diduga Calo Pengadaan Bar...</td>
+      <td>Menteri Pertanian Andi Amran Sulaiman mencopot...</td>
+      <td>Selasa, 10 Sep 2024 19:11 WIB</td>
+      <td>Ekonomi</td>
+      <td>Menteri Pertanian Andi Amran Sulaiman mencopot...</td>
+      <td>menteri pertanian andi amran sulaiman mencopot...</td>
+      <td>['menteri', 'pertanian', 'andi', 'amran', 'sul...</td>
+      <td>menteri pertanian andi amran sulaiman mencopot...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Bahlil Bicara Pasokan Listrik di Tengah Rencan...</td>
+      <td>Menteri Energi dan Sumber Daya Mineral (ESDM) ...</td>
+      <td>Selasa, 10 Sep 2024 18:32 WIB</td>
+      <td>Ekonomi</td>
+      <td>Menteri Energi dan Sumber Daya Mineral ESDM Ba...</td>
+      <td>menteri energi dan sumber daya mineral esdm ba...</td>
+      <td>['menteri', 'energi', 'dan', 'sumber', 'daya',...</td>
+      <td>menteri energi sumber daya mineral esdm bahlil...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Pertamina Kaji Ubah Minyak Jelantah Jadi Avtur</td>
+      <td>PT Pertamina (Persero) mengkaji pengembangan b...</td>
+      <td>Selasa, 10 Sep 2024 17:43 WIB</td>
+      <td>Ekonomi</td>
+      <td>PT Pertamina Persero mengkaji pengembangan bah...</td>
+      <td>pt pertamina persero mengkaji pengembangan bah...</td>
+      <td>['pt', 'pertamina', 'persero', 'mengkaji', 'pe...</td>
+      <td>pt pertamina persero mengkaji pengembangan bah...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Dukung PMI, Bank Mandiri Perluas Akses Livin' ...</td>
+      <td>Bank Mandiri menghadirkan program Livin' Aroun...</td>
+      <td>Selasa, 10 Sep 2024 17:18 WIB</td>
+      <td>Ekonomi</td>
+      <td>Bank Mandiri menghadirkan program Livin Around...</td>
+      <td>bank mandiri menghadirkan program livin around...</td>
+      <td>['bank', 'mandiri', 'menghadirkan', 'program',...</td>
+      <td>bank mandiri menghadirkan program livin around...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-dd0940f1-939e-40bf-b3df-36502c1c2ff2')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-dd0940f1-939e-40bf-b3df-36502c1c2ff2 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-dd0940f1-939e-40bf-b3df-36502c1c2ff2');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-fdd9b177-9148-4df9-9398-b6d37995b3da">
+  <button class="colab-df-quickchart" onclick="quickchart('df-fdd9b177-9148-4df9-9398-b6d37995b3da')"
+            title="Suggest charts"
+            style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-fdd9b177-9148-4df9-9398-b6d37995b3da button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+
+    </div>
+  </div>
+</div></div>
+</div>
+<section id="tfidf">
+<h2>TFIDF<a class="headerlink" href="#tfidf" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="c1"># Menginisialisasi TfidfVectorizer</span>
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="c1"># Menghitung TF-IDF</span>
+<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stopword_removal&#39;</span><span class="p">])</span>
+<span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(100, 4413)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>scikit-fuzzy
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting scikit-fuzzy
+  Downloading scikit_fuzzy-0.5.0-py2.py3-none-any.whl.metadata (2.6 kB)
+Downloading scikit_fuzzy-0.5.0-py2.py3-none-any.whl (920 kB)
+?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/920.8 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
+   ━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">307.2/920.8 kB</span> <span class=" -Color -Color-Red">9.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">920.8/920.8 kB</span> <span class=" -Color -Color-Red">14.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hInstalling collected packages: scikit-fuzzy
+Successfully installed scikit-fuzzy-0.5.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">skfuzzy.cluster</span> <span class="kn">import</span> <span class="n">cmeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mapping label string ke integer (Ekonomi -&gt; 0, Olahraga -&gt; 1)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Ekonomi&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Olahraga&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="n">true_labels</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mengurangi-dimensi-menggunakan-svd">
+<h2>Mengurangi Dimensi Menggunakan SVD<a class="headerlink" href="#mengurangi-dimensi-menggunakan-svd" title="Link to this heading">#</a></h2>
+<section id="pengurangan-komponen-1-per-satu-mencari-akurasi-terbaik-dari-4413-komponen-hingga-4000-komponen">
+<h3>Pengurangan komponen 1 per satu (mencari akurasi terbaik dari 4413 komponen hingga 4000 komponen)<a class="headerlink" href="#pengurangan-komponen-1-per-satu-mencari-akurasi-terbaik-dari-4413-komponen-hingga-4000-komponen" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">skfuzzy.cluster</span> <span class="kn">import</span> <span class="n">cmeans</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">num_components_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">accuracy_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">num_components</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4413</span><span class="p">,</span><span class="mi">3999</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># Mengurangi dimensi menggunakan SVD</span>
+    <span class="n">svd</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">num_components</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">tfidf_reduced</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
+
+    <span class="c1"># Transpose data agar sesuai dengan input skfuzzy (cmeans mengharapkan data dalam bentuk [fitur, sampel])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">tfidf_reduced</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># Fuzzy C-Means clustering menggunakan skfuzzy</span>
+    <span class="n">cntr</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">jm</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">fpc</span> <span class="o">=</span> <span class="n">cmeans</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>                     <span class="c1"># Data input</span>
+        <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>                      <span class="c1"># Jumlah cluster</span>
+        <span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>                      <span class="c1"># Parameter fuzziness</span>
+        <span class="n">error</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>              <span class="c1"># Toleransi error</span>
+        <span class="n">maxiter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>              <span class="c1"># Iterasi maksimum</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>                   <span class="c1"># Seed untuk random state</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Predict labels berdasarkan derajat keanggotaan maksimum</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Evaluasi menggunakan akurasi</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">true_labels</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;num_components&quot;</span><span class="p">:</span> <span class="n">num_components</span><span class="p">,</span>
+        <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">accuracy</span><span class="p">,</span>
+        <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span>
+        <span class="s2">&quot;centroids&quot;</span><span class="p">:</span> <span class="n">cntr</span>  <span class="c1"># Menyimpan centroid dari FCM</span>
+    <span class="p">})</span>
+
+    <span class="n">num_components_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_components</span><span class="p">)</span>
+    <span class="n">accuracy_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Komponen: </span><span class="si">{</span><span class="n">num_components</span><span class="si">}</span><span class="s2">, Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Komponen: 4413, Accuracy: 0.85
+Komponen: 4412, Accuracy: 0.85
+Komponen: 4411, Accuracy: 0.85
+Komponen: 4410, Accuracy: 0.85
+Komponen: 4409, Accuracy: 0.85
+Komponen: 4408, Accuracy: 0.85
+Komponen: 4407, Accuracy: 0.85
+Komponen: 4406, Accuracy: 0.85
+Komponen: 4405, Accuracy: 0.85
+Komponen: 4404, Accuracy: 0.85
+Komponen: 4403, Accuracy: 0.85
+Komponen: 4402, Accuracy: 0.85
+Komponen: 4401, Accuracy: 0.85
+Komponen: 4400, Accuracy: 0.85
+Komponen: 4399, Accuracy: 0.85
+Komponen: 4398, Accuracy: 0.85
+Komponen: 4397, Accuracy: 0.85
+Komponen: 4396, Accuracy: 0.85
+Komponen: 4395, Accuracy: 0.85
+Komponen: 4394, Accuracy: 0.85
+Komponen: 4393, Accuracy: 0.85
+Komponen: 4392, Accuracy: 0.85
+Komponen: 4391, Accuracy: 0.85
+Komponen: 4390, Accuracy: 0.85
+Komponen: 4389, Accuracy: 0.85
+Komponen: 4388, Accuracy: 0.85
+Komponen: 4387, Accuracy: 0.85
+Komponen: 4386, Accuracy: 0.85
+Komponen: 4385, Accuracy: 0.85
+Komponen: 4384, Accuracy: 0.85
+Komponen: 4383, Accuracy: 0.85
+Komponen: 4382, Accuracy: 0.85
+Komponen: 4381, Accuracy: 0.85
+Komponen: 4380, Accuracy: 0.85
+Komponen: 4379, Accuracy: 0.85
+Komponen: 4378, Accuracy: 0.85
+Komponen: 4377, Accuracy: 0.85
+Komponen: 4376, Accuracy: 0.85
+Komponen: 4375, Accuracy: 0.85
+Komponen: 4374, Accuracy: 0.85
+Komponen: 4373, Accuracy: 0.85
+Komponen: 4372, Accuracy: 0.85
+Komponen: 4371, Accuracy: 0.85
+Komponen: 4370, Accuracy: 0.85
+Komponen: 4369, Accuracy: 0.85
+Komponen: 4368, Accuracy: 0.85
+Komponen: 4367, Accuracy: 0.85
+Komponen: 4366, Accuracy: 0.85
+Komponen: 4365, Accuracy: 0.85
+Komponen: 4364, Accuracy: 0.85
+Komponen: 4363, Accuracy: 0.85
+Komponen: 4362, Accuracy: 0.85
+Komponen: 4361, Accuracy: 0.85
+Komponen: 4360, Accuracy: 0.85
+Komponen: 4359, Accuracy: 0.85
+Komponen: 4358, Accuracy: 0.85
+Komponen: 4357, Accuracy: 0.85
+Komponen: 4356, Accuracy: 0.85
+Komponen: 4355, Accuracy: 0.85
+Komponen: 4354, Accuracy: 0.85
+Komponen: 4353, Accuracy: 0.85
+Komponen: 4352, Accuracy: 0.85
+Komponen: 4351, Accuracy: 0.85
+Komponen: 4350, Accuracy: 0.85
+Komponen: 4349, Accuracy: 0.85
+Komponen: 4348, Accuracy: 0.85
+Komponen: 4347, Accuracy: 0.85
+Komponen: 4346, Accuracy: 0.85
+Komponen: 4345, Accuracy: 0.85
+Komponen: 4344, Accuracy: 0.85
+Komponen: 4343, Accuracy: 0.85
+Komponen: 4342, Accuracy: 0.85
+Komponen: 4341, Accuracy: 0.85
+Komponen: 4340, Accuracy: 0.85
+Komponen: 4339, Accuracy: 0.85
+Komponen: 4338, Accuracy: 0.85
+Komponen: 4337, Accuracy: 0.85
+Komponen: 4336, Accuracy: 0.85
+Komponen: 4335, Accuracy: 0.85
+Komponen: 4334, Accuracy: 0.85
+Komponen: 4333, Accuracy: 0.85
+Komponen: 4332, Accuracy: 0.85
+Komponen: 4331, Accuracy: 0.85
+Komponen: 4330, Accuracy: 0.85
+Komponen: 4329, Accuracy: 0.85
+Komponen: 4328, Accuracy: 0.85
+Komponen: 4327, Accuracy: 0.85
+Komponen: 4326, Accuracy: 0.85
+Komponen: 4325, Accuracy: 0.85
+Komponen: 4324, Accuracy: 0.85
+Komponen: 4323, Accuracy: 0.85
+Komponen: 4322, Accuracy: 0.85
+Komponen: 4321, Accuracy: 0.85
+Komponen: 4320, Accuracy: 0.85
+Komponen: 4319, Accuracy: 0.85
+Komponen: 4318, Accuracy: 0.85
+Komponen: 4317, Accuracy: 0.85
+Komponen: 4316, Accuracy: 0.85
+Komponen: 4315, Accuracy: 0.85
+Komponen: 4314, Accuracy: 0.85
+Komponen: 4313, Accuracy: 0.85
+Komponen: 4312, Accuracy: 0.85
+Komponen: 4311, Accuracy: 0.85
+Komponen: 4310, Accuracy: 0.85
+Komponen: 4309, Accuracy: 0.85
+Komponen: 4308, Accuracy: 0.85
+Komponen: 4307, Accuracy: 0.85
+Komponen: 4306, Accuracy: 0.85
+Komponen: 4305, Accuracy: 0.85
+Komponen: 4304, Accuracy: 0.85
+Komponen: 4303, Accuracy: 0.85
+Komponen: 4302, Accuracy: 0.85
+Komponen: 4301, Accuracy: 0.85
+Komponen: 4300, Accuracy: 0.85
+Komponen: 4299, Accuracy: 0.85
+Komponen: 4298, Accuracy: 0.85
+Komponen: 4297, Accuracy: 0.85
+Komponen: 4296, Accuracy: 0.85
+Komponen: 4295, Accuracy: 0.85
+Komponen: 4294, Accuracy: 0.85
+Komponen: 4293, Accuracy: 0.85
+Komponen: 4292, Accuracy: 0.85
+Komponen: 4291, Accuracy: 0.85
+Komponen: 4290, Accuracy: 0.85
+Komponen: 4289, Accuracy: 0.85
+Komponen: 4288, Accuracy: 0.85
+Komponen: 4287, Accuracy: 0.85
+Komponen: 4286, Accuracy: 0.85
+Komponen: 4285, Accuracy: 0.85
+Komponen: 4284, Accuracy: 0.85
+Komponen: 4283, Accuracy: 0.85
+Komponen: 4282, Accuracy: 0.85
+Komponen: 4281, Accuracy: 0.85
+Komponen: 4280, Accuracy: 0.85
+Komponen: 4279, Accuracy: 0.85
+Komponen: 4278, Accuracy: 0.85
+Komponen: 4277, Accuracy: 0.85
+Komponen: 4276, Accuracy: 0.85
+Komponen: 4275, Accuracy: 0.85
+Komponen: 4274, Accuracy: 0.85
+Komponen: 4273, Accuracy: 0.85
+Komponen: 4272, Accuracy: 0.85
+Komponen: 4271, Accuracy: 0.85
+Komponen: 4270, Accuracy: 0.85
+Komponen: 4269, Accuracy: 0.85
+Komponen: 4268, Accuracy: 0.85
+Komponen: 4267, Accuracy: 0.85
+Komponen: 4266, Accuracy: 0.85
+Komponen: 4265, Accuracy: 0.85
+Komponen: 4264, Accuracy: 0.85
+Komponen: 4263, Accuracy: 0.85
+Komponen: 4262, Accuracy: 0.85
+Komponen: 4261, Accuracy: 0.85
+Komponen: 4260, Accuracy: 0.85
+Komponen: 4259, Accuracy: 0.85
+Komponen: 4258, Accuracy: 0.85
+Komponen: 4257, Accuracy: 0.85
+Komponen: 4256, Accuracy: 0.85
+Komponen: 4255, Accuracy: 0.85
+Komponen: 4254, Accuracy: 0.85
+Komponen: 4253, Accuracy: 0.85
+Komponen: 4252, Accuracy: 0.85
+Komponen: 4251, Accuracy: 0.85
+Komponen: 4250, Accuracy: 0.85
+Komponen: 4249, Accuracy: 0.85
+Komponen: 4248, Accuracy: 0.85
+Komponen: 4247, Accuracy: 0.85
+Komponen: 4246, Accuracy: 0.85
+Komponen: 4245, Accuracy: 0.85
+Komponen: 4244, Accuracy: 0.85
+Komponen: 4243, Accuracy: 0.85
+Komponen: 4242, Accuracy: 0.85
+Komponen: 4241, Accuracy: 0.85
+Komponen: 4240, Accuracy: 0.85
+Komponen: 4239, Accuracy: 0.85
+Komponen: 4238, Accuracy: 0.85
+Komponen: 4237, Accuracy: 0.85
+Komponen: 4236, Accuracy: 0.85
+Komponen: 4235, Accuracy: 0.85
+Komponen: 4234, Accuracy: 0.85
+Komponen: 4233, Accuracy: 0.85
+Komponen: 4232, Accuracy: 0.85
+Komponen: 4231, Accuracy: 0.85
+Komponen: 4230, Accuracy: 0.85
+Komponen: 4229, Accuracy: 0.85
+Komponen: 4228, Accuracy: 0.85
+Komponen: 4227, Accuracy: 0.85
+Komponen: 4226, Accuracy: 0.85
+Komponen: 4225, Accuracy: 0.85
+Komponen: 4224, Accuracy: 0.85
+Komponen: 4223, Accuracy: 0.85
+Komponen: 4222, Accuracy: 0.85
+Komponen: 4221, Accuracy: 0.85
+Komponen: 4220, Accuracy: 0.85
+Komponen: 4219, Accuracy: 0.85
+Komponen: 4218, Accuracy: 0.85
+Komponen: 4217, Accuracy: 0.85
+Komponen: 4216, Accuracy: 0.85
+Komponen: 4215, Accuracy: 0.85
+Komponen: 4214, Accuracy: 0.85
+Komponen: 4213, Accuracy: 0.85
+Komponen: 4212, Accuracy: 0.85
+Komponen: 4211, Accuracy: 0.85
+Komponen: 4210, Accuracy: 0.85
+Komponen: 4209, Accuracy: 0.85
+Komponen: 4208, Accuracy: 0.85
+Komponen: 4207, Accuracy: 0.85
+Komponen: 4206, Accuracy: 0.85
+Komponen: 4205, Accuracy: 0.85
+Komponen: 4204, Accuracy: 0.85
+Komponen: 4203, Accuracy: 0.85
+Komponen: 4202, Accuracy: 0.85
+Komponen: 4201, Accuracy: 0.85
+Komponen: 4200, Accuracy: 0.85
+Komponen: 4199, Accuracy: 0.85
+Komponen: 4198, Accuracy: 0.85
+Komponen: 4197, Accuracy: 0.85
+Komponen: 4196, Accuracy: 0.85
+Komponen: 4195, Accuracy: 0.85
+Komponen: 4194, Accuracy: 0.85
+Komponen: 4193, Accuracy: 0.85
+Komponen: 4192, Accuracy: 0.85
+Komponen: 4191, Accuracy: 0.85
+Komponen: 4190, Accuracy: 0.85
+Komponen: 4189, Accuracy: 0.85
+Komponen: 4188, Accuracy: 0.85
+Komponen: 4187, Accuracy: 0.85
+Komponen: 4186, Accuracy: 0.85
+Komponen: 4185, Accuracy: 0.85
+Komponen: 4184, Accuracy: 0.85
+Komponen: 4183, Accuracy: 0.85
+Komponen: 4182, Accuracy: 0.85
+Komponen: 4181, Accuracy: 0.85
+Komponen: 4180, Accuracy: 0.85
+Komponen: 4179, Accuracy: 0.85
+Komponen: 4178, Accuracy: 0.85
+Komponen: 4177, Accuracy: 0.85
+Komponen: 4176, Accuracy: 0.85
+Komponen: 4175, Accuracy: 0.85
+Komponen: 4174, Accuracy: 0.85
+Komponen: 4173, Accuracy: 0.85
+Komponen: 4172, Accuracy: 0.85
+Komponen: 4171, Accuracy: 0.85
+Komponen: 4170, Accuracy: 0.85
+Komponen: 4169, Accuracy: 0.85
+Komponen: 4168, Accuracy: 0.85
+Komponen: 4167, Accuracy: 0.85
+Komponen: 4166, Accuracy: 0.85
+Komponen: 4165, Accuracy: 0.85
+Komponen: 4164, Accuracy: 0.85
+Komponen: 4163, Accuracy: 0.85
+Komponen: 4162, Accuracy: 0.85
+Komponen: 4161, Accuracy: 0.85
+Komponen: 4160, Accuracy: 0.85
+Komponen: 4159, Accuracy: 0.85
+Komponen: 4158, Accuracy: 0.85
+Komponen: 4157, Accuracy: 0.85
+Komponen: 4156, Accuracy: 0.85
+Komponen: 4155, Accuracy: 0.85
+Komponen: 4154, Accuracy: 0.85
+Komponen: 4153, Accuracy: 0.85
+Komponen: 4152, Accuracy: 0.85
+Komponen: 4151, Accuracy: 0.85
+Komponen: 4150, Accuracy: 0.85
+Komponen: 4149, Accuracy: 0.85
+Komponen: 4148, Accuracy: 0.85
+Komponen: 4147, Accuracy: 0.85
+Komponen: 4146, Accuracy: 0.85
+Komponen: 4145, Accuracy: 0.85
+Komponen: 4144, Accuracy: 0.85
+Komponen: 4143, Accuracy: 0.85
+Komponen: 4142, Accuracy: 0.85
+Komponen: 4141, Accuracy: 0.85
+Komponen: 4140, Accuracy: 0.85
+Komponen: 4139, Accuracy: 0.85
+Komponen: 4138, Accuracy: 0.85
+Komponen: 4137, Accuracy: 0.85
+Komponen: 4136, Accuracy: 0.85
+Komponen: 4135, Accuracy: 0.85
+Komponen: 4134, Accuracy: 0.85
+Komponen: 4133, Accuracy: 0.85
+Komponen: 4132, Accuracy: 0.85
+Komponen: 4131, Accuracy: 0.85
+Komponen: 4130, Accuracy: 0.85
+Komponen: 4129, Accuracy: 0.85
+Komponen: 4128, Accuracy: 0.85
+Komponen: 4127, Accuracy: 0.85
+Komponen: 4126, Accuracy: 0.85
+Komponen: 4125, Accuracy: 0.85
+Komponen: 4124, Accuracy: 0.85
+Komponen: 4123, Accuracy: 0.85
+Komponen: 4122, Accuracy: 0.85
+Komponen: 4121, Accuracy: 0.85
+Komponen: 4120, Accuracy: 0.85
+Komponen: 4119, Accuracy: 0.85
+Komponen: 4118, Accuracy: 0.85
+Komponen: 4117, Accuracy: 0.85
+Komponen: 4116, Accuracy: 0.85
+Komponen: 4115, Accuracy: 0.85
+Komponen: 4114, Accuracy: 0.85
+Komponen: 4113, Accuracy: 0.85
+Komponen: 4112, Accuracy: 0.85
+Komponen: 4111, Accuracy: 0.85
+Komponen: 4110, Accuracy: 0.85
+Komponen: 4109, Accuracy: 0.85
+Komponen: 4108, Accuracy: 0.85
+Komponen: 4107, Accuracy: 0.85
+Komponen: 4106, Accuracy: 0.85
+Komponen: 4105, Accuracy: 0.85
+Komponen: 4104, Accuracy: 0.85
+Komponen: 4103, Accuracy: 0.85
+Komponen: 4102, Accuracy: 0.85
+Komponen: 4101, Accuracy: 0.85
+Komponen: 4100, Accuracy: 0.85
+Komponen: 4099, Accuracy: 0.85
+Komponen: 4098, Accuracy: 0.85
+Komponen: 4097, Accuracy: 0.85
+Komponen: 4096, Accuracy: 0.85
+Komponen: 4095, Accuracy: 0.85
+Komponen: 4094, Accuracy: 0.85
+Komponen: 4093, Accuracy: 0.85
+Komponen: 4092, Accuracy: 0.85
+Komponen: 4091, Accuracy: 0.85
+Komponen: 4090, Accuracy: 0.85
+Komponen: 4089, Accuracy: 0.85
+Komponen: 4088, Accuracy: 0.85
+Komponen: 4087, Accuracy: 0.85
+Komponen: 4086, Accuracy: 0.85
+Komponen: 4085, Accuracy: 0.85
+Komponen: 4084, Accuracy: 0.85
+Komponen: 4083, Accuracy: 0.85
+Komponen: 4082, Accuracy: 0.85
+Komponen: 4081, Accuracy: 0.85
+Komponen: 4080, Accuracy: 0.85
+Komponen: 4079, Accuracy: 0.85
+Komponen: 4078, Accuracy: 0.85
+Komponen: 4077, Accuracy: 0.85
+Komponen: 4076, Accuracy: 0.85
+Komponen: 4075, Accuracy: 0.85
+Komponen: 4074, Accuracy: 0.85
+Komponen: 4073, Accuracy: 0.85
+Komponen: 4072, Accuracy: 0.85
+Komponen: 4071, Accuracy: 0.85
+Komponen: 4070, Accuracy: 0.85
+Komponen: 4069, Accuracy: 0.85
+Komponen: 4068, Accuracy: 0.85
+Komponen: 4067, Accuracy: 0.85
+Komponen: 4066, Accuracy: 0.85
+Komponen: 4065, Accuracy: 0.85
+Komponen: 4064, Accuracy: 0.85
+Komponen: 4063, Accuracy: 0.85
+Komponen: 4062, Accuracy: 0.85
+Komponen: 4061, Accuracy: 0.85
+Komponen: 4060, Accuracy: 0.85
+Komponen: 4059, Accuracy: 0.85
+Komponen: 4058, Accuracy: 0.85
+Komponen: 4057, Accuracy: 0.85
+Komponen: 4056, Accuracy: 0.85
+Komponen: 4055, Accuracy: 0.85
+Komponen: 4054, Accuracy: 0.85
+Komponen: 4053, Accuracy: 0.85
+Komponen: 4052, Accuracy: 0.85
+Komponen: 4051, Accuracy: 0.85
+Komponen: 4050, Accuracy: 0.85
+Komponen: 4049, Accuracy: 0.85
+Komponen: 4048, Accuracy: 0.85
+Komponen: 4047, Accuracy: 0.85
+Komponen: 4046, Accuracy: 0.85
+Komponen: 4045, Accuracy: 0.85
+Komponen: 4044, Accuracy: 0.85
+Komponen: 4043, Accuracy: 0.85
+Komponen: 4042, Accuracy: 0.85
+Komponen: 4041, Accuracy: 0.85
+Komponen: 4040, Accuracy: 0.85
+Komponen: 4039, Accuracy: 0.85
+Komponen: 4038, Accuracy: 0.85
+Komponen: 4037, Accuracy: 0.85
+Komponen: 4036, Accuracy: 0.85
+Komponen: 4035, Accuracy: 0.85
+Komponen: 4034, Accuracy: 0.85
+Komponen: 4033, Accuracy: 0.85
+Komponen: 4032, Accuracy: 0.85
+Komponen: 4031, Accuracy: 0.85
+Komponen: 4030, Accuracy: 0.85
+Komponen: 4029, Accuracy: 0.85
+Komponen: 4028, Accuracy: 0.85
+Komponen: 4027, Accuracy: 0.85
+Komponen: 4026, Accuracy: 0.85
+Komponen: 4025, Accuracy: 0.85
+Komponen: 4024, Accuracy: 0.85
+Komponen: 4023, Accuracy: 0.85
+Komponen: 4022, Accuracy: 0.85
+Komponen: 4021, Accuracy: 0.85
+Komponen: 4020, Accuracy: 0.85
+Komponen: 4019, Accuracy: 0.85
+Komponen: 4018, Accuracy: 0.85
+Komponen: 4017, Accuracy: 0.85
+Komponen: 4016, Accuracy: 0.85
+Komponen: 4015, Accuracy: 0.85
+Komponen: 4014, Accuracy: 0.85
+Komponen: 4013, Accuracy: 0.85
+Komponen: 4012, Accuracy: 0.85
+Komponen: 4011, Accuracy: 0.85
+Komponen: 4010, Accuracy: 0.85
+Komponen: 4009, Accuracy: 0.85
+Komponen: 4008, Accuracy: 0.85
+Komponen: 4007, Accuracy: 0.85
+Komponen: 4006, Accuracy: 0.85
+Komponen: 4005, Accuracy: 0.85
+Komponen: 4004, Accuracy: 0.85
+Komponen: 4003, Accuracy: 0.85
+Komponen: 4002, Accuracy: 0.85
+Komponen: 4001, Accuracy: 0.85
+Komponen: 4000, Accuracy: 0.85
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="menampilkan-grafik">
+<h3>Menampilkan Grafik<a class="headerlink" href="#menampilkan-grafik" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_accuracy</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">accuracy_list</span><span class="p">)</span>
+<span class="n">best_index</span> <span class="o">=</span> <span class="n">accuracy_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">best_accuracy</span><span class="p">)</span>
+<span class="n">best_num_components</span> <span class="o">=</span> <span class="n">num_components_list</span><span class="p">[</span><span class="n">best_index</span><span class="p">]</span>
+
+<span class="c1"># Membuat grafik garis untuk akurasi vs jumlah komponen</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_components_list</span><span class="p">,</span> <span class="n">accuracy_list</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Akurasi&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Grafik Perubahan Akurasi terhadap Jumlah Komponen&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Komponen (n_components)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Akurasi&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="c1">#Menambahkan anotasi untuk best accuracy</span>
+<span class="c1">#plt.annotate(</span>
+    <span class="c1">#f&#39;Best Accuracy: {best_accuracy:.2f}\nat {best_num_components} components&#39;,</span>
+    <span class="c1">#xy=(best_num_components, best_accuracy),  # Koordinat posisi (x, y)</span>
+    <span class="c1">#xytext=(best_num_components + 5, best_accuracy - 0.005),  # Posisi teks (di sebelah kanan atas titik)</span>
+    <span class="c1">#arrowprops=dict(facecolor=&#39;black&#39;, arrowstyle=&#39;-&gt;&#39;),  # Menambahkan panah</span>
+    <span class="c1">#fontsize=10,</span>
+    <span class="c1">#color=&#39;black&#39;</span>
+<span class="c1">#)</span>
+
+
+<span class="c1">#plt.xticks(ticks=range(min(num_components_list), max(num_components_list) + 1, 10))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Simpan grafik sebagai file jika diperlukan</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;grafik4413.png&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tampilkan grafik</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1f7a6ce7cd24daa06b46610095404f0b1b33425c2d15f39368a6a7fea3f85d94.png" src="_images/1f7a6ce7cd24daa06b46610095404f0b1b33425c2d15f39368a6a7fea3f85d94.png" />
+</div>
+</div>
+</section>
+<section id="menampilkan-plot-dengan-4413-komponen">
+<h3>Menampilkan plot dengan 4413 komponen<a class="headerlink" href="#menampilkan-plot-dengan-4413-komponen" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Menampilkan hasil scatter plot untuk komponen terbaik</span>
+<span class="n">best_result</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">])</span>
+<span class="n">best_labels</span> <span class="o">=</span> <span class="n">best_result</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
+<span class="n">best_centroids</span> <span class="o">=</span> <span class="n">best_result</span><span class="p">[</span><span class="s2">&quot;centroids&quot;</span><span class="p">]</span>
+<span class="n">best_num_components</span> <span class="o">=</span> <span class="n">best_result</span><span class="p">[</span><span class="s2">&quot;num_components&quot;</span><span class="p">]</span>
+<span class="n">best_accuracy</span> <span class="o">=</span> <span class="n">best_result</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span>
+
+<span class="c1"># Mengurangi dimensi untuk komponen terbaik</span>
+<span class="n">svd_best</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">best_num_components</span><span class="p">)</span>
+<span class="n">tfidf_best_reduced</span> <span class="o">=</span> <span class="n">svd_best</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
+
+<span class="c1"># Scatter plot hasil clustering</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tfidf_best_reduced</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tfidf_best_reduced</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">best_labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan centroid ke plot dengan sedikit pergeseran</span>
+<span class="n">shift_delta</span> <span class="o">=</span> <span class="mf">0.003</span>  <span class="c1"># Variabel untuk menggeser centroid agar tidak tumpang tindih</span>
+
+<span class="c1"># Menambahkan centroid ke plot dengan pergeseran sedikit pada posisi centroid</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">best_centroids</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="c1"># Menentukan warna berdasarkan cluster</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;blue&#39;</span>  <span class="c1"># Misalnya centroid cluster 1 merah, cluster 2 biru</span>
+
+    <span class="c1"># Menggeser posisi centroid agar tidak tumpang tindih</span>
+    <span class="n">shift_x</span> <span class="o">=</span> <span class="n">best_centroids</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">shift_delta</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">shift_delta</span><span class="p">)</span>
+    <span class="n">shift_y</span> <span class="o">=</span> <span class="n">best_centroids</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">shift_delta</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">shift_delta</span><span class="p">)</span>
+
+    <span class="c1"># Plot centroid yang telah digeser</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">shift_x</span><span class="p">,</span> <span class="n">shift_y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan legenda untuk warna scatter (Cluster)</span>
+<span class="n">handles</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">scatter</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="s2">&quot;colors&quot;</span><span class="p">)</span>  <span class="c1"># Ambil elemen warna dari scatter</span>
+<span class="n">legend_labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Cluster </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">best_labels</span><span class="p">)))]</span>
+<span class="n">cluster_legend</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">legend_labels</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Clusters&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan legenda untuk centroids</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift_delta</span><span class="p">,</span> <span class="n">best_centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift_delta</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Centroid Cluster 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_centroids</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">shift_delta</span><span class="p">,</span> <span class="n">best_centroids</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">shift_delta</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Centroid Cluster 2&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">cluster_legend</span><span class="p">)</span>  <span class="c1"># Tambahkan kembali legenda cluster agar tidak tertimpa</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fuzzy C-Means Clustering Dengan 4413 Component akurasi </span><span class="si">{</span><span class="n">best_accuracy</span><span class="si">}</span><span class="s1"> &#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Component 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Component 2&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menampilkan legenda</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menyimpan gambar plot sebagai file PNG</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;plot4413.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0b070a9d371a05de821a0e5d490edaa886b27efd5240a42f35c6f1d85e83187c.png" src="_images/0b070a9d371a05de821a0e5d490edaa886b27efd5240a42f35c6f1d85e83187c.png" />
+</div>
+</div>
+</section>
+<section id="distribusi-kategori-dalam-cluster">
+<h3>Distribusi Kategori Dalam cluster<a class="headerlink" href="#distribusi-kategori-dalam-cluster" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_labels</span>
+<span class="c1"># Distribusi kategori dalam Cluster 1</span>
+<span class="n">cluster_1_dist</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">cluster_1_dist</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kategori&#39;</span><span class="p">,</span> <span class="s1">&#39;Jumlah&#39;</span><span class="p">]</span>
+
+<span class="c1"># Distribusi kategori dalam Cluster 2</span>
+<span class="n">cluster_2_dist</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">cluster_2_dist</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kategori&#39;</span><span class="p">,</span> <span class="s1">&#39;Jumlah&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribusi Kategori dalam Cluster 1:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster_1_dist</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi Kategori dalam Cluster 2:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster_2_dist</span><span class="p">)</span>
+
+<span class="c1"># Simpan ke CSV</span>
+<span class="c1">#cluster_1_dist.to_csv(&#39;dis85-cluster1.csv&#39;, index=False)</span>
+<span class="c1">#cluster_2_dist.to_csv(&#39;dis85-cluster2.csv&#39;, index=False)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi Kategori dalam Cluster 1:
+   Kategori  Jumlah
+0         0      50
+1         1      15
+
+Distribusi Kategori dalam Cluster 2:
+   Kategori  Jumlah
+0         1      35
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pengurangan-komponen-1-per-satu-mencari-akurasi-terbaik-dari-300-komponen-hingga-2-komponen">
+<h2>Pengurangan komponen 1 per satu ( mencari akurasi terbaik dari 300 komponen hingga 2 komponen)<a class="headerlink" href="#pengurangan-komponen-1-per-satu-mencari-akurasi-terbaik-dari-300-komponen-hingga-2-komponen" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">skfuzzy.cluster</span> <span class="kn">import</span> <span class="n">cmeans</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">num_components_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">accuracy_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">num_components</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># Mengurangi dimensi menggunakan SVD</span>
+    <span class="n">svd</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">num_components</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">tfidf_reduced</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
+
+    <span class="c1"># Transpose data agar sesuai dengan input skfuzzy (cmeans mengharapkan data dalam bentuk [fitur, sampel])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">tfidf_reduced</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># Fuzzy C-Means clustering menggunakan skfuzzy</span>
+    <span class="n">cntr</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">jm</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">fpc</span> <span class="o">=</span> <span class="n">cmeans</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>                     <span class="c1"># Data input</span>
+        <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>                      <span class="c1"># Jumlah cluster</span>
+        <span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>                      <span class="c1"># Parameter fuzziness</span>
+        <span class="n">error</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>              <span class="c1"># Toleransi error</span>
+        <span class="n">maxiter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>              <span class="c1"># Iterasi maksimum</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>                   <span class="c1"># Seed untuk random state</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Predict labels berdasarkan derajat keanggotaan maksimum</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Evaluasi menggunakan akurasi</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">true_labels</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;num_components&quot;</span><span class="p">:</span> <span class="n">num_components</span><span class="p">,</span>
+        <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">accuracy</span><span class="p">,</span>
+        <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span>
+        <span class="s2">&quot;centroids&quot;</span><span class="p">:</span> <span class="n">cntr</span>  <span class="c1"># Menyimpan centroid dari FCM</span>
+    <span class="p">})</span>
+
+    <span class="n">num_components_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_components</span><span class="p">)</span>
+    <span class="n">accuracy_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span>
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Komponen: </span><span class="si">{</span><span class="n">num_components</span><span class="si">}</span><span class="s2">, Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Komponen: 300, Accuracy: 0.85
+Komponen: 299, Accuracy: 0.85
+Komponen: 298, Accuracy: 0.85
+Komponen: 297, Accuracy: 0.85
+Komponen: 296, Accuracy: 0.85
+Komponen: 295, Accuracy: 0.85
+Komponen: 294, Accuracy: 0.85
+Komponen: 293, Accuracy: 0.85
+Komponen: 292, Accuracy: 0.85
+Komponen: 291, Accuracy: 0.85
+Komponen: 290, Accuracy: 0.85
+Komponen: 289, Accuracy: 0.85
+Komponen: 288, Accuracy: 0.85
+Komponen: 287, Accuracy: 0.85
+Komponen: 286, Accuracy: 0.85
+Komponen: 285, Accuracy: 0.85
+Komponen: 284, Accuracy: 0.85
+Komponen: 283, Accuracy: 0.85
+Komponen: 282, Accuracy: 0.85
+Komponen: 281, Accuracy: 0.85
+Komponen: 280, Accuracy: 0.85
+Komponen: 279, Accuracy: 0.85
+Komponen: 278, Accuracy: 0.85
+Komponen: 277, Accuracy: 0.85
+Komponen: 276, Accuracy: 0.85
+Komponen: 275, Accuracy: 0.85
+Komponen: 274, Accuracy: 0.85
+Komponen: 273, Accuracy: 0.85
+Komponen: 272, Accuracy: 0.85
+Komponen: 271, Accuracy: 0.85
+Komponen: 270, Accuracy: 0.85
+Komponen: 269, Accuracy: 0.85
+Komponen: 268, Accuracy: 0.85
+Komponen: 267, Accuracy: 0.85
+Komponen: 266, Accuracy: 0.85
+Komponen: 265, Accuracy: 0.85
+Komponen: 264, Accuracy: 0.85
+Komponen: 263, Accuracy: 0.85
+Komponen: 262, Accuracy: 0.85
+Komponen: 261, Accuracy: 0.85
+Komponen: 260, Accuracy: 0.85
+Komponen: 259, Accuracy: 0.85
+Komponen: 258, Accuracy: 0.85
+Komponen: 257, Accuracy: 0.85
+Komponen: 256, Accuracy: 0.85
+Komponen: 255, Accuracy: 0.85
+Komponen: 254, Accuracy: 0.85
+Komponen: 253, Accuracy: 0.85
+Komponen: 252, Accuracy: 0.85
+Komponen: 251, Accuracy: 0.85
+Komponen: 250, Accuracy: 0.85
+Komponen: 249, Accuracy: 0.85
+Komponen: 248, Accuracy: 0.85
+Komponen: 247, Accuracy: 0.85
+Komponen: 246, Accuracy: 0.85
+Komponen: 245, Accuracy: 0.85
+Komponen: 244, Accuracy: 0.85
+Komponen: 243, Accuracy: 0.85
+Komponen: 242, Accuracy: 0.85
+Komponen: 241, Accuracy: 0.85
+Komponen: 240, Accuracy: 0.85
+Komponen: 239, Accuracy: 0.85
+Komponen: 238, Accuracy: 0.85
+Komponen: 237, Accuracy: 0.85
+Komponen: 236, Accuracy: 0.85
+Komponen: 235, Accuracy: 0.85
+Komponen: 234, Accuracy: 0.85
+Komponen: 233, Accuracy: 0.85
+Komponen: 232, Accuracy: 0.85
+Komponen: 231, Accuracy: 0.85
+Komponen: 230, Accuracy: 0.85
+Komponen: 229, Accuracy: 0.85
+Komponen: 228, Accuracy: 0.85
+Komponen: 227, Accuracy: 0.85
+Komponen: 226, Accuracy: 0.85
+Komponen: 225, Accuracy: 0.85
+Komponen: 224, Accuracy: 0.85
+Komponen: 223, Accuracy: 0.85
+Komponen: 222, Accuracy: 0.85
+Komponen: 221, Accuracy: 0.85
+Komponen: 220, Accuracy: 0.85
+Komponen: 219, Accuracy: 0.85
+Komponen: 218, Accuracy: 0.85
+Komponen: 217, Accuracy: 0.85
+Komponen: 216, Accuracy: 0.85
+Komponen: 215, Accuracy: 0.85
+Komponen: 214, Accuracy: 0.85
+Komponen: 213, Accuracy: 0.85
+Komponen: 212, Accuracy: 0.85
+Komponen: 211, Accuracy: 0.85
+Komponen: 210, Accuracy: 0.85
+Komponen: 209, Accuracy: 0.85
+Komponen: 208, Accuracy: 0.85
+Komponen: 207, Accuracy: 0.85
+Komponen: 206, Accuracy: 0.85
+Komponen: 205, Accuracy: 0.85
+Komponen: 204, Accuracy: 0.85
+Komponen: 203, Accuracy: 0.85
+Komponen: 202, Accuracy: 0.85
+Komponen: 201, Accuracy: 0.85
+Komponen: 200, Accuracy: 0.85
+Komponen: 199, Accuracy: 0.85
+Komponen: 198, Accuracy: 0.85
+Komponen: 197, Accuracy: 0.85
+Komponen: 196, Accuracy: 0.85
+Komponen: 195, Accuracy: 0.85
+Komponen: 194, Accuracy: 0.85
+Komponen: 193, Accuracy: 0.85
+Komponen: 192, Accuracy: 0.85
+Komponen: 191, Accuracy: 0.85
+Komponen: 190, Accuracy: 0.85
+Komponen: 189, Accuracy: 0.85
+Komponen: 188, Accuracy: 0.85
+Komponen: 187, Accuracy: 0.85
+Komponen: 186, Accuracy: 0.85
+Komponen: 185, Accuracy: 0.85
+Komponen: 184, Accuracy: 0.85
+Komponen: 183, Accuracy: 0.85
+Komponen: 182, Accuracy: 0.85
+Komponen: 181, Accuracy: 0.85
+Komponen: 180, Accuracy: 0.85
+Komponen: 179, Accuracy: 0.85
+Komponen: 178, Accuracy: 0.85
+Komponen: 177, Accuracy: 0.85
+Komponen: 176, Accuracy: 0.85
+Komponen: 175, Accuracy: 0.85
+Komponen: 174, Accuracy: 0.85
+Komponen: 173, Accuracy: 0.85
+Komponen: 172, Accuracy: 0.85
+Komponen: 171, Accuracy: 0.85
+Komponen: 170, Accuracy: 0.85
+Komponen: 169, Accuracy: 0.85
+Komponen: 168, Accuracy: 0.85
+Komponen: 167, Accuracy: 0.85
+Komponen: 166, Accuracy: 0.85
+Komponen: 165, Accuracy: 0.85
+Komponen: 164, Accuracy: 0.85
+Komponen: 163, Accuracy: 0.85
+Komponen: 162, Accuracy: 0.85
+Komponen: 161, Accuracy: 0.85
+Komponen: 160, Accuracy: 0.85
+Komponen: 159, Accuracy: 0.85
+Komponen: 158, Accuracy: 0.85
+Komponen: 157, Accuracy: 0.85
+Komponen: 156, Accuracy: 0.85
+Komponen: 155, Accuracy: 0.85
+Komponen: 154, Accuracy: 0.85
+Komponen: 153, Accuracy: 0.85
+Komponen: 152, Accuracy: 0.85
+Komponen: 151, Accuracy: 0.85
+Komponen: 150, Accuracy: 0.85
+Komponen: 149, Accuracy: 0.85
+Komponen: 148, Accuracy: 0.85
+Komponen: 147, Accuracy: 0.85
+Komponen: 146, Accuracy: 0.85
+Komponen: 145, Accuracy: 0.85
+Komponen: 144, Accuracy: 0.85
+Komponen: 143, Accuracy: 0.85
+Komponen: 142, Accuracy: 0.85
+Komponen: 141, Accuracy: 0.85
+Komponen: 140, Accuracy: 0.85
+Komponen: 139, Accuracy: 0.85
+Komponen: 138, Accuracy: 0.85
+Komponen: 137, Accuracy: 0.85
+Komponen: 136, Accuracy: 0.85
+Komponen: 135, Accuracy: 0.85
+Komponen: 134, Accuracy: 0.85
+Komponen: 133, Accuracy: 0.85
+Komponen: 132, Accuracy: 0.85
+Komponen: 131, Accuracy: 0.85
+Komponen: 130, Accuracy: 0.85
+Komponen: 129, Accuracy: 0.85
+Komponen: 128, Accuracy: 0.85
+Komponen: 127, Accuracy: 0.85
+Komponen: 126, Accuracy: 0.85
+Komponen: 125, Accuracy: 0.85
+Komponen: 124, Accuracy: 0.85
+Komponen: 123, Accuracy: 0.85
+Komponen: 122, Accuracy: 0.85
+Komponen: 121, Accuracy: 0.85
+Komponen: 120, Accuracy: 0.85
+Komponen: 119, Accuracy: 0.85
+Komponen: 118, Accuracy: 0.85
+Komponen: 117, Accuracy: 0.85
+Komponen: 116, Accuracy: 0.85
+Komponen: 115, Accuracy: 0.85
+Komponen: 114, Accuracy: 0.85
+Komponen: 113, Accuracy: 0.85
+Komponen: 112, Accuracy: 0.85
+Komponen: 111, Accuracy: 0.85
+Komponen: 110, Accuracy: 0.85
+Komponen: 109, Accuracy: 0.85
+Komponen: 108, Accuracy: 0.85
+Komponen: 107, Accuracy: 0.85
+Komponen: 106, Accuracy: 0.85
+Komponen: 105, Accuracy: 0.85
+Komponen: 104, Accuracy: 0.85
+Komponen: 103, Accuracy: 0.85
+Komponen: 102, Accuracy: 0.85
+Komponen: 101, Accuracy: 0.85
+Komponen: 100, Accuracy: 0.85
+Komponen: 99, Accuracy: 0.85
+Komponen: 98, Accuracy: 0.86
+Komponen: 97, Accuracy: 0.85
+Komponen: 96, Accuracy: 0.86
+Komponen: 95, Accuracy: 0.86
+Komponen: 94, Accuracy: 0.86
+Komponen: 93, Accuracy: 0.86
+Komponen: 92, Accuracy: 0.87
+Komponen: 91, Accuracy: 0.87
+Komponen: 90, Accuracy: 0.87
+Komponen: 89, Accuracy: 0.86
+Komponen: 88, Accuracy: 0.85
+Komponen: 87, Accuracy: 0.85
+Komponen: 86, Accuracy: 0.85
+Komponen: 85, Accuracy: 0.85
+Komponen: 84, Accuracy: 0.84
+Komponen: 83, Accuracy: 0.82
+Komponen: 82, Accuracy: 0.78
+Komponen: 81, Accuracy: 0.81
+Komponen: 80, Accuracy: 0.82
+Komponen: 79, Accuracy: 0.82
+Komponen: 78, Accuracy: 0.84
+Komponen: 77, Accuracy: 0.84
+Komponen: 76, Accuracy: 0.85
+Komponen: 75, Accuracy: 0.86
+Komponen: 74, Accuracy: 0.85
+Komponen: 73, Accuracy: 0.86
+Komponen: 72, Accuracy: 0.86
+Komponen: 71, Accuracy: 0.86
+Komponen: 70, Accuracy: 0.86
+Komponen: 69, Accuracy: 0.85
+Komponen: 68, Accuracy: 0.85
+Komponen: 67, Accuracy: 0.85
+Komponen: 66, Accuracy: 0.85
+Komponen: 65, Accuracy: 0.85
+Komponen: 64, Accuracy: 0.85
+Komponen: 63, Accuracy: 0.85
+Komponen: 62, Accuracy: 0.85
+Komponen: 61, Accuracy: 0.85
+Komponen: 60, Accuracy: 0.85
+Komponen: 59, Accuracy: 0.85
+Komponen: 58, Accuracy: 0.85
+Komponen: 57, Accuracy: 0.85
+Komponen: 56, Accuracy: 0.85
+Komponen: 55, Accuracy: 0.85
+Komponen: 54, Accuracy: 0.85
+Komponen: 53, Accuracy: 0.85
+Komponen: 52, Accuracy: 0.85
+Komponen: 51, Accuracy: 0.85
+Komponen: 50, Accuracy: 0.85
+Komponen: 49, Accuracy: 0.85
+Komponen: 48, Accuracy: 0.85
+Komponen: 47, Accuracy: 0.85
+Komponen: 46, Accuracy: 0.85
+Komponen: 45, Accuracy: 0.86
+Komponen: 44, Accuracy: 0.86
+Komponen: 43, Accuracy: 0.86
+Komponen: 42, Accuracy: 0.85
+Komponen: 41, Accuracy: 0.86
+Komponen: 40, Accuracy: 0.86
+Komponen: 39, Accuracy: 0.86
+Komponen: 38, Accuracy: 0.86
+Komponen: 37, Accuracy: 0.85
+Komponen: 36, Accuracy: 0.85
+Komponen: 35, Accuracy: 0.86
+Komponen: 34, Accuracy: 0.86
+Komponen: 33, Accuracy: 0.86
+Komponen: 32, Accuracy: 0.85
+Komponen: 31, Accuracy: 0.85
+Komponen: 30, Accuracy: 0.85
+Komponen: 29, Accuracy: 0.85
+Komponen: 28, Accuracy: 0.86
+Komponen: 27, Accuracy: 0.66
+Komponen: 26, Accuracy: 0.86
+Komponen: 25, Accuracy: 0.34
+Komponen: 24, Accuracy: 0.86
+Komponen: 23, Accuracy: 0.86
+Komponen: 22, Accuracy: 0.86
+Komponen: 21, Accuracy: 0.87
+Komponen: 20, Accuracy: 0.87
+Komponen: 19, Accuracy: 0.89
+Komponen: 18, Accuracy: 0.88
+Komponen: 17, Accuracy: 0.89
+Komponen: 16, Accuracy: 0.87
+Komponen: 15, Accuracy: 0.87
+Komponen: 14, Accuracy: 0.87
+Komponen: 13, Accuracy: 0.87
+Komponen: 12, Accuracy: 0.13
+Komponen: 11, Accuracy: 0.87
+Komponen: 10, Accuracy: 0.87
+Komponen: 9, Accuracy: 0.85
+Komponen: 8, Accuracy: 0.85
+Komponen: 7, Accuracy: 0.85
+Komponen: 6, Accuracy: 0.85
+Komponen: 5, Accuracy: 0.85
+Komponen: 4, Accuracy: 0.84
+Komponen: 3, Accuracy: 0.85
+Komponen: 2, Accuracy: 0.85
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h2>Menampilkan Grafik<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_accuracy</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">accuracy_list</span><span class="p">)</span>
+<span class="n">best_index</span> <span class="o">=</span> <span class="n">accuracy_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">best_accuracy</span><span class="p">)</span>
+<span class="n">best_num_components</span> <span class="o">=</span> <span class="n">num_components_list</span><span class="p">[</span><span class="n">best_index</span><span class="p">]</span>
+
+<span class="c1"># Membuat grafik garis untuk akurasi vs jumlah komponen</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_components_list</span><span class="p">,</span> <span class="n">accuracy_list</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Akurasi&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Grafik Perubahan Akurasi terhadap Jumlah Komponen&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Komponen (n_components)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Akurasi&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="c1">#Menambahkan anotasi untuk best accuracy</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;Best Accuracy: </span><span class="si">{</span><span class="n">best_accuracy</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s1">at </span><span class="si">{</span><span class="n">best_num_components</span><span class="si">}</span><span class="s1"> components&#39;</span><span class="p">,</span>
+    <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">best_num_components</span><span class="p">,</span> <span class="n">best_accuracy</span><span class="p">),</span>  <span class="c1"># Koordinat posisi (x, y)</span>
+    <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">best_num_components</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="n">best_accuracy</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">),</span>  <span class="c1"># Posisi teks (di sebelah kanan atas titik)</span>
+    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;-&gt;&#39;</span><span class="p">),</span>  <span class="c1"># Menambahkan panah</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Mengatur ticks pada sumbu-x dimulai dari 5, 10, 15, dst.</span>
+<span class="c1">#plt.xticks(ticks=range(min(num_components_list), max(num_components_list) + 1,5 ))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Simpan grafik sebagai file jika diperlukan</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;grafik300-2.png&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tampilkan grafik</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/61695f64b4f698b93611f9b6fc43a4f99cc8534a19790d864636daa23b51e035.png" src="_images/61695f64b4f698b93611f9b6fc43a4f99cc8534a19790d864636daa23b51e035.png" />
+</div>
+</div>
+<section id="menampilkan-plot-setelah-svd-berdasarkan-pencarian-komponen-dengan-akurasi-terbaik">
+<h3>Menampilkan plot setelah svd, berdasarkan pencarian komponen dengan akurasi terbaik<a class="headerlink" href="#menampilkan-plot-setelah-svd-berdasarkan-pencarian-komponen-dengan-akurasi-terbaik" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Menampilkan hasil scatter plot untuk komponen terbaik</span>
+<span class="n">best_result</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">])</span>
+<span class="n">best_labels</span> <span class="o">=</span> <span class="n">best_result</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
+<span class="n">best_centroids</span> <span class="o">=</span> <span class="n">best_result</span><span class="p">[</span><span class="s2">&quot;centroids&quot;</span><span class="p">]</span>
+<span class="n">best_num_components</span> <span class="o">=</span> <span class="n">best_result</span><span class="p">[</span><span class="s2">&quot;num_components&quot;</span><span class="p">]</span>
+<span class="n">best_accuracy</span> <span class="o">=</span> <span class="n">best_result</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span>
+
+<span class="c1"># Mengurangi dimensi untuk komponen terbaik</span>
+<span class="n">svd_best</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">best_num_components</span><span class="p">)</span>
+<span class="n">tfidf_best_reduced</span> <span class="o">=</span> <span class="n">svd_best</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
+
+<span class="c1"># Scatter plot hasil clustering</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tfidf_best_reduced</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tfidf_best_reduced</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">best_labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan centroid ke plot dengan sedikit pergeseran</span>
+<span class="n">shift_delta</span> <span class="o">=</span> <span class="mf">0.003</span>  <span class="c1"># Variabel untuk menggeser centroid agar tidak tumpang tindih</span>
+
+<span class="c1"># Menambahkan centroid ke plot dengan pergeseran sedikit pada posisi centroid</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">best_centroids</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="c1"># Menentukan warna berdasarkan cluster</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;blue&#39;</span>  <span class="c1"># Misalnya centroid cluster 1 merah, cluster 2 biru</span>
+
+    <span class="c1"># Menggeser posisi centroid agar tidak tumpang tindih</span>
+    <span class="n">shift_x</span> <span class="o">=</span> <span class="n">best_centroids</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">shift_delta</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">shift_delta</span><span class="p">)</span>
+    <span class="n">shift_y</span> <span class="o">=</span> <span class="n">best_centroids</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">shift_delta</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">shift_delta</span><span class="p">)</span>
+
+    <span class="c1"># Plot centroid yang telah digeser</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">shift_x</span><span class="p">,</span> <span class="n">shift_y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan legenda untuk warna scatter (Cluster)</span>
+<span class="n">handles</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">scatter</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="s2">&quot;colors&quot;</span><span class="p">)</span>  <span class="c1"># Ambil elemen warna dari scatter</span>
+<span class="n">legend_labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Cluster </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">best_labels</span><span class="p">)))]</span>
+<span class="n">cluster_legend</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">legend_labels</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Clusters&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan legenda untuk centroids</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift_delta</span><span class="p">,</span> <span class="n">best_centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift_delta</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Centroid Cluster 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_centroids</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">shift_delta</span><span class="p">,</span> <span class="n">best_centroids</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">shift_delta</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Centroid Cluster 2&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">cluster_legend</span><span class="p">)</span>  <span class="c1"># Tambahkan kembali legenda cluster agar tidak tertimpa</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fuzzy C-Means Clustering (Best Result Dengan </span><span class="si">{</span><span class="n">best_num_components</span><span class="si">}</span><span class="s1"> Component akurasi </span><span class="si">{</span><span class="n">best_accuracy</span><span class="si">}</span><span class="s1"> )&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Component 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Component 2&#39;</span><span class="p">)</span>
+
+<span class="c1"># Menampilkan legenda</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;plot19.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/81ab884273da476549cc2a7dea082dc83f96b8ffd57de69f1d5ea24b4829cb1c.png" src="_images/81ab884273da476549cc2a7dea082dc83f96b8ffd57de69f1d5ea24b4829cb1c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svd_best</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">best_num_components</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">tfidf_best_reduced</span> <span class="o">=</span> <span class="n">svd_best</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah Komponen Terbaik: </span><span class="si">{</span><span class="n">best_num_components</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi: </span><span class="si">{</span><span class="n">best_accuracy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimensi Data Setelah Reduksi SVD (Komponen Terbaik): </span><span class="si">{</span><span class="n">tfidf_best_reduced</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Menampilkan isi centroid terbaik</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Isi Centroid Terbaik:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_centroids</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah Komponen Terbaik: 19
+Akurasi: 0.89
+Dimensi Data Setelah Reduksi SVD (Komponen Terbaik): (100, 19)
+Isi Centroid Terbaik:
+[[ 0.22451219  0.11403016  0.00741638  0.01840847  0.00925721 -0.01087861
+   0.0239571   0.01206712 -0.00901117 -0.0006618   0.00523296  0.0107058
+   0.00023511 -0.00655039 -0.00473033  0.00210321  0.0066023   0.00052728
+   0.00790842]
+ [ 0.22736449  0.11291603  0.00733638  0.0181037   0.00923354 -0.01068436
+   0.0237967   0.01184351 -0.00906301 -0.00098216  0.0052042   0.01069081
+   0.00036109 -0.00643043 -0.00465767  0.00202415  0.00643368  0.00054862
+   0.00788758]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>Distribusi Kategori Dalam cluster<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_labels</span>
+<span class="c1"># Distribusi kategori dalam Cluster 1</span>
+<span class="n">cluster_1_dist</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">cluster_1_dist</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kategori&#39;</span><span class="p">,</span> <span class="s1">&#39;Jumlah&#39;</span><span class="p">]</span>
+
+<span class="c1"># Distribusi kategori dalam Cluster 2</span>
+<span class="n">cluster_2_dist</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">cluster_2_dist</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kategori&#39;</span><span class="p">,</span> <span class="s1">&#39;Jumlah&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribusi Kategori dalam Cluster 1:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster_1_dist</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi Kategori dalam Cluster 2:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster_2_dist</span><span class="p">)</span>
+
+<span class="c1"># Simpan ke CSV</span>
+<span class="n">cluster_1_dist</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;dis89-cluster1.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">cluster_2_dist</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;dis89-cluster2.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi Kategori dalam Cluster 1:
+   Kategori  Jumlah
+0         0      50
+1         1      11
+
+Distribusi Kategori dalam Cluster 2:
+   Kategori  Jumlah
+0         1      39
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="PencarianBerita.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Part.6 Pencarian Dokumen</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tfidf">TFIDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengurangi-dimensi-menggunakan-svd">Mengurangi Dimensi Menggunakan SVD</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengurangan-komponen-1-per-satu-mencari-akurasi-terbaik-dari-4413-komponen-hingga-4000-komponen">Pengurangan komponen 1 per satu (mencari akurasi terbaik dari 4413 komponen hingga 4000 komponen)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-grafik">Menampilkan Grafik</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-plot-dengan-4413-komponen">Menampilkan plot dengan 4413 komponen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kategori-dalam-cluster">Distribusi Kategori Dalam cluster</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengurangan-komponen-1-per-satu-mencari-akurasi-terbaik-dari-300-komponen-hingga-2-komponen">Pengurangan komponen 1 per satu ( mencari akurasi terbaik dari 300 komponen hingga 2 komponen)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Menampilkan Grafik</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-plot-setelah-svd-berdasarkan-pencarian-komponen-dengan-akurasi-terbaik">Menampilkan plot setelah svd, berdasarkan pencarian komponen dengan akurasi terbaik</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Distribusi Kategori Dalam cluster</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

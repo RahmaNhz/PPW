@@ -62,11 +62,9 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'Klasifikasiberita-Loreg';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'loreg-class';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Penerapan Logistic Regression (SVD)" href="klasifikasiwithsvd.html" />
-    <link rel="prev" title="Part.2 Vector Space Model (VSM)" href="VektorSpaceModel.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -117,6 +115,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
@@ -170,10 +170,10 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="CrawlingBerita.html">Part.1 CRAWLING BERITA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="VektorSpaceModel.html">Part.2 Vector Space Model (VSM)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Part 3. PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Klasifikasiberita-Loreg.html">Part 3. PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="klasifikasiwithsvd.html">Penerapan Logistic Regression (SVD)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Skip-gram.html">Part.4 WORD EMBEDDING</a></li>
 
@@ -237,7 +237,7 @@
       
       
       
-      <li><a href="https://colab.research.google.com/github/RahmaNhz/PPW/blob/gh-pages/_sources/Klasifikasiberita-Loreg.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/RahmaNhz/PPW/blob/gh-pages/_sources/loreg-class.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch on Colab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -285,7 +285,7 @@
       
       
       
-      <li><a href="https://github.com/RahmaNhz/PPW/issues/new?title=Issue%20on%20page%20%2FKlasifikasiberita-Loreg.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/RahmaNhz/PPW/issues/new?title=Issue%20on%20page%20%2Floreg-class.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -315,7 +315,7 @@
       
       
       
-      <li><a href="_sources/Klasifikasiberita-Loreg.ipynb" target="_blank"
+      <li><a href="_sources/loreg-class.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -403,8 +403,8 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penerapan-model-logistic-regression-untuk-klasifikasi-berita-cnn">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-preprosessing-berita">Hasil Preprosessing Berita</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-data">Split Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membangun-model-logistic-reggresion">MEMBANGUN MODEL LOGISTIC REGGRESION</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-data-baru">Percobaan Data baru</a></li>
 </ul>
 </li>
 </ul>
@@ -418,13 +418,11 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p><a class="reference external" href="https://colab.research.google.com/drive/14eENuQonqfbaU6nN_zsmKR-Uvu13Wn9u#scrollTo=-Ri4Z8mTigLi"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<p><a class="reference external" href="https://klasifikasi-berita-jkuabyzkes2kjekueusqvm.streamlit.app/">Streamlit Klasifikasi</a></p>
-<img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face Logo" width="40" style="vertical-align:middle;"/>
-<a href="https://huggingface.co/spaces/RahmaNh/Kategori-Berita" target="_blank" style="text-decoration:none; font-size:16px; margin-left:10px;">HuggingFace Klasifikasi</a><p><strong>TUGAS 3</strong></p>
+  <p><strong>TUGAS 3</strong></p>
 <p>Nama: RAHMA NURHALIZA</p>
 <p>NIM  : 210411100176</p>
 <p>Kelas : PPW A</p>
+<p><a class="reference external" href="https://klasifikasi-berita-jkuabyzkes2kjekueusqvm.streamlit.app/">Streamlit Klasifikasi</a></p>
 <section class="tex2jax_ignore mathjax_ignore" id="part-3-penerapan-model-logistic-regression-untuk-klasifikasi-berita">
 <h1>Part 3. PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA<a class="headerlink" href="#part-3-penerapan-model-logistic-regression-untuk-klasifikasi-berita" title="Link to this heading">#</a></h1>
 <p>Logistic Regression merupakan metode dalam pembelajaran mesin yang termasuk dalam supervised learning dan digunakan untuk memprediksi probabilitas hasil biner 1/0 (true/false) berdasarkan satu atau beberapa variabel fitur, degan menggunakan fungsi logistic (sigmoid) untuk melakukan prediksi.</p>
@@ -501,7 +499,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-c42834a7-dc1e-44ec-9b20-5f54b3a19e6f" class="colab-df-container">
+  <div id="df-16b32758-03d7-482e-a98b-48789e31a2d6" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -592,7 +590,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-c42834a7-dc1e-44ec-9b20-5f54b3a19e6f')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-16b32758-03d7-482e-a98b-48789e31a2d6')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -644,12 +642,12 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 
     <script>
       const buttonEl =
-        document.querySelector('#df-c42834a7-dc1e-44ec-9b20-5f54b3a19e6f button.colab-df-convert');
+        document.querySelector('#df-16b32758-03d7-482e-a98b-48789e31a2d6 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-c42834a7-dc1e-44ec-9b20-5f54b3a19e6f');
+        const element = document.querySelector('#df-16b32758-03d7-482e-a98b-48789e31a2d6');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -669,8 +667,8 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   </div>
 
 
-<div id="df-a3a4f1ed-da55-4aad-8363-5f1c6fff2305">
-  <button class="colab-df-quickchart" onclick="quickchart('df-a3a4f1ed-da55-4aad-8363-5f1c6fff2305')"
+<div id="df-b169d375-e6c1-48d7-85e3-c342d58387e1">
+  <button class="colab-df-quickchart" onclick="quickchart('df-b169d375-e6c1-48d7-85e3-c342d58387e1')"
             title="Suggest charts"
             style="display:none;">
 
@@ -789,7 +787,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-a3a4f1ed-da55-4aad-8363-5f1c6fff2305 button');
+        document.querySelector('#df-b169d375-e6c1-48d7-85e3-c342d58387e1 button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -800,14 +798,26 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   </div>
 </div></div>
 </div>
-<p>###TF-IDF</p>
+</section>
+<section id="split-data">
+<h3>Split Data<a class="headerlink" href="#split-data" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stopword_removal&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>##TFIDF</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
-<span class="c1"># Menginisialisasi TfidfVectorizer</span>
-<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
-<span class="c1"># Menghitung TF-IDF</span>
-<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stopword_removal&#39;</span><span class="p">])</span>
+
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">X_train_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>  <span class="c1"># Fit-transform pada data latih</span>
+<span class="n">X_test_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>        <span class="c1"># Transformasi data uji dengan model TF-IDF yang sama</span>
 </pre></div>
 </div>
 </div>
@@ -815,14 +825,14 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengubah hasilnya menjadi DataFrame</span>
-<span class="n">tfidf_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
-<span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">X_train_tfidf_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">tfidf</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
+<span class="n">X_train_tfidf_df</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-38ba5fbb-4b49-4fcf-8b87-c4ebbda18ee1" class="colab-df-container">
+  <div id="df-b941cc84-a599-4e26-8a1a-cde9d3e26bbb" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -843,18 +853,18 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <th></th>
       <th>abad</th>
       <th>abdul</th>
-      <th>abdulhadi</th>
       <th>abinisa</th>
       <th>absen</th>
-      <th>absjal</th>
       <th>absrhr</th>
       <th>abu</th>
       <th>acara</th>
       <th>aceh</th>
+      <th>acehsumatera</th>
+      <th>acehsumut</th>
       <th>...</th>
+      <th>yudha</th>
       <th>yudo</th>
       <th>yugen</th>
-      <th>yuk</th>
       <th>yulianto</th>
       <th>zaenal</th>
       <th>zayana</th>
@@ -867,14 +877,14 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
@@ -884,21 +894,21 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
@@ -908,22 +918,22 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.024308</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
@@ -932,21 +942,21 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.088183</td>
+      <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
@@ -956,21 +966,21 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
@@ -980,21 +990,45 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>75</th>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
@@ -1004,22 +1038,46 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.050692</td>
+      <td>0.0</td>
+      <td>0.097544</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>0.00000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>6</th>
+      <th>77</th>
+      <td>0.03463</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
-      <td>0.04869</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.076280</td>
+      <td>0.094205</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
@@ -1028,21 +1086,21 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.046121</td>
+      <td>0.0</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
+      <th>78</th>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.059701</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>...</td>
@@ -1052,22 +1110,22 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
-      <td>0.080853</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
+      <th>79</th>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.127533</td>
+      <td>0.045017</td>
       <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
@@ -1076,43 +1134,19 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.041888</td>
       <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.211657</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.023741</td>
-      <td>0.0</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
   </tbody>
 </table>
-<p>10 rows × 4413 columns</p>
+<p>80 rows × 3812 columns</p>
 </div>
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-38ba5fbb-4b49-4fcf-8b87-c4ebbda18ee1')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-b941cc84-a599-4e26-8a1a-cde9d3e26bbb')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -1164,12 +1198,12 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 
     <script>
       const buttonEl =
-        document.querySelector('#df-38ba5fbb-4b49-4fcf-8b87-c4ebbda18ee1 button.colab-df-convert');
+        document.querySelector('#df-b941cc84-a599-4e26-8a1a-cde9d3e26bbb button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-38ba5fbb-4b49-4fcf-8b87-c4ebbda18ee1');
+        const element = document.querySelector('#df-b941cc84-a599-4e26-8a1a-cde9d3e26bbb');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1189,8 +1223,8 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   </div>
 
 
-<div id="df-2dad8ac9-affb-4e4d-a8f9-2d303c3f704e">
-  <button class="colab-df-quickchart" onclick="quickchart('df-2dad8ac9-affb-4e4d-a8f9-2d303c3f704e')"
+<div id="df-ba6a00ff-63ef-4e81-8a40-12b7033bd233">
+  <button class="colab-df-quickchart" onclick="quickchart('df-ba6a00ff-63ef-4e81-8a40-12b7033bd233')"
             title="Suggest charts"
             style="display:none;">
 
@@ -1309,16 +1343,90 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-2dad8ac9-affb-4e4d-a8f9-2d303c3f704e button');
+        document.querySelector('#df-ba6a00ff-63ef-4e81-8a40-12b7033bd233 button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
   </script>
 </div>
 
+  <div id="id_e016a1fa-6ed9-4100-9ed2-3ac0ac759b96">
+    <style>
+      .colab-df-generate {
+        background-color: #E8F0FE;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        fill: #1967D2;
+        height: 32px;
+        padding: 0 0 0 0;
+        width: 32px;
+      }
+
+      .colab-df-generate:hover {
+        background-color: #E2EBFA;
+        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        fill: #174EA6;
+      }
+
+      [theme=dark] .colab-df-generate {
+        background-color: #3B4455;
+        fill: #D2E3FC;
+      }
+
+      [theme=dark] .colab-df-generate:hover {
+        background-color: #434B5C;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+        fill: #FFFFFF;
+      }
+    </style>
+    <button class="colab-df-generate" onclick="generateWithVariable('X_train_tfidf_df')"
+            title="Generate code using this dataframe."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"/>
+  </svg>
+    </button>
+    <script>
+      (() => {
+      const buttonEl =
+        document.querySelector('#id_e016a1fa-6ed9-4100-9ed2-3ac0ac759b96 button.colab-df-generate');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      buttonEl.onclick = () => {
+        google.colab.notebook.generateWithVariable('X_train_tfidf_df');
+      }
+      })();
+    </script>
+  </div>
+
     </div>
   </div>
 </div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stopword_removal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>  <span class="c1"># Memeriksa tipe data</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;stopword_removal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>  <span class="c1"># Memeriksa beberapa baris pertama</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>object
+0    presiden joko widodo jokowi dijadwalkan peleta...
+1    menteri pertanian andi amran sulaiman mencopot...
+2    menteri energi sumber daya mineral esdm bahlil...
+3    pt pertamina persero mengkaji pengembangan bah...
+4    bank mandiri menghadirkan program livin around...
+Name: stopword_removal, dtype: object
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="membangun-model-logistic-reggresion">
@@ -1335,30 +1443,14 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># kolom yang berisi label target</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membagi data menjadi data latih dan uji (80% latih, 20% uji)</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuat model Logistic Regression</span>
 <span class="n">logreg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-1 {
+<div class="output text_html"><style>#sk-container-id-2 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: black;
   --sklearn-color-line: gray;
@@ -1388,15 +1480,15 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   }
 }
 
-#sk-container-id-1 {
+#sk-container-id-2 {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-1 pre {
+#sk-container-id-2 pre {
   padding: 0;
 }
 
-#sk-container-id-1 input.sk-hidden--visually {
+#sk-container-id-2 input.sk-hidden--visually {
   border: 0;
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
@@ -1408,7 +1500,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   width: 1px;
 }
 
-#sk-container-id-1 div.sk-dashed-wrapped {
+#sk-container-id-2 div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -1416,7 +1508,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-1 div.sk-container {
+#sk-container-id-2 div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -1426,7 +1518,7 @@ z = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n
   position: relative;
 }
 
-#sk-container-id-1 div.sk-text-repr-fallback {
+#sk-container-id-2 div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -1442,14 +1534,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-1 div.sk-parallel-item::after {
+#sk-container-id-2 div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-1 div.sk-parallel {
+#sk-container-id-2 div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -1457,28 +1549,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-1 div.sk-parallel-item {
+#sk-container-id-2 div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-1 div.sk-serial {
+#sk-container-id-2 div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1496,14 +1588,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-1 div.sk-toggleable {
+#sk-container-id-2 div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
+#sk-container-id-2 label.sk-toggleable__label {
   cursor: pointer;
   display: block;
   width: 100%;
@@ -1513,7 +1605,7 @@ clickable and can be expanded/collapsed.
   text-align: center;
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -1521,13 +1613,13 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-1 div.sk-toggleable__content {
+#sk-container-id-2 div.sk-toggleable__content {
   max-height: 0;
   max-width: 0;
   overflow: hidden;
@@ -1536,12 +1628,12 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted {
+#sk-container-id-2 div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content pre {
+#sk-container-id-2 div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -1549,79 +1641,79 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   max-height: 200px;
   max-width: 100%;
   overflow: auto;
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-1 div.sk-label label {
+#sk-container-id-2 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   display: inline-block;
   line-height: 1.2em;
 }
 
-#sk-container-id-1 div.sk-label-container {
+#sk-container-id-2 div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
+#sk-container-id-2 div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -1631,18 +1723,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted {
+#sk-container-id-2 div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
+#sk-container-id-2 div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted:hover {
+#sk-container-id-2 div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -1729,7 +1821,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-1 a.estimator_doc_link {
+#sk-container-id-2 a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -1744,72 +1836,73 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted {
+#sk-container-id-2 a.estimator_doc_link.fitted {
   /* fitted */
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
   color: var(--sklearn-color-fitted-level-1);
 }
 
 /* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
+#sk-container-id-2 a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LogisticRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;LogisticRegression<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.linear_model.LogisticRegression.html">?<span>Documentation for LogisticRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>LogisticRegression()</pre></div> </div></div></div></div></div></div>
+</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LogisticRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;LogisticRegression<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.linear_model.LogisticRegression.html">?<span>Documentation for LogisticRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>LogisticRegression()</pre></div> </div></div></div></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuat prediksi pada data uji</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_tfidf</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengevaluasi model</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>  <span class="c1"># Untuk data multi-kelas</span>
+<span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>        <span class="c1"># Untuk data multi-kelas</span>
+
+<span class="c1"># Menampilkan laporan klasifikasi lengkap</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Precision:&quot;</span><span class="p">,</span> <span class="n">precision</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Recall:&quot;</span><span class="p">,</span> <span class="n">recall</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.95
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 1.0
+Precision: 1.0
+Recall: 1.0
+
 Classification Report:
                precision    recall  f1-score   support
 
-     Ekonomi       0.91      1.00      0.95        10
-    Olahraga       1.00      0.90      0.95        10
+     Ekonomi       1.00      1.00      1.00        12
+    Olahraga       1.00      1.00      1.00         8
 
-    accuracy                           0.95        20
-   macro avg       0.95      0.95      0.95        20
-weighted avg       0.95      0.95      0.95        20
-
-Confusion Matrix:
- [[10  0]
- [ 1  9]]
+    accuracy                           1.00        20
+   macro avg       1.00      1.00      1.00        20
+weighted avg       1.00      1.00      1.00        20
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="percobaan-data-baru">
-<h3>Percobaan Data baru<a class="headerlink" href="#percobaan-data-baru" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
 
 <span class="c1"># Simpan TfidfVectorizer</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tfidf_vectorizer.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">vectorizer</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">tfidf</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1908,24 +2001,6 @@ Prediksi Kategori: Olahraga
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="VektorSpaceModel.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Part.2 Vector Space Model (VSM)</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="klasifikasiwithsvd.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Penerapan Logistic Regression (SVD)</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -1945,8 +2020,8 @@ Prediksi Kategori: Olahraga
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penerapan-model-logistic-regression-untuk-klasifikasi-berita-cnn">PENERAPAN MODEL LOGISTIC REGRESSION UNTUK KLASIFIKASI BERITA CNN</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-preprosessing-berita">Hasil Preprosessing Berita</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-data">Split Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membangun-model-logistic-reggresion">MEMBANGUN MODEL LOGISTIC REGGRESION</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-data-baru">Percobaan Data baru</a></li>
 </ul>
 </li>
 </ul>
