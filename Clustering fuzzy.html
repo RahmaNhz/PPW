@@ -424,7 +424,7 @@
                 <article class="bd-article">
                   
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face Logo" width="40" style="vertical-align:middle;"/>
-<a href="https://huggingface.co/spaces/RahmaNh/fuzzyc-means" target="_blank" style="text-decoration:none; font-size:16px; margin-left:10px;">Fuzzy C Means</a>
+<a href="https://huggingface.co/spaces/RahmaNh/fcm-cluster" target="_blank" style="text-decoration:none; font-size:16px; margin-left:10px;">Fuzzy C Means</a>
 <section class="tex2jax_ignore mathjax_ignore" id="part-7-fuzzy-c-means-clustering">
 <h1>Part 7. Fuzzy C-Means Clustering<a class="headerlink" href="#part-7-fuzzy-c-means-clustering" title="Link to this heading">#</a></h1>
 <p>NAMA : RAHMA NURHALIZA</p>
@@ -484,7 +484,7 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-dd0940f1-939e-40bf-b3df-36502c1c2ff2" class="colab-df-container">
+  <div id="df-101b8233-8d73-42d5-bb06-13cec84f73b2" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -575,7 +575,7 @@
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-dd0940f1-939e-40bf-b3df-36502c1c2ff2')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-101b8233-8d73-42d5-bb06-13cec84f73b2')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -627,12 +627,12 @@
 
     <script>
       const buttonEl =
-        document.querySelector('#df-dd0940f1-939e-40bf-b3df-36502c1c2ff2 button.colab-df-convert');
+        document.querySelector('#df-101b8233-8d73-42d5-bb06-13cec84f73b2 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-dd0940f1-939e-40bf-b3df-36502c1c2ff2');
+        const element = document.querySelector('#df-101b8233-8d73-42d5-bb06-13cec84f73b2');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -652,8 +652,8 @@
   </div>
 
 
-<div id="df-fdd9b177-9148-4df9-9398-b6d37995b3da">
-  <button class="colab-df-quickchart" onclick="quickchart('df-fdd9b177-9148-4df9-9398-b6d37995b3da')"
+<div id="df-e208a37a-42e6-4fa6-bbdc-4a7b1fc09dfb">
+  <button class="colab-df-quickchart" onclick="quickchart('df-e208a37a-42e6-4fa6-bbdc-4a7b1fc09dfb')"
             title="Suggest charts"
             style="display:none;">
 
@@ -772,7 +772,7 @@
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-fdd9b177-9148-4df9-9398-b6d37995b3da button');
+        document.querySelector('#df-e208a37a-42e6-4fa6-bbdc-4a7b1fc09dfb button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -813,8 +813,8 @@
   Downloading scikit_fuzzy-0.5.0-py2.py3-none-any.whl.metadata (2.6 kB)
 Downloading scikit_fuzzy-0.5.0-py2.py3-none-any.whl (920 kB)
 ?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/920.8 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">307.2/920.8 kB</span> <span class=" -Color -Color-Red">9.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">920.8/920.8 kB</span> <span class=" -Color -Color-Red">14.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">256.0/920.8 kB</span> <span class=" -Color -Color-Red">7.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">920.8/920.8 kB</span> <span class=" -Color -Color-Red">14.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hInstalling collected packages: scikit-fuzzy
 Successfully installed scikit-fuzzy-0.5.0
 </pre></div>
@@ -855,16 +855,16 @@ Successfully installed scikit-fuzzy-0.5.0
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 <span class="kn">from</span> <span class="nn">skfuzzy.cluster</span> <span class="kn">import</span> <span class="n">cmeans</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">num_components_list</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">accuracy_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># List untuk menyimpan informasi hasil dari setiap iterasi (jumlah komponen, akurasi, label cluster, centroid).</span>
+<span class="n">num_components_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Menyimpan jumlah komponen yang digunakan dalam setiap iterasi.</span>
+<span class="n">accuracy_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#Menyimpan nilai akurasi dari setiap iterasi.</span>
 
 <span class="k">for</span> <span class="n">num_components</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4413</span><span class="p">,</span><span class="mi">3999</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
     <span class="c1"># Mengurangi dimensi menggunakan SVD</span>
     <span class="n">svd</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">num_components</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-    <span class="n">tfidf_reduced</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
+    <span class="n">tfidf_reduced</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span> <span class="c1">#hasil dari reduksi</span>
 
-    <span class="c1"># Transpose data agar sesuai dengan input skfuzzy (cmeans mengharapkan data dalam bentuk [fitur, sampel])</span>
+    <span class="c1"># Transpose data agar sesuai dengan input skfuzzy (cmeans mengharapkan data dalam bentuk [fitur(baris), sampel(data)])</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">tfidf_reduced</span><span class="o">.</span><span class="n">T</span>
 
     <span class="c1"># Fuzzy C-Means clustering menggunakan skfuzzy</span>
@@ -1342,8 +1342,6 @@ Komponen: 4000, Accuracy: 0.85
     <span class="c1">#fontsize=10,</span>
     <span class="c1">#color=&#39;black&#39;</span>
 <span class="c1">#)</span>
-
-
 <span class="c1">#plt.xticks(ticks=range(min(num_components_list), max(num_components_list) + 1, 10))</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
@@ -1476,7 +1474,7 @@ Distribusi Kategori dalam Cluster 2:
 <span class="n">num_components_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">accuracy_list</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="k">for</span> <span class="n">num_components</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">num_components</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
     <span class="c1"># Mengurangi dimensi menggunakan SVD</span>
     <span class="n">svd</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">num_components</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
     <span class="n">tfidf_reduced</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
@@ -1515,207 +1513,7 @@ Distribusi Kategori dalam Cluster 2:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Komponen: 300, Accuracy: 0.85
-Komponen: 299, Accuracy: 0.85
-Komponen: 298, Accuracy: 0.85
-Komponen: 297, Accuracy: 0.85
-Komponen: 296, Accuracy: 0.85
-Komponen: 295, Accuracy: 0.85
-Komponen: 294, Accuracy: 0.85
-Komponen: 293, Accuracy: 0.85
-Komponen: 292, Accuracy: 0.85
-Komponen: 291, Accuracy: 0.85
-Komponen: 290, Accuracy: 0.85
-Komponen: 289, Accuracy: 0.85
-Komponen: 288, Accuracy: 0.85
-Komponen: 287, Accuracy: 0.85
-Komponen: 286, Accuracy: 0.85
-Komponen: 285, Accuracy: 0.85
-Komponen: 284, Accuracy: 0.85
-Komponen: 283, Accuracy: 0.85
-Komponen: 282, Accuracy: 0.85
-Komponen: 281, Accuracy: 0.85
-Komponen: 280, Accuracy: 0.85
-Komponen: 279, Accuracy: 0.85
-Komponen: 278, Accuracy: 0.85
-Komponen: 277, Accuracy: 0.85
-Komponen: 276, Accuracy: 0.85
-Komponen: 275, Accuracy: 0.85
-Komponen: 274, Accuracy: 0.85
-Komponen: 273, Accuracy: 0.85
-Komponen: 272, Accuracy: 0.85
-Komponen: 271, Accuracy: 0.85
-Komponen: 270, Accuracy: 0.85
-Komponen: 269, Accuracy: 0.85
-Komponen: 268, Accuracy: 0.85
-Komponen: 267, Accuracy: 0.85
-Komponen: 266, Accuracy: 0.85
-Komponen: 265, Accuracy: 0.85
-Komponen: 264, Accuracy: 0.85
-Komponen: 263, Accuracy: 0.85
-Komponen: 262, Accuracy: 0.85
-Komponen: 261, Accuracy: 0.85
-Komponen: 260, Accuracy: 0.85
-Komponen: 259, Accuracy: 0.85
-Komponen: 258, Accuracy: 0.85
-Komponen: 257, Accuracy: 0.85
-Komponen: 256, Accuracy: 0.85
-Komponen: 255, Accuracy: 0.85
-Komponen: 254, Accuracy: 0.85
-Komponen: 253, Accuracy: 0.85
-Komponen: 252, Accuracy: 0.85
-Komponen: 251, Accuracy: 0.85
-Komponen: 250, Accuracy: 0.85
-Komponen: 249, Accuracy: 0.85
-Komponen: 248, Accuracy: 0.85
-Komponen: 247, Accuracy: 0.85
-Komponen: 246, Accuracy: 0.85
-Komponen: 245, Accuracy: 0.85
-Komponen: 244, Accuracy: 0.85
-Komponen: 243, Accuracy: 0.85
-Komponen: 242, Accuracy: 0.85
-Komponen: 241, Accuracy: 0.85
-Komponen: 240, Accuracy: 0.85
-Komponen: 239, Accuracy: 0.85
-Komponen: 238, Accuracy: 0.85
-Komponen: 237, Accuracy: 0.85
-Komponen: 236, Accuracy: 0.85
-Komponen: 235, Accuracy: 0.85
-Komponen: 234, Accuracy: 0.85
-Komponen: 233, Accuracy: 0.85
-Komponen: 232, Accuracy: 0.85
-Komponen: 231, Accuracy: 0.85
-Komponen: 230, Accuracy: 0.85
-Komponen: 229, Accuracy: 0.85
-Komponen: 228, Accuracy: 0.85
-Komponen: 227, Accuracy: 0.85
-Komponen: 226, Accuracy: 0.85
-Komponen: 225, Accuracy: 0.85
-Komponen: 224, Accuracy: 0.85
-Komponen: 223, Accuracy: 0.85
-Komponen: 222, Accuracy: 0.85
-Komponen: 221, Accuracy: 0.85
-Komponen: 220, Accuracy: 0.85
-Komponen: 219, Accuracy: 0.85
-Komponen: 218, Accuracy: 0.85
-Komponen: 217, Accuracy: 0.85
-Komponen: 216, Accuracy: 0.85
-Komponen: 215, Accuracy: 0.85
-Komponen: 214, Accuracy: 0.85
-Komponen: 213, Accuracy: 0.85
-Komponen: 212, Accuracy: 0.85
-Komponen: 211, Accuracy: 0.85
-Komponen: 210, Accuracy: 0.85
-Komponen: 209, Accuracy: 0.85
-Komponen: 208, Accuracy: 0.85
-Komponen: 207, Accuracy: 0.85
-Komponen: 206, Accuracy: 0.85
-Komponen: 205, Accuracy: 0.85
-Komponen: 204, Accuracy: 0.85
-Komponen: 203, Accuracy: 0.85
-Komponen: 202, Accuracy: 0.85
-Komponen: 201, Accuracy: 0.85
-Komponen: 200, Accuracy: 0.85
-Komponen: 199, Accuracy: 0.85
-Komponen: 198, Accuracy: 0.85
-Komponen: 197, Accuracy: 0.85
-Komponen: 196, Accuracy: 0.85
-Komponen: 195, Accuracy: 0.85
-Komponen: 194, Accuracy: 0.85
-Komponen: 193, Accuracy: 0.85
-Komponen: 192, Accuracy: 0.85
-Komponen: 191, Accuracy: 0.85
-Komponen: 190, Accuracy: 0.85
-Komponen: 189, Accuracy: 0.85
-Komponen: 188, Accuracy: 0.85
-Komponen: 187, Accuracy: 0.85
-Komponen: 186, Accuracy: 0.85
-Komponen: 185, Accuracy: 0.85
-Komponen: 184, Accuracy: 0.85
-Komponen: 183, Accuracy: 0.85
-Komponen: 182, Accuracy: 0.85
-Komponen: 181, Accuracy: 0.85
-Komponen: 180, Accuracy: 0.85
-Komponen: 179, Accuracy: 0.85
-Komponen: 178, Accuracy: 0.85
-Komponen: 177, Accuracy: 0.85
-Komponen: 176, Accuracy: 0.85
-Komponen: 175, Accuracy: 0.85
-Komponen: 174, Accuracy: 0.85
-Komponen: 173, Accuracy: 0.85
-Komponen: 172, Accuracy: 0.85
-Komponen: 171, Accuracy: 0.85
-Komponen: 170, Accuracy: 0.85
-Komponen: 169, Accuracy: 0.85
-Komponen: 168, Accuracy: 0.85
-Komponen: 167, Accuracy: 0.85
-Komponen: 166, Accuracy: 0.85
-Komponen: 165, Accuracy: 0.85
-Komponen: 164, Accuracy: 0.85
-Komponen: 163, Accuracy: 0.85
-Komponen: 162, Accuracy: 0.85
-Komponen: 161, Accuracy: 0.85
-Komponen: 160, Accuracy: 0.85
-Komponen: 159, Accuracy: 0.85
-Komponen: 158, Accuracy: 0.85
-Komponen: 157, Accuracy: 0.85
-Komponen: 156, Accuracy: 0.85
-Komponen: 155, Accuracy: 0.85
-Komponen: 154, Accuracy: 0.85
-Komponen: 153, Accuracy: 0.85
-Komponen: 152, Accuracy: 0.85
-Komponen: 151, Accuracy: 0.85
-Komponen: 150, Accuracy: 0.85
-Komponen: 149, Accuracy: 0.85
-Komponen: 148, Accuracy: 0.85
-Komponen: 147, Accuracy: 0.85
-Komponen: 146, Accuracy: 0.85
-Komponen: 145, Accuracy: 0.85
-Komponen: 144, Accuracy: 0.85
-Komponen: 143, Accuracy: 0.85
-Komponen: 142, Accuracy: 0.85
-Komponen: 141, Accuracy: 0.85
-Komponen: 140, Accuracy: 0.85
-Komponen: 139, Accuracy: 0.85
-Komponen: 138, Accuracy: 0.85
-Komponen: 137, Accuracy: 0.85
-Komponen: 136, Accuracy: 0.85
-Komponen: 135, Accuracy: 0.85
-Komponen: 134, Accuracy: 0.85
-Komponen: 133, Accuracy: 0.85
-Komponen: 132, Accuracy: 0.85
-Komponen: 131, Accuracy: 0.85
-Komponen: 130, Accuracy: 0.85
-Komponen: 129, Accuracy: 0.85
-Komponen: 128, Accuracy: 0.85
-Komponen: 127, Accuracy: 0.85
-Komponen: 126, Accuracy: 0.85
-Komponen: 125, Accuracy: 0.85
-Komponen: 124, Accuracy: 0.85
-Komponen: 123, Accuracy: 0.85
-Komponen: 122, Accuracy: 0.85
-Komponen: 121, Accuracy: 0.85
-Komponen: 120, Accuracy: 0.85
-Komponen: 119, Accuracy: 0.85
-Komponen: 118, Accuracy: 0.85
-Komponen: 117, Accuracy: 0.85
-Komponen: 116, Accuracy: 0.85
-Komponen: 115, Accuracy: 0.85
-Komponen: 114, Accuracy: 0.85
-Komponen: 113, Accuracy: 0.85
-Komponen: 112, Accuracy: 0.85
-Komponen: 111, Accuracy: 0.85
-Komponen: 110, Accuracy: 0.85
-Komponen: 109, Accuracy: 0.85
-Komponen: 108, Accuracy: 0.85
-Komponen: 107, Accuracy: 0.85
-Komponen: 106, Accuracy: 0.85
-Komponen: 105, Accuracy: 0.85
-Komponen: 104, Accuracy: 0.85
-Komponen: 103, Accuracy: 0.85
-Komponen: 102, Accuracy: 0.85
-Komponen: 101, Accuracy: 0.85
-Komponen: 100, Accuracy: 0.85
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Komponen: 100, Accuracy: 0.85
 Komponen: 99, Accuracy: 0.85
 Komponen: 98, Accuracy: 0.86
 Komponen: 97, Accuracy: 0.85
@@ -1860,7 +1658,7 @@ Komponen: 2, Accuracy: 0.85
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/61695f64b4f698b93611f9b6fc43a4f99cc8534a19790d864636daa23b51e035.png" src="_images/61695f64b4f698b93611f9b6fc43a4f99cc8534a19790d864636daa23b51e035.png" />
+<img alt="_images/74cbc00bc8d015b520f4627d1b7e53e817efb3b9e2127f50a2064ee78b6c9535.png" src="_images/74cbc00bc8d015b520f4627d1b7e53e817efb3b9e2127f50a2064ee78b6c9535.png" />
 </div>
 </div>
 <section id="menampilkan-plot-setelah-svd-berdasarkan-pencarian-komponen-dengan-akurasi-terbaik">
